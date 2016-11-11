@@ -1,0 +1,6 @@
+bin/
+node_modules/
+routes/
+views/
+package.json
+app.js

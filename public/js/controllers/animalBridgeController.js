@@ -1,8 +1,7 @@
 var app = angular.module('AnimalBridgeApp', ['ngRoute']);
 
-app.config(function($routeProvider, $locationProvider) {
+app.config(["$routeProvider","$locationProvider",function($routeProvider, $locationProvider) {
     $routeProvider
-
     //route for the homepage
         .when('/', {
         templateUrl: 'home.html',
@@ -27,8 +26,8 @@ app.config(function($routeProvider, $locationProvider) {
         controller: 'contactController'
     });
 
-    // $locationProvider.html5Mode(true);
-});
+    $locationProvider.html5Mode(true);
+}]);
 
 app.controller('animalBridgeController', function($scope, $http) {
     $scope.name = "AnimalBridgeApp";

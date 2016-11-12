@@ -1,6 +1,7 @@
 body {
     /*margin: 0px;
     padding: 50px 20px;*/
+    /*background-image: url('http://www.bdaarc.com/images/uploads/galleryphotos/h08-Animal-Shelter-Design.jpg');*/
     margin: 0px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -14,10 +15,14 @@ a {
   margin: initial;
 }*/
 .jumbotron {
-    background-color: #55c6ef;
+    /*background-color: #55c6ef;*/
     /* Orange */
     color: #ffffff;
-    padding: 100px 5px;
+    padding: 250px 5px;
+    background-image: url('../images/Animal-Shelter-Design.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .bg-grey {

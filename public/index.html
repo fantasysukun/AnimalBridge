@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html ng-app="AnimalBridgeApp">
     <head lang="en">
         <meta charset="UTF-8">
         <!--Changed href "/" to your own project url such as
         /TeamMinions -->
-        <base href="/">
+        <base href="/TeamMinion/">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Animal Bridge</title>
@@ -15,6 +16,8 @@
         <script src="js/controllers/animalBridgeController.js" charset="utf-8"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
+        
+  
     </head>
     <body ng-controller="animalBridgeController as main">
         <!-- <div class="container"> -->
@@ -28,10 +31,12 @@
 
                 <form class="form-inline">
                     <input type="email" class="form-control" size="50" placeholder="Email Address">
-                    <button type="button" class="btn btn-primary">Subscribe</button>
+                    <button type="button" class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register" >Sign Up</button>
                 </form>
             </div>
         </header>
+
+        <!------------------------------------------------- <Navgation bar"> ------------------------------------------>
 
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
@@ -41,7 +46,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Logo</a>
+                    <a class="navbar-brand" href="#">Animal Bridge</a>
+					<img src="images/logo.png" alt="logo" class="logo">
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
@@ -52,7 +58,7 @@
                             <a href="services">SERVICES</a>
                         </li>
                         <li>
-                            <a href="portfolio">PORTFOLIO</a>
+                            <a href="Emergency.html">Emergency</a>
                         </li>
                         <li>
                             <a href="about">ABOUT</a>
@@ -60,10 +66,86 @@
                         <li>
                             <a href="contact">CONTACT</a>
                         </li>
+       <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
+    
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> </a>
+			<ul class="dropdown-menu">
+				<li>
+							 <form class="form" role="form" method="post" action="login" id="login-nav">
+										<div class="Login_form-group">
+											 <label >Email address</label>
+									<input type="Login_email" class="form-control" placeholder="Email address"required>
+										</div>
+										
+										<div class="Login_form-group">
+											 <label>Password</label>
+										<input type="Login_password" class="form-control" placeholder="Password" required>
+                                             <div class="help-block text-right"><a href="">Forget password?</a></div>
+										</div>
+										<div class="form-group">
+											 <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+										</div>
+								 </form>
+							</div>
+					 </div>
+				</li>
+				       <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
+
                     </ul>
                 </div>
             </div>
         </nav>
+                <!-----------------------< Navgation bar > -------------------------->
+
+        <!-----------------------< POPUP Sign up form after clicked signup button. > -------------------------->
+
+         <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
+        	<div class="modal-dialog">
+        		<div class="modal-content">
+        			
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">
+        					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        				</button>
+        				<h3 class="modal-title" id="modal-register-label">Sign up now</h3>
+        				<p>“If a man aspires towards a righteous life, his first act of abstinence is from injury to animals." - Albert Einstein</p>
+        			</div>
+        			
+        			<div class="modal-body">
+        				
+	                    <form role="form" action="" method="post" class="registration-form">
+	                    	<div class="form-group">
+	                    		<label class="sr-only" for="form-first-name">First name</label>
+	                        	<input type="text" name="form-first-name" placeholder="First name" class="form-first-name form-control" id="form-first-name">
+	                        </div>
+	                        <div class="form-group">
+	                        	<label class="sr-only" for="form-last-name">Last name</label>
+	                        	<input type="text" name="form-last-name" placeholder="Last name" class="form-last-name form-control" id="form-last-name">
+	                        </div>
+	                        <div class="form-group">
+	                        	<label class="sr-only" for="form-email">Email</label>
+	                        	<input type="text" name="form-email" placeholder="Email" class="form-email form-control" id="form-email">
+	                        </div>
+	                         <div class="form-group">
+	                        	<label class="sr-only" for="form-email">Password</label>
+	                        	<input type="text" name="form-email" placeholder="Password" class="form-Password form-control" id="form-email">
+	                        </div>
+	                        <div class="form-group">
+	                        	<label class="sr-only" for="form-email">Confirm Password</label>
+	                        	<input type="text" name="form-email" placeholder="Confirm Password" class="form-ConPassword form-control" id="form-email">
+	                        </div>                  
+	                        <button type="submit" class="btn">Sign me up!</button>
+	                    </form>
+	                    
+        			</div>
+        			
+        		</div>
+        	</div>
+        </div>
+        
+  <!-----------------------< POPUP Sign up form after click Subscribe button. > -------------------------->
+
 
         <div id="main">
             <ng-view></ng-view>
@@ -76,6 +158,6 @@
             <p>
                 Copyright AnimalBridge.org
             </p>
-        </footer>
+        </footer>        
     </body>
 </html>

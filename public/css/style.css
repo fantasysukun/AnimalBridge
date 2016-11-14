@@ -10,13 +10,7 @@ a {
     color: #00B7FF;
 }
 
-/*.container {
-  padding: initial;
-  margin: initial;
-}*/
 .jumbotron {
-    /*background-color: #55c6ef;*/
-    /* Orange */
     color: #ffffff;
     padding: 250px 5px;
     background-image: url('../images/Animal-Shelter-Design.jpg');
@@ -37,4 +31,33 @@ footer .glyphicon {
     font-size: 20px;
     margin-bottom: 20px;
     color: #f4511e;
+}
+.logo {
+    position: relative;
+    width: 14%;
+    height: 14%;
+    top: 5px;
+    right: 185px;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }

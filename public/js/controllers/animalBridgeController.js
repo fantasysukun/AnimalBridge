@@ -1,5 +1,13 @@
 var app = angular.module('AnimalBridgeApp', ['ngRoute']);
 
+jQuery(document).ready(function() {
+    $('.launch-modal').on('click', function(e){
+        e.preventDefault();
+        $( '#' + $(this).data('modal-id') ).modal();
+    });
+});
+
+
 app.config(["$routeProvider","$locationProvider",function($routeProvider, $locationProvider) {
     $routeProvider
     //route for the homepage

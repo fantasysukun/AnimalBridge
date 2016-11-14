@@ -1,105 +1,12 @@
-<!DOCTYPE html>
-<html ng-app="AnimalBridgeApp">
-    <head lang="en">
-        <meta charset="UTF-8">
-        <!--Changed href "/" to your own project url such as
-        /TeamMinions -->
-        <base href="/TeamMinion/">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="Emergency_textfield text-center">
+    <p>
+        Please enter your zip code. We will find you a nearby pet hospital. For other Emergency please call 911
+    </p>
 
-        <title>Animal Bridge</title>
-        <script src="js/angular.min.js" charset="utf-8"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-        <script src="js/jquery-3.1.1.min.js"></script>
-        <script src="js/bootstrap.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_8qaRPK-xsI28j5ofWukzatxM5Bx5fYQ&libraries=places""></script>
-        <script type = "text/javascript" src="js/controllers/Emergency.js"></script>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/Emergency.css">
-        
-  
-    </head>
+    <form class="form-inline">
+        <input type="zipcode" class="form-control" size="10" placeholder="Zipcode">
+        <button type="button">Search</button>
+    </form>
+</div>
 
-    <body ng-controller="Emergency">
-	     <!------------------------------------------------- <Navgation bar"> ------------------------------------------>
-
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Animal Bridge</a>
-					<img src="images/logo.png" alt="logo" class="logo">
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="/">HOME</a>
-                        </li>
-                        <li>
-                            <a href="services">SERVICES</a>
-                        </li>
-                        <li>
-                            <a href="Emergency.html">Emergency</a>
-                        </li>
-                        <li>
-                            <a href="about">ABOUT</a>
-                        </li>
-                        <li>
-                            <a href="contact">CONTACT</a>
-                        </li>
-       <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
-    
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> </a>
-			<ul class="dropdown-menu">
-				<li>
-							 <form class="form" role="form" method="post" action="login" id="login-nav">
-										<div class="Login_form-group">
-											 <label >Email address</label>
-									<input type="Login_email" class="form-control" placeholder="Email address"required>
-										</div>
-										
-										<div class="Login_form-group">
-											 <label>Password</label>
-										<input type="Login_password" class="form-control" placeholder="Password" required>
-                                             <div class="help-block text-right"><a href="">Forget password?</a></div>
-										</div>
-										<div class="form-group">
-											 <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-										</div>
-								 </form>
-							</div>
-					 </div>
-				</li>
-				       <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
-                <!-----------------------< Navgation bar > -------------------------->
-                
-                
-
-            <div class="Emergency_textfield text-center">
-                <p>
-                    Please enter your zip code. We will find you a nearby pet hospital. For other Emergency please call 911
-                </p>
-
-                <form class="form-inline">
-                    <input type="zipcode" class="form-control" size="10" placeholder="Zipcode">
-                    <button type="button" >Search</button>
-                </form>
-            </div>
-            
-            
-        <div id="gmap_canvas"></div>
-            
-        
-    </body>
-</html>
+<div id="gmap_canvas"></div>

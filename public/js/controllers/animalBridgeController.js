@@ -32,6 +32,11 @@ app.config(["$routeProvider","$locationProvider",function($routeProvider, $locat
     .when('/contact', {
         templateUrl: 'contact.html',
         controller: 'contactController'
+    })
+
+    .when('/emergency', {
+        templateUrl: 'emergency.html',
+        controller: 'contactController'
     });
 
     $locationProvider.html5Mode(true);

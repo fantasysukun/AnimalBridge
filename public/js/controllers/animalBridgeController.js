@@ -39,7 +39,7 @@ app.config(["$routeProvider", "$locationProvider", function($routeProvider, $loc
         controller: 'emergencyController'
     });
 
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(false);
 }]);
 
 app.controller('animalBridgeController', function($scope, $http) {

@@ -1,4 +1,3 @@
-#Author: Kun Su
 DROP DATABASE IF EXISTS cs160test;
 CREATE DATABASE cs160test;
 USE cs160test;
@@ -10,7 +9,7 @@ CREATE TABLE AnimalBridge_users (
     user_Email VARCHAR(100) NOT NULL UNIQUE,
     user_Pass VARCHAR(100) NOT NULL,
     user_ComfirmStatus ENUM('Y', 'N') NOT NULL DEFAULT 'N',
-    user_RegisteredDate DATETIME NOT NULL,
+    user_RegisteredDate DATE NOT NULL,
     tokenCode VARCHAR(100) NOT NULL,
     PRIMARY KEY (user_ID , user_Name)
 );

@@ -11,7 +11,7 @@ import java.sql.Date;
  */
 
 public class AnimalBridge_users {
-
+	
 	private int user_ID;
 	private String user_Name;
 	private String user_Email;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="AnimalBridgeApp" >
+<html ng-app="AnimalBridgeApp">
     <head lang="en">
         <meta charset="UTF-8">
         <!--Changed href "/" to your own project url such as
@@ -15,10 +15,14 @@
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/bootstrap.min.js" charset="utf-8"></script>
         <script src="js/controllers/animalBridgeController.js" charset="utf-8"></script>
+        <script type="text/javascript" src="js/controllers/emergency.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_8qaRPK-xsI28j5ofWukzatxM5Bx5fYQ&libraries=places"></script>
+<<<<<<< HEAD
         <script type="text/javascript" src="js/controllers/emergency.js"></script>
         
+=======
+>>>>>>> daa7a56e1c68bf589bbf3952863c9cf8129389e1
 
         <!-- css files -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -29,18 +33,35 @@
     <body ng-controller="animalBridgeController as MainCtrl">
         <!-- <div class="container"> -->
 
-
         <div id="main">
             <ng-view></ng-view>
         </div>
 
         <footer class="container-fluid text-center">
-            <a href="#myPage" title="To Top">
+            <a href="#mypage" title="To Top">
                 <span class="glyphicon glyphicon-chevron-up"></span>
             </a>
             <p>
                 Copyright AnimalBridge.org
             </p>
         </footer>
+
+        <script>
+            $(document).ready(function() {
+                // Add smooth scrolling to all links in navbar + footer link
+                $("footer a[href='#mypage']").on('click', function(event) {
+                    // Make sure this.hash has a value before overriding default behavior
+                    if (this.hash !== "") {
+                        // Prevent default anchor click behavior
+                        event.preventDefault();
+
+                        // Using jQuery's animate() method to add smooth page scroll The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+                        $('html, body').animate({
+                            scrollTop: $("#main").offset().top
+                        }, 900, function() {});
+                    } // End if
+                });
+            })
+        </script>
     </body>
 </html>

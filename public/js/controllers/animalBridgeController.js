@@ -131,6 +131,10 @@ app.controller('newPostController', ['pageLayoutService','$http', function(pageL
     ];
     self.selectedCategoryId = 2;
     self.selectedCategory = this.categories[1];
+
+    self.submit = function() {
+      console.log('User clicked submit with ', self.post);
+    };
 }]);
 
 app.directive('googleplace', function() {

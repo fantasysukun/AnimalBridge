@@ -47,3 +47,7 @@ footer .glyphicon {
     overflow:hidden;
     background-color:rgba(255,255,255,.8);
 }
+
+div.post {
+  padding-top: 5em;
+}

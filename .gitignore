@@ -4,3 +4,4 @@ routes/
 views/
 package.json
 app.js
+.DS_Store

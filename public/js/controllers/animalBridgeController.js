@@ -1,58 +1,134 @@
 var app = angular.module('AnimalBridgeApp', ['ngRoute']);
 
+app.service("pageLayoutService", function(){
+  var self = this;
+  var shouldShowHeader = true;
+  var shouldShowNavBar = true;
+
+  self.getShowHeader = function () {
+    return shouldShowHeader;
+  };
+  self.getShowNavBar = function (){
+    return shouldShowNavBar;
+  };
+
+  self.setShowHeader = function (newVal){
+    shouldShowHeader = newVal;
+  };
+
+  self.setShowNavBar = function (newVal) {
+    shouldShowNavBar = newVal;
+  };
+});
+
 jQuery(document).ready(function() {
-    $('.launch-modal').on('click', function(e){
+    $('.launch-modal').on('click', function(e) {
         e.preventDefault();
-        $( '#' + $(this).data('modal-id') ).modal();
+        $('#' + $(this).data('modal-id')).modal();
     });
 });
 
 
-app.config(["$routeProvider","$locationProvider",function($routeProvider, $locationProvider) {
+app.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
     $routeProvider
     //route for the homepage
         .when('/', {
-        templateUrl: 'home.html',
-        controller: 'animalBridgeController'
-    })
-    // //route for the homepage
-    //     .when('/#/', {
-    //     templateUrl: 'home.html',
-    //     controller: 'animalBridgeController'
-    // })
+            templateUrl: 'home.html',
+            controller: 'animalBridgeController'
+        })
+        // //route for the homepage
+        //     .when('/#/', {
+        //     templateUrl: 'home.html',
+        //     controller: 'animalBridgeController'
+        // })
 
 
     //route for about page
     .when('/about', {
         templateUrl: 'about.html',
-        controller: 'aboutController'
+        controller: 'aboutController',
+        controllerAs: 'MainCtrl'
     })
 
     // route for the contact page
     .when('/contact', {
         templateUrl: 'contact.html',
-        controller: 'contactController'
+        controller: 'contactController',
+        controllerAs: 'MainCtrl'
+    })
+
+    .when('/newpost', {
+        templateUrl: 'newPost.html',
+        controller: 'newPostController',
+        controllerAs: 'MainCtrl'
     })
 
     .when('/emergency', {
         templateUrl: 'emergency.html',
-        controller: 'contactController'
+        controller: 'emergencyController',
+        controllerAs: 'MainCtrl'
     });
 
     $locationProvider.html5Mode(false);
 }]);
 
-app.controller('animalBridgeController', function($scope, $http) {
-    $scope.name = "AnimalBridgeApp";
-    this.name = "Marco";
-});
+app.controller('animalBridgeController', ['pageLayoutService','$http', function(pageLayoutService,$http) {
+    var self = this;
+    self.name = "AnimalBridgeApp";
+    self.headerTemplate = 'header.html';
+    pageLayoutService.setShowHeader(true);
+    pageLayoutService.setShowNavBar(true);
+    self.showHeader = pageLayoutService.getShowHeader();
+    self.showNav = pageLayoutService.getShowNavBar();
+}]);
 
-app.controller('aboutController', function($scope, $http) {
-    $scope.name = "About Us";
-    this.name = "The Team";
-});
+app.controller('aboutController', ['pageLayoutService','$http', function(pageLayoutService,$http) {
+    var self = this;
+    self.name = "AnimalBridgeApp";
+    self.headerTemplate = 'header.html';
+    pageLayoutService.setShowHeader(true);
+    pageLayoutService.setShowNavBar(true);
+    self.showHeader = pageLayoutService.getShowHeader();
+    self.showNav = pageLayoutService.getShowNavBar();
+}]);
 
-app.controller('contactController', function($scope, $http) {
-    $scope.name = "Contact Us";
-    this.name = "Email: admin@animalbridge.org";
-});
+app.controller('contactController', ['pageLayoutService','$http', function(pageLayoutService,$http) {
+    var self = this;
+    self.name = "AnimalBridgeApp";
+    self.headerTemplate = 'header.html';
+
+    pageLayoutService.setShowHeader(true);
+    pageLayoutService.setShowNavBar(true);
+    self.showHeader = pageLayoutService.getShowHeader();
+    self.showNav = pageLayoutService.getShowNavBar();
+}]);
+
+app.controller('emergencyController', ['pageLayoutService','$http', function(pageLayoutService,$http) {
+    var self = this;
+    self.name = "AnimalBridgeApp";
+    self.headerTemplate = 'header.html';
+
+    pageLayoutService.setShowHeader(false);
+    pageLayoutService.setShowNavBar(true);
+    self.showHeader = pageLayoutService.getShowHeader();
+    self.showNav = pageLayoutService.getShowNavBar();
+}]);
+
+app.controller('newPostController', ['pageLayoutService','$http', function(pageLayoutService,$http) {
+    var self = this;
+    self.name = "AnimalBridgeApp";
+    self.headerTemplate = 'header.html';
+
+    pageLayoutService.setShowHeader(false);
+    pageLayoutService.setShowNavBar(true);
+    self.showHeader = pageLayoutService.getShowHeader();
+    self.showNav = pageLayoutService.getShowNavBar();
+
+    self.categories = [
+      {label: 'Emergency', id: 1},
+      {label: 'Information', id: 2},
+      {label: 'Product', id: 3}
+    ];
+    self.selectedCategoryId = 2;
+    self.selectedCategory = this.categories[1];
+}]);

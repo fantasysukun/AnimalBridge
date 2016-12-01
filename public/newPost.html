@@ -4,21 +4,33 @@
 <div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav"></div>
 <div class="post">
     <form class="postform" ng-submit="MainCtrl.submit()" name="newPostForm">
+      <div class="form-group">
+        <label for="postTitle">Title</label>
+        <input type="text" class="form-control" id="postTitle" placeholder="TITLE" ng-model="MainCtrl.post.title" required ng-minlength="5">
+      </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" ng-model="MainCtrl.post.email" required>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="MainCtrl.post.password">
         </div>
         <div class="form-group">
-            <label for="exampleSelect1">Example select</label>
-            <select class="form-control" id="categorySelect" ng-model='MainCtrl.selectedCategoryId' ng-options="c.id as c.label for c in MainCtrl.categories"></select>
+            <label for="categorySelect">Select Category</label>
+            <select class="form-control" id="categorySelect" ng-model='MainCtrl.post.category' ng-options="c.id as c.label for c in MainCtrl.categories" required></select>
             <small class="form-text text-muted">
                 Selected Category ID:
-                {{MainCtrl.selectedCategoryId}}</small>
+                {{MainCtrl.post.category}}</small>
+        </div>
+        <div class="form-group">
+            <label for="contentText">Description</label>
+            <textarea class="form-control" id="contentText" rows="15" ng-model="MainCtrl.post.description" required ng-minlength="5"></textarea>
+        </div>
+
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Submit" ng-disabled="newPostForm.$invalid">
         </div>
     </form>
 </div>

@@ -191,6 +191,15 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
 
+    self.post = {
+      "title": "",
+      "email": "",
+      "password": "",
+      "category": null,
+      "description": "",
+      "imageData": ""
+    };
+
     pageLayoutService.setShowHeader(false);
     pageLayoutService.setShowNavBar(true);
     self.showHeader = pageLayoutService.getShowHeader();
@@ -211,6 +220,17 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
 
     self.submit = function() {
         console.log('User clicked submit with ', self.post);
+    };
+
+    self.addImageFile = function() {
+        var file = document.getElementById('file').files[0],
+        readFile = new FileReader();
+        readFile.onloadend = function(e) {
+          console.log("loaded image");
+          // self.imageData = e.target.result;
+          self.post.imageData = e.target.result;
+        }
+        readFile.readAsBinaryString(file);
     };
 }]);
 

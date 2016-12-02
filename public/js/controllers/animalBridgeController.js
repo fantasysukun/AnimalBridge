@@ -103,7 +103,7 @@ app.controller('contactController', ['pageLayoutService', '$http', function(page
     self.showNav = pageLayoutService.getShowNavBar();
 }]);
 
-app.controller('emergencyController', ['pageLayoutService', '$scope','$http', function(pageLayoutService, $scope, $http) {
+app.controller('emergencyController', ['pageLayoutService', '$scope', '$http', function(pageLayoutService, $scope, $http) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -192,12 +192,23 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
     self.headerTemplate = 'header.html';
 
     self.post = {
-      "title": "",
-      "email": "",
-      "password": "",
-      "category": null,
-      "description": "",
-      "imageData": ""
+        "title": "",
+        "email": "",
+        "password": "",
+        "category": "",
+        "description": "",
+        "imageData": "",
+        "priority": "",
+        "address": "",
+        "date": "",
+        "startingTime": "",
+        "endingTime": "",
+        "price": ""
+    };
+
+    self.selected = {
+        "label": "",
+        "priority": ""
     };
 
     pageLayoutService.setShowHeader(false);
@@ -207,16 +218,40 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
 
     self.categories = [{
         label: 'Emergency',
-        id: 1
+        priority: 6
     }, {
-        label: 'Information',
-        id: 2
+        label: 'Lost',
+        priority: 5
     }, {
-        label: 'Product',
-        id: 3
+        label: 'AdpotionOffer',
+        priority: 4
+    }, {
+        label: 'AdpotionRequest',
+        priority: 3
+    }, {
+        label: 'RecentNews',
+        priority: 1
+    }, {
+        label: 'ShelterPromotion',
+        priority: 2
     }];
-    self.selectedCategoryId = 2;
-    self.selectedCategory = this.categories[1];
+    // self.selectedCategoryId = 2;
+    // self.selectedCategory = this.categories[1];
+    // $scope.$watch(
+    //     "self.selected",
+    //     function handleFooChange(newValue, oldValue) {
+    //         console.log("self.post.category: ", newValue);
+    //         //self.post.priority = newValue.priority;
+    //     }
+    // );
+    $scope.$watch(angular.bind(this, function() {
+        return self.selected;
+    }), function(newValue) {
+        console.log('selected changed to ' + newValue.label);
+        console.log('selected changed to ' + newValue.priority);
+        self.post.category = newValue.label;
+        self.post.priority = newValue.priority;
+    });
 
     self.submit = function() {
         console.log('User clicked submit with ', self.post);
@@ -224,14 +259,28 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
 
     self.addImageFile = function() {
         var file = document.getElementById('file').files[0],
-        readFile = new FileReader();
+            readFile = new FileReader();
         readFile.onloadend = function(e) {
-          console.log("loaded image");
-          // self.imageData = e.target.result;
-          self.post.imageData = e.target.result;
+            console.log("loaded image");
+            // self.imageData = e.target.result;
+            self.post.imageData = e.target.result;
         }
         readFile.readAsBinaryString(file);
     };
+
+		self.dp1 = $('#datepicker1').datepicker().on('changeDate', function(e){
+			console.log('datepicker is ' + e.format([0]));
+			self.post.date = e.format([0]);
+		});
+    self.tp1 = $('#timepicker1').timepicker().on('changeTime.timepicker', function(e) {
+        console.log('Starting time is ' + e.time.value);
+				self.post.startingTime = e.time.value;
+    });
+		self.tp2 = $('#timepicker2').timepicker().on('changeTime.timepicker', function(e) {
+        console.log('Ending time is ' + e.time.value);
+				self.post.endingTime = e.time.value;
+    });
+
 }]);
 
 app.directive('googleplace', function() {

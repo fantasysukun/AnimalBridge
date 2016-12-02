@@ -51,3 +51,11 @@ footer .glyphicon {
 div.post {
   padding: 5em;
 }
+
+div.form-group.tp {
+  width: 15em;
+}
+
+#price{
+  width: 15em;
+}

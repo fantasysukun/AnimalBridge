@@ -31,11 +31,12 @@
         text-align: right;
         width: 400px;
         font-size: 14px;
-        padding: 4px;
+        margin: 5em;
         z-index: 5;
         background-color: #fff;
       }
       #locationField {
+        margin: 5em;
         position: absolute;
         width: 190px;
         height: 30px;

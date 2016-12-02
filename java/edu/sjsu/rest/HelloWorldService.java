@@ -9,6 +9,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import edu.sjsu.db.AnimalBridge_users;
 import edu.sjsu.db.Dao;
 import edu.sjsu.db.Model;
@@ -54,133 +57,86 @@ public class HelloWorldService {
         }
         return Response.status(200).entity(output).build();
     }
-    public static Response getUser (int id)
+    public void insertObject(@PathParam("param") String name, String json) throws JSONException {
+
+    	if (name == "aboutus")
+    	{
+    		insertAboutUs(json);
+    	}
+    }
+    public animalbridge_aboutus insertAboutUs(String json) throws JSONException
+    {
+    	//JSONObject jsonObject = new JSONObject(json);
+    	//animalbridge_aboutus aboutus = new animalbridge_aboutus(json.getInt(AboutUs_ID), json.get);
+		return null;
+    	
+    }
+    public static String getUser ()
     {
         HashMap<Integer, AnimalBridge_users> users = Model.AnimalBridge_users();
-        //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
-        String json = gson.toJson(users.get(id));
-        try {
-            File file = new File("C:\\", "users.json");
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(json);
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response.status(200).entity("").build();
+        String json = gson.toJson(users);
+
+        return json;
     }
-    public static Response getPost (@PathParam("param") int id)
+    public static String getPost ()
     {
         HashMap<Integer, animalbridge_posting> posts = Model.animalbridge_posting();
         //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
-        String json = gson.toJson(posts.get(id));
-        try {
-            File file = new File("C:\\", "posts.json");
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(json);
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response.status(200).entity("").build();
+        String json = gson.toJson(posts);
+
+        return json;
     }
-    public static Response getHomepage (@PathParam("param") int id)
+    public static String getHomepage ()
     {
         HashMap<Integer, animalbridge_homepage> home = Model.animalbridge_homepage();
         //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(home);
-        try {
-            File file = new File("C:\\", "homepage.json");
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(json);
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response.status(200).entity("").build();
+
+        return json;
     }
-    public static Response getAboutUs (@PathParam("param") int id)
+    public static String getAboutUs ()
     {
         HashMap<Integer, animalbridge_aboutus> aboutus = Model.animalbridge_aboutus();
         //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(aboutus);
-        try {
-            File file = new File("C:\\", "aboutus.json");
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(json);
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response.status(200).entity("").build();
+
+        return json;
     }
-    public static Response getContactUs (@PathParam("param") int id)
+    public static String getContactUs ()
     {
         HashMap<Integer, animalbridge_contactus> contact = Model.animalbridge_contactus();
         //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(contact);
-        try {
-            File file = new File("C:\\", "contact.json");
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(json);
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response.status(200).entity("").build();
+
+        return json;
     }
-    public static Response getEmergency (@PathParam("param") int id)
+    public static String getEmergency ()
     {
         HashMap<Integer, animalbridge_emergencycontact> emergency = Model.animalbridge_emergencycontact();
         //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
-        String json = gson.toJson(emergency.get(id));
-        try {
-            File file = new File("C:\\", "emergency.json");
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(json);
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response.status(200).entity("").build();
+        String json = gson.toJson(emergency);
+
+        return json;
     }
-    public static Response getAnimals (@PathParam("param") int id)
+    public static String getAnimals ()
     {
         HashMap<Integer, animalbridge_animals> animal = Model.animalbridge_animals();
         //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
-        String json = gson.toJson(animal.get(id));
-        try {
-            File file = new File("C:\\", "animal.json");
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(json);
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response.status(200).entity("").build();
+        String json = gson.toJson(animal);
+
+        return json;
     }
-    public static File getJson(String name)
-    {
-        File file = new File("C:\\" + name);
-        return file;
-    }
+
     public static void main(String[] args) throws IOException
     {	
-    	//getJson("user.json");
+    	System.out.println(getAnimals());
     }
    
 } //class

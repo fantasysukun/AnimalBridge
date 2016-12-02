@@ -25,9 +25,9 @@ CREATE TABLE AnimalBridge_Animals (
     Animals_Address VARCHAR(100) NOT NULL,
     Animals_Color VARCHAR(100) NOT NULL,
     Animals_Description LONGTEXT NOT NULL,
-    Animals_Image LONGBLOB NOT NULL,
+    Animals_Image BLOB,
     Animals_Size VARCHAR(100) NOT NULL,
-    Animals_Gender ENUM('Female', 'male', 'Other') NOT NULL,
+    Animals_Gender ENUM('Female', 'Male', 'Other') NOT NULL,
     Animals_OwnerID INT(11) NOT NULL,
     Animals_OwnerName VARCHAR(100) NOT NULL,
     FOREIGN KEY (Animals_OwnerID , Animals_OwnerName)
@@ -47,7 +47,7 @@ CREATE TABLE AnimalBridge_Posting (
     Posting_Date DATE NOT NULL,
     Posting_StartingTime TIME NOT NULL,
     Posting_EndingTIme TIME NOT NULL,
-    Posting_Image LONGBLOB NOT NULL,
+    Posting_Image BLOB,
     Posting_Price VARCHAR(100),
     Posting_ContactEmail VARCHAR(100),
     Posting_OwnerID INT(11) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE AnimalBridge_AboutUs (
     AboutUs_Title VARCHAR(100) NOT NULL,
     AboutUs_Description LONGTEXT NOT NULL,
     AboutUs_Date DATE NOT NULL,
-    AboutUs_Image LONGBLOB NOT NULL,
+    AboutUs_Image BLOB,
     PRIMARY KEY (AboutUs_ID)
 );
 
@@ -74,7 +74,7 @@ CREATE TABLE AnimalBridge_ContactUs (
     ContactUs_Title VARCHAR(100) NOT NULL,
     ContactUs_Description LONGTEXT NOT NULL,
     ContactUs_Date DATE NOT NULL,
-    ContactUs_Image LONGBLOB NOT NULL,
+    ContactUs_Image BLOB,
     ContactUs_ContactEmail VARCHAR(100),
     PRIMARY KEY (ContactUs_ID)
 );
@@ -86,7 +86,7 @@ CREATE TABLE AnimalBridge_EmergencyContact (
     EmergencyContact_Description LONGTEXT NOT NULL,
     EmergencyContact_Date DATE NOT NULL,
     EmergencyContact_ZipCode INT(6) NOT NULL,
-    EmergencyContact_Image LONGBLOB NOT NULL,
+    EmergencyContact_Image BLOB,
     EmergencyContact_ContactEmail VARCHAR(100),
     EmergencyContact_OwnerID INT(11) NOT NULL,
     EmergencyContact_OwnerName VARCHAR(100) NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE AnimalBridge_HomePage (
     HomePage_Title VARCHAR(100) NOT NULL,
     HomePage_Description LONGTEXT NOT NULL,
     HomePage_Date DATE NOT NULL,
-    HomePage_Image LONGBLOB NOT NULL,
+    HomePage_Image BLOB,
     HomePage_RecentNews VARCHAR(100) NOT NULL,
     PRIMARY KEY (HomePage_ID)
 );

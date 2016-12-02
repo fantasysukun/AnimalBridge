@@ -3,7 +3,8 @@
 <!-- navbar -->
 <div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav"></div>
 <div class="post">
-    <form class="postform" ng-submit="MainCtrl.submit()" name="newPostForm">
+  <form class="postform" name="newPostForm">
+    <!-- <form class="postform" ng-click="MainCtrl.submit()" name="newPostForm"> -->
       <div class="form-group">
         <label for="postTitle">Title</label>
         <input type="text" class="form-control" id="postTitle" placeholder="TITLE" ng-model="MainCtrl.post.title" required ng-minlength="5">
@@ -30,7 +31,14 @@
         </div>
 
         <div class="form-group">
-            <input class="btn btn-primary" type="submit" value="Submit" ng-disabled="newPostForm.$invalid">
+          <label for="imageUpload">Upload Image</label>
+          <input class-"btn" type="file" id="file" name="file"/>
+          <button class="btn" ng-click="MainCtrl.addImageFile()">Add</button>
+          <p>{{MainCtrl.post.imageData}}</p>
+        </div>
+
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Submit" ng-click="MainCtrl.submit()" ng-disabled="newPostForm.$invalid">
         </div>
     </form>
 </div>

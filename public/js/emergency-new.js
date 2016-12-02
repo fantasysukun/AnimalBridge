@@ -24,7 +24,7 @@
         autocomplete = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */ (
                 document.getElementById('autocomplete')), {
-              types: ['(cities)'],
+              types: ['(regions)'],
               componentRestrictions: countryRestrict
             });
         places = new google.maps.places.PlacesService(map);
@@ -42,7 +42,7 @@
         var place = autocomplete.getPlace();
         if (place.geometry) {
           map.panTo(place.geometry.location);
-          map.setZoom(15);
+          map.setZoom(14);
           search();
         } else {
           document.getElementById('autocomplete').placeholder = 'Enter a city';
@@ -91,23 +91,7 @@
         markers = [];
       }
 
-      // Set the country restriction based on user input.
-      // Also center and zoom the map on the given country.
-      function setAutocompleteCountry() {
-        var country = document.getElementById('country').value;
-        if (country == 'all') {
-          autocomplete.setComponentRestrictions([]);
-          map.setCenter({lat: 15, lng: 0});
-          map.setZoom(2);
-        } else {
-          autocomplete.setComponentRestrictions({'country': country});
-          map.setCenter(countries[country].center);
-          map.setZoom(countries[country].zoom);
-        }
-        clearResults();
-        clearMarkers();
-      }
-
+  
       function dropMarker(i) {
         return function() {
           markers[i].setMap(map);

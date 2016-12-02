@@ -78,6 +78,9 @@ public class Model {
 	public static BufferedImage ConvertBlobTobufferedImage (Blob blob){
 
 		BufferedImage Image = null;
+		if(blob == null) {
+			return Image;
+		}
 		try {
 	        int blobLength = (int) blob.length();
 	        byte[] blobAsBytes = blob.getBytes(1, blobLength);
@@ -380,18 +383,64 @@ public class Model {
 		//DB_To_Java_ClassGenerator("animalbridge_contactus.txt");
 		//HashMapGenerator("animalbridge_contactus.txt");
 		
-		HashMap<Integer, animalbridge_aboutus> ResultMap1 = new HashMap<Integer, animalbridge_aboutus>();
-		HashMap<Integer, animalbridge_animals> ResultMap2 = new HashMap<Integer, animalbridge_animals>();
-		HashMap<Integer, animalbridge_contactus> ResultMap3 = new HashMap<Integer, animalbridge_contactus>();
-		HashMap<Integer, animalbridge_emergencycontact> ResultMap4 = new HashMap<Integer, animalbridge_emergencycontact>();
-		HashMap<Integer, animalbridge_homepage> ResultMap5 = new HashMap<Integer, animalbridge_homepage>();
-		HashMap<Integer, animalbridge_posting> ResultMap6 = new HashMap<Integer, animalbridge_posting>();
-		HashMap<Integer, AnimalBridge_users> ResultMap7 = new HashMap<Integer, AnimalBridge_users>();
-
 		
-		/* I will do a simple unit Test later -Kun
-		int ID = 5;
+		HashMap<Integer, animalbridge_aboutus> ResultMap1 = animalbridge_aboutus();
+		HashMap<Integer, animalbridge_animals> ResultMap2 = animalbridge_animals();
+		HashMap<Integer, animalbridge_contactus> ResultMap3 = animalbridge_contactus();
+		HashMap<Integer, animalbridge_emergencycontact> ResultMap4 = animalbridge_emergencycontact();
+		HashMap<Integer, animalbridge_homepage> ResultMap5 = animalbridge_homepage();
+		HashMap<Integer, animalbridge_posting> ResultMap6 = animalbridge_posting();
+		
+		HashMap<Integer, AnimalBridge_users> ResultMap7 = AnimalBridge_users();
+		
+		
+		// I will do a simple unit Test later -Kun
+		
+		int ID;
+		System.out.println("ResultMap1.size(): " + ResultMap1.size());
+		System.out.println("ResultMap2.size(): " + ResultMap2.size());
+		System.out.println("ResultMap3.size(): " + ResultMap3.size());
+		System.out.println("ResultMap4.size(): " + ResultMap4.size());
+		System.out.println("ResultMap5.size(): " + ResultMap5.size());
+		System.out.println("ResultMap6.size(): " + ResultMap6.size());
+		System.out.println("ResultMap7.size(): " + ResultMap7.size());
+		
+		for(int i = 1; i < ResultMap7.size()+1; i++) {
+			ID = i;
+			System.out.println("Running");
+			System.out.println("Getuser_ID(): " + ResultMap7.get(ID).Getuser_ID());
+			System.out.println("Getuser_Name(): " + ResultMap7.get(ID).Getuser_Name());
+			System.out.println("Getuser_Email(): " + ResultMap7.get(ID).Getuser_Email());
+			System.out.println("Getuser_Pass(): " + ResultMap7.get(ID).Getuser_Pass());
+			System.out.println("Getuser_ComfirmStatus(): " + ResultMap7.get(ID).Getuser_ComfirmStatus());
+			System.out.println("Getuser_RegisteredDate(): " + ResultMap7.get(ID).Getuser_RegisteredDate());
+			System.out.println("GettokenCode(): " + ResultMap7.get(ID).GettokenCode());			
+		}
+		
+		
+		/*
+		ID = 1;
 		HashMap<Integer, AnimalBridge_users> Testing = AnimalBridge_users();
+		System.out.println("Running");
+		System.out.println("Getuser_ID(): " + Testing.get(ID).Getuser_ID());
+		System.out.println("Getuser_Name(): " + Testing.get(ID).Getuser_Name());
+		System.out.println("Getuser_Email(): " + Testing.get(ID).Getuser_Email());
+		System.out.println("Getuser_Pass(): " + Testing.get(ID).Getuser_Pass());
+		System.out.println("Getuser_ComfirmStatus(): " + Testing.get(ID).Getuser_ComfirmStatus());
+		System.out.println("Getuser_RegisteredDate(): " + Testing.get(ID).Getuser_RegisteredDate());
+		System.out.println("GettokenCode(): " + Testing.get(ID).GettokenCode());
+		
+		ID = 2;
+		System.out.println("Running");
+		System.out.println("Getuser_ID(): " + Testing.get(ID).Getuser_ID());
+		System.out.println("Getuser_Name(): " + Testing.get(ID).Getuser_Name());
+		System.out.println("Getuser_Email(): " + Testing.get(ID).Getuser_Email());
+		System.out.println("Getuser_Pass(): " + Testing.get(ID).Getuser_Pass());
+		System.out.println("Getuser_ComfirmStatus(): " + Testing.get(ID).Getuser_ComfirmStatus());
+		System.out.println("Getuser_RegisteredDate(): " + Testing.get(ID).Getuser_RegisteredDate());
+		System.out.println("GettokenCode(): " + Testing.get(ID).GettokenCode());
+		
+		ID = 3;
 		System.out.println("Running");
 		System.out.println("Getuser_ID(): " + Testing.get(ID).Getuser_ID());
 		System.out.println("Getuser_Name(): " + Testing.get(ID).Getuser_Name());

@@ -25,9 +25,9 @@ public class Dao {
 		
 		//***** The information below might need to be stored in a local file ***** -Kun 
 		String driverStr = "com.mysql.jdbc.Driver";
-		String urlStr = "jdbc:mysql://localhost:3306/cs160test";
+		String urlStr = "jdbc:mysql://localhost:3306/cs160test?autoReconnect=true&useSSL=false";
 		String uid = "root";
-		String pwd = "";
+		String pwd = "123456";
 		try {
 			Class.forName(driverStr);
 			return DriverManager.getConnection(urlStr, uid, pwd);

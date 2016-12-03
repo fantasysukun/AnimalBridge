@@ -1,17 +1,13 @@
-
 package edu.sjsu.rest;
-
-import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import edu.sjsu.db.AnimalBridge_users;
 import edu.sjsu.db.Dao;
 import edu.sjsu.db.Model;
@@ -22,11 +18,23 @@ import edu.sjsu.db.animalbridge_emergencycontact;
 import edu.sjsu.db.animalbridge_homepage;
 import edu.sjsu.db.animalbridge_posting;
 
-import java.io.File;
-import java.io.FileWriter;
+//import java.awt.PageAttributes.MediaType;
 import java.io.IOException;
+import java.sql.SQLException;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+ 
+//import javax.print.attribute.standard.Media;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+//import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 //add <dependency>
 //<groupId>com.google.code.gson</groupId>
@@ -57,20 +65,74 @@ public class HelloWorldService {
         }
         return Response.status(200).entity(output).build();
     }
+    /*
+    @GET
+    @Path("/posting/{param}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public void insertObject(@PathParam("param") String name, String json) throws JSONException {
-
-    	if (name == "aboutus")
+    	if (name == "post")
     	{
-    		insertAboutUs(json);
+    		JSONObject jsonObject = new JSONObject(json);    		
+        	animalbridge_posting post = new animalbridge_posting(0, jsonObject.getString("category"), jsonObject.getString("priority"), jsonObject.getString("title"), jsonObject.getString("address"), jsonObject.getString("description"), jsonObject.getString("day"), jsonObject.getString("startingTime"), jsonObject.getString("endingTime"), null, jsonObject.getString("price"), jsonObject.getString("email"), 0, "0");
+   		    //insertPost(post);
+    	}
+    	if (name == "user")
+    	{
+    		JSONObject jsonObject = new JSONObject(json);
+    		AnimalBridge_users user = new AnimalBridge_users(0, jsonObject.getString("name"), jsonObject.getString("email"), jsonObject.getString("password"), jsonObject.getString("confirm"), jsonObject.getString("date"), jsonObject.getString("token"));
+    		//insertUser(user);
+    	}
+    	if (name == "animal")
+    	{
+    		JSONObject jsonObject = new JSONObject(json);
+    		animalbridge_animals animal = new animalbridge_animals(0, jsonObject.getString("category"), jsonObject.getString("name"), jsonObject.getString("age"), jsonObject.getString("breeds"), jsonObject.getString("price"), jsonObject.getString("address"),jsonObject.getString("color"), jsonObject.getString("description"), null, jsonObject.getString("size"), jsonObject.getString("gender"), 0, "");
+    		//insertUser(animal);
+    	}
+    	if (name == "emergencycontact")
+    	{
+    		JSONObject jsonObject = new JSONObject(json);
+    		animalbridge_emergencycontact emergency = new animalbridge_emergencycontact(0, jsonObject.getString("title"), jsonObject.getString("description"), jsonObject.getString("date"), jsonObject.getString("zipcode"), null, jsonObject.getString("email"), 0, "");
+    		//insertEmergencyContact(emergency);
     	}
     }
-    public animalbridge_aboutus insertAboutUs(String json) throws JSONException
+    */
+    @GET
+    @Path("/posting/{param}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public animalbridge_posting savePosting(animalbridge_posting post)
     {
-    	//JSONObject jsonObject = new JSONObject(json);
-    	//animalbridge_aboutus aboutus = new animalbridge_aboutus(json.getInt(AboutUs_ID), json.get);
-		return null;
-    	
+    	return post;
     }
+    
+    @GET
+    @Path("/animals/{param}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public animalbridge_animals saveAnimals(animalbridge_animals animal)
+    {
+    	return animal;
+    }
+    
+    @GET
+    @Path("/users/{param}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public AnimalBridge_users saveUser(AnimalBridge_users user)
+    {
+    	return user;
+    }
+    
+    @GET
+    @Path("/emergencycontact/{param}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public animalbridge_emergencycontact saveEmergencyContact(animalbridge_emergencycontact emergency)
+    {
+    	return emergency;
+    }
+
     public static String getUser ()
     {
         HashMap<Integer, AnimalBridge_users> users = Model.AnimalBridge_users();
@@ -82,7 +144,6 @@ public class HelloWorldService {
     public static String getPost ()
     {
         HashMap<Integer, animalbridge_posting> posts = Model.animalbridge_posting();
-        //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(posts);
 
@@ -91,7 +152,6 @@ public class HelloWorldService {
     public static String getHomepage ()
     {
         HashMap<Integer, animalbridge_homepage> home = Model.animalbridge_homepage();
-        //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(home);
 
@@ -100,7 +160,6 @@ public class HelloWorldService {
     public static String getAboutUs ()
     {
         HashMap<Integer, animalbridge_aboutus> aboutus = Model.animalbridge_aboutus();
-        //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(aboutus);
 
@@ -109,7 +168,6 @@ public class HelloWorldService {
     public static String getContactUs ()
     {
         HashMap<Integer, animalbridge_contactus> contact = Model.animalbridge_contactus();
-        //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(contact);
 
@@ -118,7 +176,6 @@ public class HelloWorldService {
     public static String getEmergency ()
     {
         HashMap<Integer, animalbridge_emergencycontact> emergency = Model.animalbridge_emergencycontact();
-        //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(emergency);
 
@@ -127,7 +184,6 @@ public class HelloWorldService {
     public static String getAnimals ()
     {
         HashMap<Integer, animalbridge_animals> animal = Model.animalbridge_animals();
-        //Animalbridge_users user = new Animalbridge_users(users.get(id).user_ID)
         Gson gson = new Gson();
         String json = gson.toJson(animal);
 
@@ -136,11 +192,10 @@ public class HelloWorldService {
 
     public static void main(String[] args) throws IOException
     {	
-    	System.out.println(getAnimals());
+    	System.out.println(getPost());
     }
    
-} //class
-	
+} 
 
 	
 	

@@ -194,37 +194,34 @@ public class Model {
 		System.out.println(Output);
 	}
 	
-public static void AddQueryGenerator(String ClassName) {
+	public static void AddQueryGenerator(String ClassName) {
 		
 		HashMap<Integer, Attribute> MashMapInput = DBinput(ClassName);
 		ClassName = ClassName.substring(0, ClassName.length()-4);
 		String Output = "";
 		Output += "	public static boolean Add" + ClassName + "(" + ClassName + " InputObject) {\n\n";
-		for(int i = 0 ; i < MashMapInput.size(); i++) {
+		for(int i = 1 ; i < MashMapInput.size(); i++) {
 
 			String AttributeName = MashMapInput.get(i).GetAttributeName();
-			if(!AttributeName.contains("ID")){
-				Output += "		String " + MashMapInput.get(i).GetAttributeName() + " = ";
-				Output += "InputObject.Get" + MashMapInput.get(i).GetAttributeName() + "().replace(\"\'\", \"\'\'\");\n";
+			Output += "		String " + MashMapInput.get(i).GetAttributeName() + " = ";
+			Output += "InputObject.Get" + MashMapInput.get(i).GetAttributeName() + "().replace(\"\'\", \"\'\'\");\n";
 							
-			}
 		}
 		Output += "\n";
 
 		Output += "		String query = String.format(\"INSERT INTO " + ClassName + "(\"\n";
-		for(int i = 0 ; i < MashMapInput.size(); i++) {
+		for(int i = 1 ; i < MashMapInput.size(); i++) {
 			String AttributeName = MashMapInput.get(i).GetAttributeName();
-			if(!AttributeName.contains("ID")){
-				Output += "			+ \"" + MashMapInput.get(i).GetAttributeName();
-				if(i < MashMapInput.size() - 1) {
-					Output += ",\"\n";
-				}
+
+			Output += "			+ \"" + MashMapInput.get(i).GetAttributeName();
+			if(i < MashMapInput.size() - 1) {
+				Output += ",\"\n";
 			}
 		}
 		Output += ")\"\n";
 		Output += "		+ \" VALUES(";
 
-		for(int i = 0 ; i < MashMapInput.size(); i++) {
+		for(int i = 1 ; i < MashMapInput.size(); i++) {
 			String AttributeName = MashMapInput.get(i).GetAttributeName();
 			if(!AttributeName.contains("ID")){
 				Output += "\'%s\'";
@@ -232,15 +229,20 @@ public static void AddQueryGenerator(String ClassName) {
 					Output += ", ";
 				}
 			}
+			else {
+				Output += "\'%d\'";
+				if(i < MashMapInput.size() - 1) {
+					Output += ", ";
+				}
+			}
 		}
 		Output += ")\",\n";
-		for(int i = 0 ; i < MashMapInput.size(); i++) {
+		for(int i = 1 ; i < MashMapInput.size(); i++) {
 			String AttributeName = MashMapInput.get(i).GetAttributeName();
-			if(!AttributeName.contains("ID")){
-				Output += "			" +MashMapInput.get(i).GetAttributeName();
-				if(i < MashMapInput.size() - 1) {
-					Output += ",\n";
-				}
+
+			Output += "			" +MashMapInput.get(i).GetAttributeName();
+			if(i < MashMapInput.size() - 1) {
+				Output += ",\n";
 			}
 		}
 		Output += ");\n";
@@ -541,6 +543,7 @@ public static void AddQueryGenerator(String ClassName) {
 		String Animals_Image = null;
 		String Animals_Size = InputObject.GetAnimals_Size().replace("'", "''");
 		String Animals_Gender = InputObject.GetAnimals_Gender().replace("'", "''");
+		int Animals_OwnerID = InputObject.GetAnimals_OwnerID();
 		String Animals_OwnerName = InputObject.GetAnimals_OwnerName().replace("'", "''");
 
 		String query = String.format("INSERT INTO animalbridge_animals("
@@ -555,8 +558,9 @@ public static void AddQueryGenerator(String ClassName) {
 			+ "Animals_Image,"
 			+ "Animals_Size,"
 			+ "Animals_Gender,"
+			+ "Animals_OwnerID,"
 			+ "Animals_OwnerName)"
-		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s')",
 			Animals_Categories,
 			Animals_Name,
 			Animals_Ago,
@@ -568,6 +572,7 @@ public static void AddQueryGenerator(String ClassName) {
 			Animals_Image,
 			Animals_Size,
 			Animals_Gender,
+			Animals_OwnerID,
 			Animals_OwnerName);
 		try {
 			statement.execute(query);
@@ -577,7 +582,7 @@ public static void AddQueryGenerator(String ClassName) {
 			return false;
 		}
 	}
-
+	
 	public static boolean Addanimalbridge_contactus(animalbridge_contactus InputObject) {
 
 		String ContactUs_Title = InputObject.GetContactUs_Title().replace("'", "''");
@@ -615,6 +620,7 @@ public static void AddQueryGenerator(String ClassName) {
 		String EmergencyContact_ZipCode = InputObject.GetEmergencyContact_ZipCode().replace("'", "''");
 		String EmergencyContact_Image = null;
 		String EmergencyContact_ContactEmail = InputObject.GetEmergencyContact_ContactEmail().replace("'", "''");
+		int EmergencyContact_OwnerID = InputObject.GetEmergencyContact_OwnerID();
 		String EmergencyContact_OwnerName = InputObject.GetEmergencyContact_OwnerName().replace("'", "''");
 
 		String query = String.format("INSERT INTO animalbridge_emergencycontact("
@@ -624,14 +630,16 @@ public static void AddQueryGenerator(String ClassName) {
 			+ "EmergencyContact_ZipCode,"
 			+ "EmergencyContact_Image,"
 			+ "EmergencyContact_ContactEmail,"
+			+ "EmergencyContact_OwnerID,"
 			+ "EmergencyContact_OwnerName)"
-		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s')",
 			EmergencyContact_Title,
 			EmergencyContact_Description,
 			EmergencyContact_Date,
 			EmergencyContact_ZipCode,
 			EmergencyContact_Image,
 			EmergencyContact_ContactEmail,
+			EmergencyContact_OwnerID,
 			EmergencyContact_OwnerName);
 		try {
 			statement.execute(query);
@@ -684,6 +692,7 @@ public static void AddQueryGenerator(String ClassName) {
 		String Posting_Image = null;
 		String Posting_Price = InputObject.GetPosting_Price().replace("'", "''");
 		String Posting_ContactEmail = InputObject.GetPosting_ContactEmail().replace("'", "''");
+		int Posting_OwnerID = InputObject.GetPosting_OwnerID();
 		String Posting_OwnerName = InputObject.GetPosting_OwnerName().replace("'", "''");
 
 		String query = String.format("INSERT INTO animalbridge_posting("
@@ -698,8 +707,9 @@ public static void AddQueryGenerator(String ClassName) {
 			+ "Posting_Image,"
 			+ "Posting_Price,"
 			+ "Posting_ContactEmail,"
+			+ "Posting_OwnerID,"
 			+ "Posting_OwnerName)"
-		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s')",
 			Posting_Categories,
 			Posting_Priority,
 			Posting_Title,
@@ -711,6 +721,7 @@ public static void AddQueryGenerator(String ClassName) {
 			Posting_Image,
 			Posting_Price,
 			Posting_ContactEmail,
+			Posting_OwnerID,
 			Posting_OwnerName);
 		try {
 			statement.execute(query);
@@ -722,40 +733,42 @@ public static void AddQueryGenerator(String ClassName) {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-	
 	public static void main(String[] args) {
 		
 		//DB_To_Java_ClassGenerator("animalbridge_users.txt");
 		//HashMapGenerator("animalbridge_users.txt");
 
-
+		//AddQueryGenerator("animalbridge_posting.txt");
 		/*
 		String Date = "2016-12-02";
 		animalbridge_users user = new animalbridge_users(0, "Second Testing", "Second.Testing@sjsu.edu", "123456", "Y", Date, "0001");
 		Addanimalbridge_users(user);
+		
+		
+		
+		animalbridge_aboutus aboutus = new animalbridge_aboutus(0, "First Testing", "First Testing Description", "2016-12-1", null);
+		Addanimalbridge_aboutus(aboutus);
 		*/
-		AddQueryGenerator("animalbridge_posting.txt");
+		/*
+		animalbridge_posting posting = new animalbridge_posting(0, "Lost", "5", "First Testing", "First Testing Addres1",
+				 "First Testing Description1", "2016-12-1", "00:00:00", "12:00:00",
+				 null, "$100", "First Testing Email1", 1, "Kun Su");
+		Addanimalbridge_posting(posting);
+		*/
+		/*
+		animalbridge_homepage homepage = new animalbridge_homepage(0, "First Testing Title1", "First Testing Description1", "2016-12-1", null, "First Testing RecentNews1");
+		Addanimalbridge_homepage(homepage);
+		animalbridge_emergencycontact emergencycontact = new animalbridge_emergencycontact(0, "First Testing Title1", "First Testing Description1", "2016-12-1",
+				"95132", null, "First Testing Email1", 1, "Kun Su");
+		Addanimalbridge_emergencycontact(emergencycontact);
+		animalbridge_contactus contactus = new animalbridge_contactus(0, "First Testing Title1", "First Testing Description1", "2016-12-1", null, "First Testing Email1");
+		Addanimalbridge_contactus(contactus);
+		*/
+
+		animalbridge_animals animals = new animalbridge_animals(0, "Dog", "First Testing Name1", "First Testing Ago1", "First Testing Breed1", "$100", "First Testing Addres1",
+				"First Testing Color1", "First Testing Description1", null, "First Testing Size1", "Female", 1, "Kun Su");
+		Addanimalbridge_animals(animals);
+		//
 		
 		/*
 		HashMap<Integer, animalbridge_aboutus> ResultMap1 = animalbridge_aboutus();

@@ -16,7 +16,7 @@ public class animalbridge_emergencycontact {
 	private int EmergencyContact_ID;
 	private String EmergencyContact_Title;
 	private String EmergencyContact_Description;
-	private Date EmergencyContact_Date;
+	private String EmergencyContact_Date;
 	private String EmergencyContact_ZipCode;
 	private BufferedImage EmergencyContact_Image;
 	private String EmergencyContact_ContactEmail;
@@ -28,7 +28,7 @@ public class animalbridge_emergencycontact {
 		int EmergencyContact_ID,
 		String EmergencyContact_Title,
 		String EmergencyContact_Description,
-		Date EmergencyContact_Date,
+		String EmergencyContact_Date,
 		String EmergencyContact_ZipCode,
 		BufferedImage EmergencyContact_Image,
 		String EmergencyContact_ContactEmail,
@@ -58,7 +58,7 @@ public class animalbridge_emergencycontact {
 		return EmergencyContact_Description;
 	}
 
-	public Date GetEmergencyContact_Date() {
+	public String GetEmergencyContact_Date() {
 		return EmergencyContact_Date;
 	}
 
@@ -83,4 +83,3 @@ public class animalbridge_emergencycontact {
 	}
 
 }
-

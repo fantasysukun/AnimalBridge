@@ -19,7 +19,7 @@ public class animalbridge_posting {
 	private String Posting_Title;
 	private String Posting_Address;
 	private String Posting_Description;
-	private Date Posting_Date;
+	private String Posting_Date;
 	private String Posting_StartingTime;
 	private String Posting_EndingTIme;
 	private BufferedImage Posting_Image;
@@ -36,7 +36,7 @@ public class animalbridge_posting {
 		String Posting_Title,
 		String Posting_Address,
 		String Posting_Description,
-		Date Posting_Date,
+		String Posting_Date,
 		String Posting_StartingTime,
 		String Posting_EndingTIme,
 		BufferedImage Posting_Image,
@@ -85,7 +85,7 @@ public class animalbridge_posting {
 		return Posting_Description;
 	}
 
-	public Date GetPosting_Date() {
+	public String GetPosting_Date() {
 		return Posting_Date;
 	}
 

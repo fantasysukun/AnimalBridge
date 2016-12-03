@@ -9,7 +9,7 @@ CREATE TABLE AnimalBridge_users (
     user_Email VARCHAR(100) NOT NULL UNIQUE,
     user_Pass VARCHAR(100) NOT NULL,
     user_ComfirmStatus ENUM('Y', 'N') NOT NULL DEFAULT 'N',
-    user_RegisteredDate DATE NOT NULL,
+    user_RegisteredDate VARCHAR(100) NOT NULL,
     tokenCode VARCHAR(100) NOT NULL,
     PRIMARY KEY (user_ID , user_Name)
 );
@@ -44,9 +44,9 @@ CREATE TABLE AnimalBridge_Posting (
     Posting_Title VARCHAR(100) NOT NULL,
     Posting_Address VARCHAR(100) NOT NULL,
     Posting_Description LONGTEXT NOT NULL,
-    Posting_Date DATE NOT NULL,
-    Posting_StartingTime TIME NOT NULL,
-    Posting_EndingTIme TIME NOT NULL,
+    Posting_Date VARCHAR(100) NOT NULL,
+    Posting_StartingTime VARCHAR(100) NOT NULL,
+    Posting_EndingTIme VARCHAR(100) NOT NULL,
     Posting_Image BLOB,
     Posting_Price VARCHAR(100),
     Posting_ContactEmail VARCHAR(100),
@@ -63,7 +63,7 @@ CREATE TABLE AnimalBridge_AboutUs (
     AboutUs_ID INT(11) NOT NULL AUTO_INCREMENT,
     AboutUs_Title VARCHAR(100) NOT NULL,
     AboutUs_Description LONGTEXT NOT NULL,
-    AboutUs_Date DATE NOT NULL,
+    AboutUs_Date VARCHAR(100) NOT NULL,
     AboutUs_Image BLOB,
     PRIMARY KEY (AboutUs_ID)
 );
@@ -73,7 +73,7 @@ CREATE TABLE AnimalBridge_ContactUs (
     ContactUs_ID INT(11) NOT NULL AUTO_INCREMENT,
     ContactUs_Title VARCHAR(100) NOT NULL,
     ContactUs_Description LONGTEXT NOT NULL,
-    ContactUs_Date DATE NOT NULL,
+    ContactUs_Date VARCHAR(100) NOT NULL,
     ContactUs_Image BLOB,
     ContactUs_ContactEmail VARCHAR(100),
     PRIMARY KEY (ContactUs_ID)
@@ -84,7 +84,7 @@ CREATE TABLE AnimalBridge_EmergencyContact (
     EmergencyContact_ID INT(11) NOT NULL AUTO_INCREMENT,
     EmergencyContact_Title VARCHAR(100) NOT NULL,
     EmergencyContact_Description LONGTEXT NOT NULL,
-    EmergencyContact_Date DATE NOT NULL,
+    EmergencyContact_Date VARCHAR(100) NOT NULL,
     EmergencyContact_ZipCode INT(6) NOT NULL,
     EmergencyContact_Image BLOB,
     EmergencyContact_ContactEmail VARCHAR(100),
@@ -101,7 +101,7 @@ CREATE TABLE AnimalBridge_HomePage (
     HomePage_ID INT(11) NOT NULL AUTO_INCREMENT,
     HomePage_Title VARCHAR(100) NOT NULL,
     HomePage_Description LONGTEXT NOT NULL,
-    HomePage_Date DATE NOT NULL,
+    HomePage_Date VARCHAR(100) NOT NULL,
     HomePage_Image BLOB,
     HomePage_RecentNews VARCHAR(100) NOT NULL,
     PRIMARY KEY (HomePage_ID)

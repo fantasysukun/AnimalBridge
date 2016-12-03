@@ -16,7 +16,7 @@ public class animalbridge_homepage {
 	private int HomePage_ID;
 	private String HomePage_Title;
 	private String HomePage_Description;
-	private Date HomePage_Date;
+	private String HomePage_Date;
 	private BufferedImage HomePage_Image;
 	private String HomePage_RecentNews;
 
@@ -25,7 +25,7 @@ public class animalbridge_homepage {
 		int HomePage_ID,
 		String HomePage_Title,
 		String HomePage_Description,
-		Date HomePage_Date,
+		String HomePage_Date,
 		BufferedImage HomePage_Image,
 		String HomePage_RecentNews
 	) {
@@ -49,7 +49,7 @@ public class animalbridge_homepage {
 		return HomePage_Description;
 	}
 
-	public Date GetHomePage_Date() {
+	public String GetHomePage_Date() {
 		return HomePage_Date;
 	}
 
@@ -62,4 +62,3 @@ public class animalbridge_homepage {
 	}
 
 }
-

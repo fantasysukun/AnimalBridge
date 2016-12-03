@@ -16,7 +16,7 @@ public class animalbridge_contactus {
 	private int ContactUs_ID;
 	private String ContactUs_Title;
 	private String ContactUs_Description;
-	private Date ContactUs_Date;
+	private String ContactUs_Date;
 	private BufferedImage ContactUs_Image;
 	private String ContactUs_ContactEmail;
 
@@ -25,7 +25,7 @@ public class animalbridge_contactus {
 		int ContactUs_ID,
 		String ContactUs_Title,
 		String ContactUs_Description,
-		Date ContactUs_Date,
+		String ContactUs_Date,
 		BufferedImage ContactUs_Image,
 		String ContactUs_ContactEmail
 	) {
@@ -49,7 +49,7 @@ public class animalbridge_contactus {
 		return ContactUs_Description;
 	}
 
-	public Date GetContactUs_Date() {
+	public String GetContactUs_Date() {
 		return ContactUs_Date;
 	}
 

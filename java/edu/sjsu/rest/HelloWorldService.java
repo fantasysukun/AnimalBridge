@@ -98,34 +98,34 @@ public class HelloWorldService {
     }
     */
     @GET
-    @Path("/posting/{param}")
+    @Path("/posting/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public animalbridge_posting savePosting(animalbridge_posting post)
+    public void savePosting(animalbridge_posting post)
     {
-    	return post;
+    	Model.Addanimalbridge_posting(post);
     }
     
     @GET
-    @Path("/animals/{param}")
+    @Path("/animals/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public animalbridge_animals saveAnimals(animalbridge_animals animal)
+    public void saveAnimals(animalbridge_animals animal)
     {
-    	return animal;
+    	Model.Addanimalbridge_animals(animal);
     }
     
     @GET
-    @Path("/users/{param}")
+    @Path("/users/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public AnimalBridge_users saveUser(AnimalBridge_users user)
+    public void saveUser(AnimalBridge_users user)
     {
-    	return user;
+    	Model.Addanimalbridge_users(user);
     }
     
     @GET
-    @Path("/emergencycontact/{param}")
+    @Path("/emergencycontact/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public animalbridge_emergencycontact saveEmergencyContact(animalbridge_emergencycontact emergency)

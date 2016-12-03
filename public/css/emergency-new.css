@@ -1,8 +1,14 @@
  /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
+       .clearfix{
+         overflow: auto;
+         height: 100%;
+       }
       #map {
         height: 100%;
         top: 5%;
+        float: left;
+        width: 80%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -13,15 +19,13 @@
       table {
         font-size: 12px;
       }
-      #map {
-        width: 80%;
-      }
       #listing {
+        margin-left: 80%;
+        float: right;
         position: absolute;
-        width: 200px;
-        height: 470px;
+        width: 18%;
+        height: 40%;
         overflow: auto;
-        left: 1130px;
         top: 30%;
         cursor: pointer;
         overflow-x: hidden;

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Emergency-Map</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-   <!-- google maps api -->
+    <head>
+        <title>Emergency-Map</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- google maps api -->
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzLtD6HPA71BPasOcU8JDqD2CyTLUAAP8"></script>
 
@@ -18,173 +18,171 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/emergency-new.css">
-        </head>
+    </head>
 
+    <body>
 
+        <!------------------------------------------------- <Navgation bar"> ------------------------------------------>
 
-<body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/">Animal Bridge</a>
+                    <img src="images/logo.png" alt="logo" class="logo">
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="./">HOME</a>
+                        </li>
+                        <li>
+                            <a href="./#/newpost">NEW POST</a>
+                        </li>
+                        <li>
+                            <a href="#emergency">EMERGENCY</a>
+                        </li>
+                        <li>
+                            <a href="./#/about">ABOUT</a>
+                        </li>
+                        <li>
+                            <a href="./#/contact">CONTACT</a>
+                        </li>
+                        <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
 
-  <!------------------------------------------------- <Navgation bar"> ------------------------------------------>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <b>Login</b>
+                            </a>
+                            <ul id="login-dp" class="dropdown-menu">
+                                <li>
+                                    <form class="form" role="form" method="post" action="login" id="login-nav">
+                                        <div class="Login_form-group">
+                                            <label >Email address</label>
+                                            <input type="Login_email" class="form-control" placeholder="Email address" required>
+                                        </div>
 
-  <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-          <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#/">Animal Bridge</a>
-              <img src="images/logo.png" alt="logo" class="logo">
-          </div>
-          <div class="collapse navbar-collapse" id="myNavbar">
-              <ul class="nav navbar-nav navbar-right">
-                  <li>
-                      <a href="./">HOME</a>
-                  </li>
-                  <li>
-                      <a href="./#/newpost">NEW POST</a>
-                  </li>
-                  <li>
-                      <a href="#emergency">EMERGENCY</a>
-                  </li>
-                  <li>
-                      <a href="./#/about">ABOUT</a>
-                  </li>
-                  <li>
-                      <a href="./#/contact">CONTACT</a>
-                  </li>
-                  <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
+                                        <div class="Login_form-group">
+                                            <label>Password</label>
+                                            <input type="Login_password" class="form-control" placeholder="Password" required>
+                                            <div class="help-block text-right">
+                                                <a href="">Forget password?</a>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                        <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
 
-                  <li class="dropdown">
-                      <a class="dropdown-toggle" data-toggle="dropdown">
-                          <b>Login</b>
-                      </a>
-                      <ul id="login-dp" class="dropdown-menu">
-                          <li>
-                              <form class="form" role="form" method="post" action="login" id="login-nav">
-                                  <div class="Login_form-group">
-                                      <label >Email address</label>
-                                      <input type="Login_email" class="form-control" placeholder="Email address" required>
-                                  </div>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-----------------------< Navgation bar > -------------------------->
 
-                                  <div class="Login_form-group">
-                                      <label>Password</label>
-                                      <input type="Login_password" class="form-control" placeholder="Password" required>
-                                      <div class="help-block text-right">
-                                          <a href="">Forget password?</a>
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </li>
-                  <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
+        <!-----------------------< POPUP Sign up form after clicked signup button. > -------------------------->
 
-              </ul>
-          </div>
-      </div>
-  </nav>
-  <!-----------------------< Navgation bar > -------------------------->
+        <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-  <!-----------------------< POPUP Sign up form after clicked signup button. > -------------------------->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h3 class="modal-title" id="modal-register-label">Sign up now</h3>
+                        <p>“If a man aspires towards a righteous life, his first act of abstinence is from injury to animals." - Albert Einstein</p>
+                    </div>
 
-  <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
+                    <div class="modal-body">
 
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">
-                      <span aria-hidden="true">&times;</span>
-                      <span class="sr-only">Close</span>
-                  </button>
-                  <h3 class="modal-title" id="modal-register-label">Sign up now</h3>
-                  <p>“If a man aspires towards a righteous life, his first act of abstinence is from injury to animals." - Albert Einstein</p>
-              </div>
+                        <form role="form" action="" method="post" class="registration-form">
+                            <div class="form-group">
+                                <label class="sr-only" for="form-first-name">First name</label>
+                                <input type="text" name="form-first-name" placeholder="First name" class="form-first-name form-control" id="form-first-name">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-last-name">Last name</label>
+                                <input type="text" name="form-last-name" placeholder="Last name" class="form-last-name form-control" id="form-last-name">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-email">Email</label>
+                                <input type="text" name="form-email" placeholder="Email" class="form-email form-control" id="form-email">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-email">Password</label>
+                                <input type="text" name="form-email" placeholder="Password" class="form-Password form-control" id="form-email">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-email">Confirm Password</label>
+                                <input type="text" name="form-email" placeholder="Confirm Password" class="form-ConPassword form-control" id="form-email">
+                            </div>
+                            <button type="submit" class="btn">Sign me up!</button>
+                        </form>
 
-              <div class="modal-body">
+                    </div>
 
-                  <form role="form" action="" method="post" class="registration-form">
-                      <div class="form-group">
-                          <label class="sr-only" for="form-first-name">First name</label>
-                          <input type="text" name="form-first-name" placeholder="First name" class="form-first-name form-control" id="form-first-name">
-                      </div>
-                      <div class="form-group">
-                          <label class="sr-only" for="form-last-name">Last name</label>
-                          <input type="text" name="form-last-name" placeholder="Last name" class="form-last-name form-control" id="form-last-name">
-                      </div>
-                      <div class="form-group">
-                          <label class="sr-only" for="form-email">Email</label>
-                          <input type="text" name="form-email" placeholder="Email" class="form-email form-control" id="form-email">
-                      </div>
-                      <div class="form-group">
-                          <label class="sr-only" for="form-email">Password</label>
-                          <input type="text" name="form-email" placeholder="Password" class="form-Password form-control" id="form-email">
-                      </div>
-                      <div class="form-group">
-                          <label class="sr-only" for="form-email">Confirm Password</label>
-                          <input type="text" name="form-email" placeholder="Confirm Password" class="form-ConPassword form-control" id="form-email">
-                      </div>
-                      <button type="submit" class="btn">Sign me up!</button>
-                  </form>
+                </div>
+            </div>
+        </div>
 
-              </div>
+        <!-----------------------< POPUP Sign up form after click Subscribe button. > -------------------------->
 
-          </div>
-      </div>
-  </div>
+        <div class="clearfix">
 
-  <!-----------------------< POPUP Sign up form after click Subscribe button. > -------------------------->
+            <div id="findhotels">
+                Please enter your Zipcode. We will find you a nearby pet hospital. For other Emergency please call 911:
+            </div>
 
+            <div id="locationField">
+                <input id="autocomplete" placeholder="Enter a Zipcode" type="text"/>
+            </div>
 
- <div id="findhotels">
-      Please enter your Zipcode. We will find you a nearby pet hospital. For other Emergency please call 911:
-    </div>
+            <div id="map"></div>
 
-    <div id="locationField">
-      <input id="autocomplete" placeholder="Enter a Zipcode" type="text" />
-    </div>
+            <div id="listing">
+                <table id="resultsTable">
+                    <tbody id="results"></tbody>
+                </table>
+            </div>
 
-    <div id="map"></div>
+            <div style="display: none">
+                <div id="info-content">
+                    <table>
+                        <tr id="iw-url-row" class="iw_table_row">
+                            <td id="iw-icon" class="iw_table_icon"></td>
+                            <td id="iw-url"></td>
+                        </tr>
+                        <tr id="iw-address-row" class="iw_table_row">
+                            <td class="iw_attribute_name">Address:</td>
+                            <td id="iw-address"></td>
+                        </tr>
+                        <tr id="iw-phone-row" class="iw_table_row">
+                            <td class="iw_attribute_name">Telephone:</td>
+                            <td id="iw-phone"></td>
+                        </tr>
+                        <tr id="iw-rating-row" class="iw_table_row">
+                            <td class="iw_attribute_name">Rating:</td>
+                            <td id="iw-rating"></td>
+                        </tr>
+                        <tr id="iw-website-row" class="iw_table_row">
+                            <td class="iw_attribute_name">Website:</td>
+                            <td id="iw-website"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
-    <div id="listing">
-      <table id="resultsTable">
-        <tbody id="results"></tbody>
-      </table>
-    </div>
-
-    <div style="display: none">
-      <div id="info-content">
-        <table>
-          <tr id="iw-url-row" class="iw_table_row">
-            <td id="iw-icon" class="iw_table_icon"></td>
-            <td id="iw-url"></td>
-          </tr>
-          <tr id="iw-address-row" class="iw_table_row">
-            <td class="iw_attribute_name">Address:</td>
-            <td id="iw-address"></td>
-          </tr>
-          <tr id="iw-phone-row" class="iw_table_row">
-            <td class="iw_attribute_name">Telephone:</td>
-            <td id="iw-phone"></td>
-          </tr>
-          <tr id="iw-rating-row" class="iw_table_row">
-            <td class="iw_attribute_name">Rating:</td>
-            <td id="iw-rating"></td>
-          </tr>
-          <tr id="iw-website-row" class="iw_table_row">
-            <td class="iw_attribute_name">Website:</td>
-            <td id="iw-website"></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzLtD6HPA71BPasOcU8JDqD2CyTLUAAP8&libraries=places&callback=initMap"
-        async defer></script>
-
-</body>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzLtD6HPA71BPasOcU8JDqD2CyTLUAAP8&libraries=places&callback=initMap" async defer></script>
+        </div>
+    </body>
 </html>

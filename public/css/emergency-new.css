@@ -21,8 +21,8 @@
         width: 200px;
         height: 470px;
         overflow: auto;
-        left: 1150px;
-        top: 0px;
+        left: 1130px;
+        top: 30%;
         cursor: pointer;
         overflow-x: hidden;
       }

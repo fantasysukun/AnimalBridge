@@ -28,6 +28,23 @@ jQuery(document).ready(function() {
     });
 });
 
+$(function() {
+
+    $('.toggles .CatButton').click(function(){
+      var get_id = this.id;
+      var get_current = $('.posts .' + get_id);
+  
+        $('.post').not( get_current ).hide(500);
+        get_current.show(500);
+    });
+    
+    
+    $('#showall').click(function() {
+        $('.post').show(500);
+    });
+
+
+}); 
 
 app.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
     $routeProvider
@@ -80,6 +97,9 @@ app.controller('animalBridgeController', ['pageLayoutService', '$http', function
     pageLayoutService.setShowNavBar(true);
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
+    
+   
+    
 }]);
 
 app.controller('aboutController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {

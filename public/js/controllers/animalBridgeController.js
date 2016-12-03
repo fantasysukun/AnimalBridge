@@ -112,6 +112,15 @@ app.controller('aboutController', ['pageLayoutService', '$http', function(pageLa
 
 
 		});
+		
+		
+	self.us	= $('select').on('change', function(){
+  var optionVal = $(this).val();
+  $('.grid-item').find('img').removeClass().addClass( optionVal);
+});
+		
+		
+		
 }]);
 
 app.controller('contactController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {

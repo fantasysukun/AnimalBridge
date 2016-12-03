@@ -121,6 +121,7 @@ h1{
   padding: 10px;
   border-bottom: 1px solid;
   width: 250px;
+  text-align: center;
   margin: 0 auto 25px;
 }
 
@@ -163,4 +164,42 @@ h1{
     color: #fff;
   }
 
+}
+.form-control {
+  width: 30%;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 0;
+}
+/**** Grid Style ****/
+.grid {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+}
+.grid-item {
+overflow: hidden;
+  list-style: none;
+  flex-basis: 200px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 30px;
+  img {
+    max-width: 100%;
+    margin: auto;
+    Transition: 0.3s;
+  }
+  .member-name {
+    text-align: center;
+  }
+  .member-title {
+    display: block;
+    text-align: center;
+  }
 }

@@ -27,6 +27,58 @@ a {
     padding: 60px 50px;
 }
 
+.card{
+   margin: 30px;
+  background: #FFF;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    width: 50%;
+      h3 {
+    position:relative;
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    line-height: 40px;
+    padding:0 10px;
+    box-shadow: 0 2px 2px rgba(0,0,0,.15);
+    z-index: 2;
+  }
+}
+
+
+.card > ul {
+  position: relative;
+  z-index: 1;
+  
+  a {
+    display: block;
+    position: relative;
+    padding: 14px 20px 0;
+    font-size: 12px;
+    line-height: 18px;
+    color: #298eb9;
+    text-decoration: none;
+    border-bottom: 1px solid #DDDDDD;
+    height: 47px;
+    overflow: hidden;
+    
+    &:after {
+      content:"";
+      position: absolute;
+      width:5px; top:0; bottom:0; left:0;
+      background: #F7F7F7;
+      //transition: background .30s ease-out;
+    }
+    
+    &.cat1:hover:after { background: #00406F; }
+    &.cat2:hover:after { background: #BE2051; }
+  }
+  
+  li:last-child a { border-bottom:0; height: 48px; }
+}
+
+
+
 footer .glyphicon {
     font-size: 20px;
     margin-bottom: 20px;
@@ -50,4 +102,57 @@ footer .glyphicon {
 
 div.post {
   padding: 5em;
+}
+
+$mainColor: #1ECD97;
+
+h1{ 
+  text-align: center;
+  color: $mainColor;
+  font: bold 50px Arial;
+  padding: 10px;
+  border-bottom: 1px solid;
+  width: 250px;
+  margin: 0 auto 25px;
+}
+
+.toggles{ 
+  width: 800px;
+  margin: auto;
+  display: block;
+  
+  clear: both;
+  overflow: hidden;
+}
+
+.CatButton{
+  border: 2px solid $mainColor;
+  border-radius: 40px; 
+  color: $mainColor;
+  display: block;
+  float: left;
+  margin: auto;
+  padding: 10px;
+  width: 150px;
+  cursor: pointer;
+  font-size: 14px; 
+  margin: 0 5px;
+}
+
+.posts{
+   width: 800px;
+   margin: 2em auto;
+
+  div{
+    font: 16px/250px Arial; 
+    width: 245px; 
+    height: 250px;
+    float: left;
+    margin: 10px; 
+    display: block;
+    text-align: center;
+    background: $mainColor;
+    color: #fff; 
+  }
+   
 }

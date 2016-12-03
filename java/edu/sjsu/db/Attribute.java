@@ -24,7 +24,7 @@ public class Attribute {
 			this.DataType = "int";
 		}
 		else if(AttributeName.contains("Date")) {
-			this.DataType = "Date";
+			this.DataType = "String";
 		}
 		else if(AttributeName.contains("Image")) {
 			this.DataType = "BufferedImage";

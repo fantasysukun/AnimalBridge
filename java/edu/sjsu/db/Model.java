@@ -7,10 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -92,26 +94,7 @@ public class Model {
 		}
 		return Image;
 	}
-	
-	public static HashMap<Integer, AnimalBridge_users> AnimalBridge_users() {
-		HashMap<Integer, AnimalBridge_users> ResultMap = new HashMap<Integer, AnimalBridge_users>();
-
-		String SQLquery = "SELECT * FROM AnimalBridge_users;";
-		try {
-			ResultSet rs = statement.executeQuery(SQLquery);
-			while (rs.next()) {
-				AnimalBridge_users User = new AnimalBridge_users(rs.getInt("user_ID"), rs.getString("user_Name"), rs.getString("user_Email"), 
-						rs.getString("user_Pass"), rs.getString("user_ComfirmStatus"), rs.getDate("user_RegisteredDate"), rs.getString("tokenCode"));
-				ResultMap.put(rs.getInt("user_ID"), User);
-			}
-			rs.close();
-			return ResultMap;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
+		
 	/**
 	 * Auto Generate HashMap for each class
 	 * @param ClassName
@@ -142,7 +125,7 @@ public class Model {
 					Output += "Int";
 				}
 				else if(AttributeName.contains("Date")) {
-					Output += "Date";
+					Output += "String";
 				}
 				else {
 					Output += "String";
@@ -211,7 +194,95 @@ public class Model {
 		System.out.println(Output);
 	}
 	
+public static void AddQueryGenerator(String ClassName) {
+		
+		HashMap<Integer, Attribute> MashMapInput = DBinput(ClassName);
+		ClassName = ClassName.substring(0, ClassName.length()-4);
+		String Output = "";
+		Output += "	public static boolean Add" + ClassName + "(" + ClassName + " InputObject) {\n\n";
+		for(int i = 0 ; i < MashMapInput.size(); i++) {
+
+			String AttributeName = MashMapInput.get(i).GetAttributeName();
+			if(!AttributeName.contains("ID")){
+				Output += "		String " + MashMapInput.get(i).GetAttributeName() + " = ";
+				Output += "InputObject.Get" + MashMapInput.get(i).GetAttributeName() + "().replace(\"\'\", \"\'\'\");\n";
+							
+			}
+		}
+		Output += "\n";
+
+		Output += "		String query = String.format(\"INSERT INTO " + ClassName + "(\"\n";
+		for(int i = 0 ; i < MashMapInput.size(); i++) {
+			String AttributeName = MashMapInput.get(i).GetAttributeName();
+			if(!AttributeName.contains("ID")){
+				Output += "			+ \"" + MashMapInput.get(i).GetAttributeName();
+				if(i < MashMapInput.size() - 1) {
+					Output += ",\"\n";
+				}
+			}
+		}
+		Output += ")\"\n";
+		Output += "		+ \" VALUES(";
+
+		for(int i = 0 ; i < MashMapInput.size(); i++) {
+			String AttributeName = MashMapInput.get(i).GetAttributeName();
+			if(!AttributeName.contains("ID")){
+				Output += "\'%s\'";
+				if(i < MashMapInput.size() - 1) {
+					Output += ", ";
+				}
+			}
+		}
+		Output += ")\",\n";
+		for(int i = 0 ; i < MashMapInput.size(); i++) {
+			String AttributeName = MashMapInput.get(i).GetAttributeName();
+			if(!AttributeName.contains("ID")){
+				Output += "			" +MashMapInput.get(i).GetAttributeName();
+				if(i < MashMapInput.size() - 1) {
+					Output += ",\n";
+				}
+			}
+		}
+		Output += ");\n";
+		
+		Output += "		try {\n";
+		Output += "			statement.execute(query);\n";
+		Output += "			return true;\n";
+		Output += "		} catch (SQLException e) {\n";
+
+		Output += "			e.printStackTrace();\n";
+		Output += "			return false;\n";
+		Output += "		}\n";
+		Output += "	}\n";
+		System.out.println(Output);
+	}
+
 	//Auto Generate Classes
+	public static HashMap<Integer, animalbridge_users> animalbridge_users() {
+
+		HashMap<Integer, animalbridge_users> ResultMap = new HashMap<Integer, animalbridge_users>();
+		String SQLquery = "SELECT * FROM animalbridge_users;";
+		try {
+			ResultSet rs = statement.executeQuery(SQLquery);
+			while (rs.next()) {
+				animalbridge_users NewObject = new animalbridge_users(
+					rs.getInt("user_ID"),
+					rs.getString("user_Name"),
+					rs.getString("user_Email"),
+					rs.getString("user_Pass"),
+					rs.getString("user_ComfirmStatus"),
+					rs.getString("user_RegisteredDate"),
+					rs.getString("tokenCode"));
+				ResultMap.put(rs.getInt("user_ID"), NewObject);
+			}
+			rs.close();
+			return ResultMap;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static HashMap<Integer, animalbridge_aboutus> animalbridge_aboutus() {
 
 		HashMap<Integer, animalbridge_aboutus> ResultMap = new HashMap<Integer, animalbridge_aboutus>();
@@ -223,7 +294,7 @@ public class Model {
 					rs.getInt("AboutUs_ID"),
 					rs.getString("AboutUs_Title"),
 					rs.getString("AboutUs_Description"),
-					rs.getDate("AboutUs_Date"),
+					rs.getString("AboutUs_Date"),
 					ConvertBlobTobufferedImage(rs.getBlob("AboutUs_Image")));
 				ResultMap.put(rs.getInt("AboutUs_ID"), NewObject);
 			}
@@ -278,7 +349,7 @@ public class Model {
 					rs.getInt("EmergencyContact_ID"),
 					rs.getString("EmergencyContact_Title"),
 					rs.getString("EmergencyContact_Description"),
-					rs.getDate("EmergencyContact_Date"),
+					rs.getString("EmergencyContact_Date"),
 					rs.getString("EmergencyContact_ZipCode"),
 					ConvertBlobTobufferedImage(rs.getBlob("EmergencyContact_Image")),
 					rs.getString("EmergencyContact_ContactEmail"),
@@ -305,7 +376,7 @@ public class Model {
 					rs.getInt("HomePage_ID"),
 					rs.getString("HomePage_Title"),
 					rs.getString("HomePage_Description"),
-					rs.getDate("HomePage_Date"),
+					rs.getString("HomePage_Date"),
 					ConvertBlobTobufferedImage(rs.getBlob("HomePage_Image")),
 					rs.getString("HomePage_RecentNews"));
 				ResultMap.put(rs.getInt("HomePage_ID"), NewObject);
@@ -332,7 +403,7 @@ public class Model {
 					rs.getString("Posting_Title"),
 					rs.getString("Posting_Address"),
 					rs.getString("Posting_Description"),
-					rs.getDate("Posting_Date"),
+					rs.getString("Posting_Date"),
 					rs.getString("Posting_StartingTime"),
 					rs.getString("Posting_EndingTIme"),
 					ConvertBlobTobufferedImage(rs.getBlob("Posting_Image")),
@@ -361,7 +432,7 @@ public class Model {
 					rs.getInt("ContactUs_ID"),
 					rs.getString("ContactUs_Title"),
 					rs.getString("ContactUs_Description"),
-					rs.getDate("ContactUs_Date"),
+					rs.getString("ContactUs_Date"),
 					ConvertBlobTobufferedImage(rs.getBlob("ContactUs_Image")),
 					rs.getString("ContactUs_ContactEmail"));
 				ResultMap.put(rs.getInt("ContactUs_ID"), NewObject);
@@ -375,15 +446,318 @@ public class Model {
 	}
 
 
+/*
+	public static boolean Addanimalbridge_users(animalbridge_users user) {		
+		
+		String user_Name = user.Getuser_Name().replace("'", "''");
+		String user_Email = user.Getuser_Email().replace("'", "''");
+		String user_Pass = user.Getuser_Pass().replace("'", "''");
+		String user_ComfirmStatus = user.Getuser_ComfirmStatus().replace("'", "''");
+		String user_RegisteredDate = user.Getuser_RegisteredDate().replace("'", "''");
+		String tokenCode = user.GettokenCode().replace("'", "''");
+
+		
+		String query = String.format("INSERT INTO animalbridge_users(user_Name, user_Email, user_Pass, user_ComfirmStatus, user_RegisteredDate, tokenCode)"
+				+ " VALUES('%s','%s','%s','%s',%s,'%s')", 
+				user_Name, user_Email, user_Pass, user_ComfirmStatus, user_RegisteredDate, tokenCode);
+		try {
+			statement.execute(query);
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+*/
+	public static boolean Addanimalbridge_users(animalbridge_users InputObject) {
+
+		String user_Name = InputObject.Getuser_Name().replace("'", "''");
+		String user_Email = InputObject.Getuser_Email().replace("'", "''");
+		String user_Pass = InputObject.Getuser_Pass().replace("'", "''");
+		String user_ComfirmStatus = InputObject.Getuser_ComfirmStatus().replace("'", "''");
+		String user_RegisteredDate = InputObject.Getuser_RegisteredDate().replace("'", "''");
+		String tokenCode = InputObject.GettokenCode().replace("'", "''");
+
+		String query = String.format("INSERT INTO animalbridge_users("
+			+ "user_Name,"
+			+ "user_Email,"
+			+ "user_Pass,"
+			+ "user_ComfirmStatus,"
+			+ "user_RegisteredDate,"
+			+ "tokenCode)"
+		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s')",
+			user_Name,
+			user_Email,
+			user_Pass,
+			user_ComfirmStatus,
+			user_RegisteredDate,
+			tokenCode);
+		try {
+			statement.execute(query);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean Addanimalbridge_aboutus(animalbridge_aboutus InputObject) {
+
+		String AboutUs_Title = InputObject.GetAboutUs_Title().replace("'", "''");
+		String AboutUs_Description = InputObject.GetAboutUs_Description().replace("'", "''");
+		String AboutUs_Date = InputObject.GetAboutUs_Date().replace("'", "''");
+		String AboutUs_Image = null;
+
+		String query = String.format("INSERT INTO animalbridge_aboutus("
+			+ "AboutUs_Title,"
+			+ "AboutUs_Description,"
+			+ "AboutUs_Date,"
+			+ "AboutUs_Image)"
+		+ " VALUES('%s', '%s', '%s', '%s')",
+			AboutUs_Title,
+			AboutUs_Description,
+			AboutUs_Date,
+			AboutUs_Image);
+		try {
+			statement.execute(query);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean Addanimalbridge_animals(animalbridge_animals InputObject) {
+
+		String Animals_Categories = InputObject.GetAnimals_Categories().replace("'", "''");
+		String Animals_Name = InputObject.GetAnimals_Name().replace("'", "''");
+		String Animals_Ago = InputObject.GetAnimals_Ago().replace("'", "''");
+		String Animals_Breeds = InputObject.GetAnimals_Breeds().replace("'", "''");
+		String Animals_Price = InputObject.GetAnimals_Price().replace("'", "''");
+		String Animals_Address = InputObject.GetAnimals_Address().replace("'", "''");
+		String Animals_Color = InputObject.GetAnimals_Color().replace("'", "''");
+		String Animals_Description = InputObject.GetAnimals_Description().replace("'", "''");
+		String Animals_Image = null;
+		String Animals_Size = InputObject.GetAnimals_Size().replace("'", "''");
+		String Animals_Gender = InputObject.GetAnimals_Gender().replace("'", "''");
+		String Animals_OwnerName = InputObject.GetAnimals_OwnerName().replace("'", "''");
+
+		String query = String.format("INSERT INTO animalbridge_animals("
+			+ "Animals_Categories,"
+			+ "Animals_Name,"
+			+ "Animals_Ago,"
+			+ "Animals_Breeds,"
+			+ "Animals_Price,"
+			+ "Animals_Address,"
+			+ "Animals_Color,"
+			+ "Animals_Description,"
+			+ "Animals_Image,"
+			+ "Animals_Size,"
+			+ "Animals_Gender,"
+			+ "Animals_OwnerName)"
+		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+			Animals_Categories,
+			Animals_Name,
+			Animals_Ago,
+			Animals_Breeds,
+			Animals_Price,
+			Animals_Address,
+			Animals_Color,
+			Animals_Description,
+			Animals_Image,
+			Animals_Size,
+			Animals_Gender,
+			Animals_OwnerName);
+		try {
+			statement.execute(query);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean Addanimalbridge_contactus(animalbridge_contactus InputObject) {
+
+		String ContactUs_Title = InputObject.GetContactUs_Title().replace("'", "''");
+		String ContactUs_Description = InputObject.GetContactUs_Description().replace("'", "''");
+		String ContactUs_Date = InputObject.GetContactUs_Date().replace("'", "''");
+		String ContactUs_Image = null;
+		String ContactUs_ContactEmail = InputObject.GetContactUs_ContactEmail().replace("'", "''");
+
+		String query = String.format("INSERT INTO animalbridge_contactus("
+			+ "ContactUs_Title,"
+			+ "ContactUs_Description,"
+			+ "ContactUs_Date,"
+			+ "ContactUs_Image,"
+			+ "ContactUs_ContactEmail)"
+		+ " VALUES('%s', '%s', '%s', '%s', '%s')",
+			ContactUs_Title,
+			ContactUs_Description,
+			ContactUs_Date,
+			ContactUs_Image,
+			ContactUs_ContactEmail);
+		try {
+			statement.execute(query);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean Addanimalbridge_emergencycontact(animalbridge_emergencycontact InputObject) {
+
+		String EmergencyContact_Title = InputObject.GetEmergencyContact_Title().replace("'", "''");
+		String EmergencyContact_Description = InputObject.GetEmergencyContact_Description().replace("'", "''");
+		String EmergencyContact_Date = InputObject.GetEmergencyContact_Date().replace("'", "''");
+		String EmergencyContact_ZipCode = InputObject.GetEmergencyContact_ZipCode().replace("'", "''");
+		String EmergencyContact_Image = null;
+		String EmergencyContact_ContactEmail = InputObject.GetEmergencyContact_ContactEmail().replace("'", "''");
+		String EmergencyContact_OwnerName = InputObject.GetEmergencyContact_OwnerName().replace("'", "''");
+
+		String query = String.format("INSERT INTO animalbridge_emergencycontact("
+			+ "EmergencyContact_Title,"
+			+ "EmergencyContact_Description,"
+			+ "EmergencyContact_Date,"
+			+ "EmergencyContact_ZipCode,"
+			+ "EmergencyContact_Image,"
+			+ "EmergencyContact_ContactEmail,"
+			+ "EmergencyContact_OwnerName)"
+		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+			EmergencyContact_Title,
+			EmergencyContact_Description,
+			EmergencyContact_Date,
+			EmergencyContact_ZipCode,
+			EmergencyContact_Image,
+			EmergencyContact_ContactEmail,
+			EmergencyContact_OwnerName);
+		try {
+			statement.execute(query);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean Addanimalbridge_homepage(animalbridge_homepage InputObject) {
+
+		String HomePage_Title = InputObject.GetHomePage_Title().replace("'", "''");
+		String HomePage_Description = InputObject.GetHomePage_Description().replace("'", "''");
+		String HomePage_Date = InputObject.GetHomePage_Date().replace("'", "''");
+		String HomePage_Image = null;
+		String HomePage_RecentNews = InputObject.GetHomePage_RecentNews().replace("'", "''");
+
+		String query = String.format("INSERT INTO animalbridge_homepage("
+			+ "HomePage_Title,"
+			+ "HomePage_Description,"
+			+ "HomePage_Date,"
+			+ "HomePage_Image,"
+			+ "HomePage_RecentNews)"
+		+ " VALUES('%s', '%s', '%s', '%s', '%s')",
+			HomePage_Title,
+			HomePage_Description,
+			HomePage_Date,
+			HomePage_Image,
+			HomePage_RecentNews);
+		try {
+			statement.execute(query);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean Addanimalbridge_posting(animalbridge_posting InputObject) {
+
+		String Posting_Categories = InputObject.GetPosting_Categories().replace("'", "''");
+		String Posting_Priority = InputObject.GetPosting_Priority().replace("'", "''");
+		String Posting_Title = InputObject.GetPosting_Title().replace("'", "''");
+		String Posting_Address = InputObject.GetPosting_Address().replace("'", "''");
+		String Posting_Description = InputObject.GetPosting_Description().replace("'", "''");
+		String Posting_Date = InputObject.GetPosting_Date().replace("'", "''");
+		String Posting_StartingTime = InputObject.GetPosting_StartingTime().replace("'", "''");
+		String Posting_EndingTIme = InputObject.GetPosting_EndingTIme().replace("'", "''");
+		String Posting_Image = null;
+		String Posting_Price = InputObject.GetPosting_Price().replace("'", "''");
+		String Posting_ContactEmail = InputObject.GetPosting_ContactEmail().replace("'", "''");
+		String Posting_OwnerName = InputObject.GetPosting_OwnerName().replace("'", "''");
+
+		String query = String.format("INSERT INTO animalbridge_posting("
+			+ "Posting_Categories,"
+			+ "Posting_Priority,"
+			+ "Posting_Title,"
+			+ "Posting_Address,"
+			+ "Posting_Description,"
+			+ "Posting_Date,"
+			+ "Posting_StartingTime,"
+			+ "Posting_EndingTIme,"
+			+ "Posting_Image,"
+			+ "Posting_Price,"
+			+ "Posting_ContactEmail,"
+			+ "Posting_OwnerName)"
+		+ " VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+			Posting_Categories,
+			Posting_Priority,
+			Posting_Title,
+			Posting_Address,
+			Posting_Description,
+			Posting_Date,
+			Posting_StartingTime,
+			Posting_EndingTIme,
+			Posting_Image,
+			Posting_Price,
+			Posting_ContactEmail,
+			Posting_OwnerName);
+		try {
+			statement.execute(query);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	
+	
+	
 	public static void main(String[] args) {
 		
-		//DB_To_Java_ClassGenerator("animalbridge_contactus.txt");
-		//HashMapGenerator("animalbridge_contactus.txt");
+		//DB_To_Java_ClassGenerator("animalbridge_users.txt");
+		//HashMapGenerator("animalbridge_users.txt");
+
+
+		/*
+		String Date = "2016-12-02";
+		animalbridge_users user = new animalbridge_users(0, "Second Testing", "Second.Testing@sjsu.edu", "123456", "Y", Date, "0001");
+		Addanimalbridge_users(user);
+		*/
+		AddQueryGenerator("animalbridge_posting.txt");
 		
-		
+		/*
 		HashMap<Integer, animalbridge_aboutus> ResultMap1 = animalbridge_aboutus();
 		HashMap<Integer, animalbridge_animals> ResultMap2 = animalbridge_animals();
 		HashMap<Integer, animalbridge_contactus> ResultMap3 = animalbridge_contactus();
@@ -391,7 +765,7 @@ public class Model {
 		HashMap<Integer, animalbridge_homepage> ResultMap5 = animalbridge_homepage();
 		HashMap<Integer, animalbridge_posting> ResultMap6 = animalbridge_posting();
 		
-		HashMap<Integer, AnimalBridge_users> ResultMap7 = AnimalBridge_users();
+		HashMap<Integer, animalbridge_users> ResultMap7 = animalbridge_users();
 		
 		
 		// I will do a simple unit Test later -Kun
@@ -416,7 +790,7 @@ public class Model {
 			System.out.println("Getuser_RegisteredDate(): " + ResultMap7.get(ID).Getuser_RegisteredDate());
 			System.out.println("GettokenCode(): " + ResultMap7.get(ID).GettokenCode());			
 		}
-		
+		*/
 		
 		/*
 		ID = 1;

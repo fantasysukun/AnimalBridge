@@ -16,7 +16,7 @@ public class animalbridge_aboutus {
 	private int AboutUs_ID;
 	private String AboutUs_Title;
 	private String AboutUs_Description;
-	private Date AboutUs_Date;
+	private String AboutUs_Date;
 	private BufferedImage AboutUs_Image;
 
 	public animalbridge_aboutus (
@@ -24,7 +24,7 @@ public class animalbridge_aboutus {
 		int AboutUs_ID,
 		String AboutUs_Title,
 		String AboutUs_Description,
-		Date AboutUs_Date,
+		String AboutUs_Date,
 		BufferedImage AboutUs_Image
 	) {
 		this.AboutUs_ID = AboutUs_ID;
@@ -46,7 +46,7 @@ public class animalbridge_aboutus {
 		return AboutUs_Description;
 	}
 
-	public Date GetAboutUs_Date() {
+	public String GetAboutUs_Date() {
 		return AboutUs_Date;
 	}
 

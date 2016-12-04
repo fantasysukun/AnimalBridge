@@ -170,7 +170,17 @@ h1{
   /*margin: auto;
   margin-top: 30px;
   margin-bottom: 30px;*/
-  /*margin: 30px auto 30px auto;*/
+  margin: 30px auto 30px auto;
+  border-radius: 0;
+}
+
+.custom-form-control-span {
+  /*width: 30%;*/
+  /*margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;*/
+  height: auto;
+  margin: 30px auto 30px auto;
   border-radius: 0;
 }
 /**** Grid Style ****/

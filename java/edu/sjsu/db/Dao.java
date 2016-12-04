@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;	
+import java.sql.Statement;
 import java.sql.SQLException;
 
 /**
- * COPYRIGHT 2016 TeamMinion. All Rights Reserved. 
+ * COPYRIGHT 2016 TeamMinion. All Rights Reserved.
  * Animal Bridge
  * CS160 Group Project
  * @author Kun Su, Archer Zhao, Nelson Liang, Marco Kuang, Peilu Liu
@@ -16,18 +16,23 @@ import java.sql.SQLException;
  */
 
 public class Dao {
-	
+
 	/**
 	 * Get a connection to database using DriverManager
 	 * @return a connection to database from driver manager
 	 */
 	public static Connection getConn() {
-		
-		//***** The information below might need to be stored in a local file ***** -Kun 
+
+		//***** The information below might need to be stored in a local file ***** -Kun
 		String driverStr = "com.mysql.jdbc.Driver";
 		String urlStr = "jdbc:mysql://localhost:3306/cs160test?autoReconnect=true&useSSL=false";
 		String uid = "root";
 		String pwd = "123456";
+
+		// marco's data
+		// String urlStr = "jdbc:mysql://localhost:3307/cs160test?autoReconnect=true&useSSL=false";
+		// String uid = "root";
+		// String pwd = "root";
 		try {
 			Class.forName(driverStr);
 			return DriverManager.getConnection(urlStr, uid, pwd);
@@ -43,38 +48,38 @@ public class Dao {
 	 * @param conn - a connection to be closed
 	 */
 	public static void closeConnection(Connection conn) {
-		
+
 		try {
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Get a statement from a given connection
 	 * @param conn - a connection
-	 * @return a statement 
+	 * @return a statement
 	 */
 	public static Statement getStatement(Connection conn) {
 		Statement stmt = null;
-		
+
 		try {
 			stmt = conn.createStatement();
 			return stmt;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return stmt;
 	}
-	
+
 	/**
 	 * Close a statement
 	 * @param stmt - a statement to be closed
 	 */
 	public static void closeStatement(Statement stmt) {
-		
+
 		try {
 			stmt.close();
 		} catch (SQLException e) {
@@ -84,7 +89,7 @@ public class Dao {
 
 	/*this function might be deleted sometimes later -Kun */
 	public static String getPhone(String name) throws SQLException {
-		
+
 		String output = "{\"phone\" : ";
 		Connection conn = getConn();
 		if (conn == null) return output + "\"connection failed\"}";
@@ -101,19 +106,19 @@ public class Dao {
 		}
 		return output + "}";
 	} // method
-	
+
 	/*
-	public static HashMap<Integer, AnimalBridge_users> GetAnimalBridge_users() { 
+	public static HashMap<Integer, AnimalBridge_users> GetAnimalBridge_users() {
 
 		HashMap<Integer, AnimalBridge_users> ResultMap = new HashMap<Integer, AnimalBridge_users>();
-		
+
 		String sqlStr = "SELECT * FROM animalbridge_users;";
-		
+
 		try {
 			ResultSet rs = statement.executeQuery(sqlStr);
 			while (rs.next()) {
 				Room room = new Room(rs.getInt("roomid"), rs.getDouble("costPerNight"), rs.getString("roomtype"));
-				Reservation res = new Reservation(rs.getInt("reservationid"), rs.getString("customer"), room, 
+				Reservation res = new Reservation(rs.getInt("reservationid"), rs.getString("customer"), room,
 						rs.getDate("startdate"), rs.getDate("enddate"), rs.getInt("numOfDays"), rs.getDouble("totalCost"),
 						rs.getBoolean("canceled"));
 				resList.add(res);

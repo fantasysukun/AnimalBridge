@@ -21,6 +21,23 @@ app.service("pageLayoutService", function() {
     };
 });
 
+app.service("loginService", function() {
+    var self = this;
+    var login = {
+      email : "",
+      password : ""
+    };
+
+    self.getLogin = function (){
+      return login;
+    }
+
+    self.setLogin = function (newLogin){
+      login = newLogin;
+      console.log("from service: email: " + login.email + " pwd: " + login.password);
+    }
+});
+
 jQuery(document).ready(function() {
     $('.launch-modal').on('click', function(e) {
         e.preventDefault();
@@ -64,6 +81,12 @@ app.config(["$routeProvider", "$locationProvider", function($routeProvider, $loc
         controllerAs: 'MainCtrl'
     })
 
+    .when('/allPosts', {
+        templateUrl: 'viewPosts.html',
+        controller: 'viewPostsController',
+        controllerAs: 'MainCtrl'
+    })
+
     .when('/emergency', {
         templateUrl: 'emergency.html',
         controller: 'emergencyController',
@@ -72,8 +95,15 @@ app.config(["$routeProvider", "$locationProvider", function($routeProvider, $loc
 
     $locationProvider.html5Mode(false);
 }]);
+app.config(['$httpProvider', function($httpProvider) {
+    // $httpProvider.defaults.useXDomain = true;
+    // $httpProvider.defaults.withCredentials = true;
+    // delete $httpProvider.defaults.headers.common["X-Requested-With"];
+    // $httpProvider.defaults.headers.common["Accept"] = "application/json";
+    // $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
+}]);
 
-app.controller('animalBridgeController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {
+app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '$http', function(pageLayoutService, loginService, $http) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -82,7 +112,39 @@ app.controller('animalBridgeController', ['pageLayoutService', '$http', function
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
 
+    self.signinSubmit = function (){
+      console.log(self.login);
+      loginService.setLogin(self.login);
 
+      $http.post('http://localhost:8080/TeamMinions/rest/hello/testGet/', self.login)
+          .then(function(response) {
+            login = {};
+
+          }, function(err){
+            console.log("SERVER ERROR!!!");
+          });
+    };
+
+}]);
+
+app.controller('viewPostsController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {
+    var self = this;
+    self.name = "AnimalBridgeApp";
+    self.headerTemplate = 'header.html';
+    pageLayoutService.setShowHeader(true);
+    pageLayoutService.setShowNavBar(true);
+    self.showHeader = pageLayoutService.getShowHeader();
+    self.showNav = pageLayoutService.getShowNavBar();
+
+    self.items = [];
+    $http.get('http://localhost:8080/TeamMinions/rest/hello/testGet/')
+    .then(
+      function(response) {
+        self.items = response.data;
+    },
+    function(errResponse) {
+        console.error('Error while fetching notes');
+    });
 
 }]);
 
@@ -95,32 +157,32 @@ app.controller('aboutController', ['pageLayoutService', '$http', function(pageLa
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
 
-		self.lists = $(function() {
+    self.lists = $(function() {
 
-		    $('.toggles .CatButton').click(function(){
-		      var get_id = this.id;
-		      var get_current = $('.posts .' + get_id);
+        $('.toggles .CatButton').click(function() {
+            var get_id = this.id;
+            var get_current = $('.posts .' + get_id);
 
-		        $('.post').not( get_current ).hide(500);
-		        get_current.show(500);
-		    });
-
-
-		    $('#showall').click(function() {
-		        $('.post').show(500);
-		    });
+            $('.post').not(get_current).hide(500);
+            get_current.show(500);
+        });
 
 
-		});
-		
-		
-	self.us	= $('select').on('change', function(){
-  var optionVal = $(this).val();
-  $('.grid-item').find('img').removeClass().addClass( optionVal);
-});
-		
-		
-		
+        $('#showall').click(function() {
+            $('.post').show(500);
+        });
+
+
+    });
+
+
+    self.us = $('select').on('change', function() {
+        var optionVal = $(this).val();
+        $('.grid-item').find('img').removeClass().addClass(optionVal);
+    });
+
+
+
 }]);
 
 app.controller('contactController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {
@@ -299,17 +361,17 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
         readFile.readAsBinaryString(file);
     };
 
-		self.dp1 = $('#datepicker1').datepicker().on('changeDate', function(e){
-			console.log('datepicker is ' + e.format([0]));
-			self.post.date = e.format([0]);
-		});
+    self.dp1 = $('#datepicker1').datepicker().on('changeDate', function(e) {
+        console.log('datepicker is ' + e.format([0]));
+        self.post.date = e.format([0]);
+    });
     self.tp1 = $('#timepicker1').timepicker().on('changeTime.timepicker', function(e) {
         console.log('Starting time is ' + e.time.value);
-				self.post.startingTime = e.time.value;
+        self.post.startingTime = e.time.value;
     });
-		self.tp2 = $('#timepicker2').timepicker().on('changeTime.timepicker', function(e) {
+    self.tp2 = $('#timepicker2').timepicker().on('changeTime.timepicker', function(e) {
         console.log('Ending time is ' + e.time.value);
-				self.post.endingTime = e.time.value;
+        self.post.endingTime = e.time.value;
     });
 
 }]);

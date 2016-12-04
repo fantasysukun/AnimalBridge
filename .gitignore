@@ -6,3 +6,4 @@ package.json
 app.js
 .DS_Store
 public/stylesheets/
+public/META-INF/

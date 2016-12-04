@@ -1,0 +1,112 @@
+$mainColor: #1ECD97;
+h1 {
+    text-align: center;
+    color: $mainColor;
+    font: bold 50px Arial;
+    padding: 10px;
+    border-bottom: 1px solid;
+    width: 250px;
+    text-align: center;
+    margin: 0 auto 25px;
+}
+
+.toggles {
+    width: 800px;
+    margin: auto;
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+.CatButton {
+    border: 2px solid $mainColor;
+    border-radius: 40px;
+    color: $mainColor;
+    display: block;
+    float: left;
+    margin: auto;
+    padding: 10px;
+    width: 150px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+.posts {
+    width: 800px;
+    margin: 2em auto;
+    div {
+        font: 16px/250px Arial;
+        width: 245px;
+        height: 250px;
+        float: left;
+        margin: 10px;
+        display: block;
+        text-align: center;
+        background: $mainColor;
+        color: #fff;
+    }
+}
+
+.postform {
+    width: 60%;
+    /*margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;*/
+    margin: 30px auto 30px auto;
+    border-radius: 0;
+}
+
+.custom-form-control-span2 {
+    /*width: 30%;*/
+    /*margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;*/
+    height: auto;
+    margin: 30px auto 30px auto;
+    border-radius: 0;
+}
+
+/**** Grid Style ****/
+
+.grid {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
+}
+
+.grid-item {
+    overflow: hidden;
+    list-style: none;
+    flex-basis: 200px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+    img {
+        max-width: 100%;
+        margin: auto;
+        Transition: 0.3s;
+    }
+    .member-name {
+        text-align: center;
+    }
+    .member-title {
+        display: block;
+        text-align: center;
+    }
+}
+
+.trans-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    z-index: 1000;
+}

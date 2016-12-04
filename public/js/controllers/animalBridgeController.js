@@ -469,14 +469,29 @@ function MyCtrl($scope) {
 }
 
 app.controller("MainController", ['pageLayoutService', '$scope', function(pageLayoutService, $scope) {
+  var self = this;
     $scope.title = "This is a message";
     $scope.body = "Welcome Modal";
     $scope.showSignUpButton = pageLayoutService.getShowSignUp();
     $(".pulse-button").on("click",function(){
 
-    $(".modal-container").css('z-index', 3000)
-    document.getElementById('.form-control1').value=document.getElementById('.email12').value;
+    $(".modal-container").css('z-index', 3000);
 
+    $scope.signup = {
+      "name": "",
+      "email": "",
+      "password": "",
+      "repassword": ""
+    }
+    $scope.signUpSubmit = function (){
+      console.log("clickedxxxxx");
+      if ($scope.signup.password !== $scope.signup.repassword) {
+        console.log("yyy");
+      }
+      else{
+        console.log("ooo");
+      }
+    };
 
 });
 }]);

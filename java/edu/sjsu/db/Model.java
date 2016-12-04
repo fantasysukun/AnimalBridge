@@ -263,7 +263,7 @@ public class Model {
 	public static HashMap<Integer, animalbridge_users> animalbridge_users() {
 
 		HashMap<Integer, animalbridge_users> ResultMap = new HashMap<Integer, animalbridge_users>();
-		String SQLquery = "SELECT * FROM animalbridge_users;";
+		String SQLquery = "SELECT * FROM cs160test.animalbridge_users;";
 		try {
 			ResultSet rs = statement.executeQuery(SQLquery);
 			while (rs.next()) {
@@ -765,9 +765,11 @@ public class Model {
 		Addanimalbridge_contactus(contactus);
 		*/
 
+		/*
 		animalbridge_animals animals = new animalbridge_animals(0, "Dog", "First Testing Name1", "First Testing Ago1", "First Testing Breed1", "$100", "First Testing Addres1",
 				"First Testing Color1", "First Testing Description1", null, "First Testing Size1", "Female", 1, "Kun Su");
 		Addanimalbridge_animals(animals);
+		*/
 		//
 		
 		/*

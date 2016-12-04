@@ -1,5 +1,7 @@
 package edu.sjsu.rest;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -21,10 +23,16 @@ import edu.sjsu.db.animalbridge_posting;
 import java.io.IOException;
 import java.sql.SQLException;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
- 
+import java.io.Reader;
+
 //import javax.print.attribute.standard.Media;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.Consumes;
@@ -47,13 +55,17 @@ public class HelloWorldService {
     @Path("/{param}")
     public static Response getMsg(@PathParam("param") String msg) {
         String output = "Hello " + msg;
-       
+
         HashMap<Integer, animalbridge_users> Testing = Model.animalbridge_users();
         System.out.println(Testing.get(5).toString());
         output += "Running";
-        return Response.status(200).entity(Testing.get(5).Getuser_Name()).build();
+        Gson gson = new Gson();
+        animalbridge_users newUser = new animalbridge_users(888, "marco kuang", "marco@gmail.com", "asdfasdf", "asdfasdfrerr", "xxxx", "yyyy");
+        String json = gson.toJson(newUser);
+        return Response.status(200).entity(json).build();
+//        return Response.status(200).entity(Testing.get(5).Getuser_Name()).build();
     } //method
-   
+
     @GET
     @Path("/phone/{param}")
     public Response getPhone(@PathParam("param") String name) {
@@ -74,7 +86,7 @@ public class HelloWorldService {
     public void insertObject(@PathParam("param") String name, String json) throws JSONException {
     	if (name == "post")
     	{
-    		JSONObject jsonObject = new JSONObject(json);    		
+    		JSONObject jsonObject = new JSONObject(json);
         	animalbridge_posting post = new animalbridge_posting(0, jsonObject.getString("category"), jsonObject.getString("priority"), jsonObject.getString("title"), jsonObject.getString("address"), jsonObject.getString("description"), jsonObject.getString("day"), jsonObject.getString("startingTime"), jsonObject.getString("endingTime"), null, jsonObject.getString("price"), jsonObject.getString("email"), 0, "0");
    		    //insertPost(post);
     	}
@@ -106,7 +118,7 @@ public class HelloWorldService {
     {
     	Model.Addanimalbridge_posting(post);
     }
-    
+
     @GET
     @Path("/animals/")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -115,7 +127,7 @@ public class HelloWorldService {
     {
     	Model.Addanimalbridge_animals(animal);
     }
-    
+
     @GET
     @Path("/users/")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -124,7 +136,7 @@ public class HelloWorldService {
     {
     	Model.Addanimalbridge_users(user);
     }
-    
+
     @GET
     @Path("/emergencycontact/")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -134,14 +146,94 @@ public class HelloWorldService {
     	return emergency;
     }
 
-    public static String getUser ()
+    @GET
+    @Path("/testGetxxxx/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public static Response getUser ()
     {
         HashMap<Integer, animalbridge_users> users = Model.animalbridge_users();
         Gson gson = new Gson();
-        String json = gson.toJson(users);
+        String json = gson.toJson(users.toString());
 
-        return json;
+//        return json;
+        return Response.status(200).entity(json).build();
     }
+
+    @GET
+    @Path("/testGet/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public static Response getJSON ()
+    {
+    	String json = "{\"phone\" : \"Name not found!\"}";
+    	Gson gson = new Gson();
+        String json2 = gson.toJson(json);
+    	return Response.status(200).entity(json).build();
+    }
+
+    @POST
+    @Path("/testPost")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+//	public Response crunchifyREST(InputStream incomingData) {
+    public Response crunchifyREST(String JSONData) {
+    	Gson gson = new Gson();
+    	HashMap<Integer, animalbridge_users> Testing = Model.animalbridge_users();
+    	Wrapper ee = null;
+    	try{
+//    		String kk = "{\"email\": \"dd\", \"password\":\"rr\"}";
+    		String kk = JSONData.replaceAll("\"", "\\\"");
+    		ee = gson.fromJson(kk, Wrapper.class);
+    		System.out.println(ee.email);
+    		System.out.println(ee.PWD);
+    	}
+    	catch(Exception r){
+    		r.printStackTrace();
+    	}
+//		StringBuilder crunchifyBuilder = new StringBuilder();
+//		try {
+//			BufferedReader in = new BufferedReader(new InputStreamReader(incomingData));
+//			String line = null;
+//			while ((line = in.readLine()) != null) {
+//				System.out.println(line);
+//				crunchifyBuilder.append(line);
+//			}
+//		} catch (Exception e) {
+//			System.out.println("Error Parsing: - ");
+//		}
+//		System.out.println("Data Received: " + crunchifyBuilder.toString());
+//		Wrapper w = gson.fromJson(new Reader., Wrapper.class);
+		boolean valid = false;
+	    String tempEmail = ee.email;
+	    String tempPassword = ee.PWD;
+		for(Entry<Integer, animalbridge_users> entry : Testing.entrySet()) {
+		    int key = (int) entry.getKey();
+		    animalbridge_users value = entry.getValue();
+//		    String tempEmail = gson.fromJson("\"email\"", String.class);
+//		    String tempPassword = gson.fromJson("\"email\"", String.class);
+
+		    System.out.println("SEARCHING: email: " + value.Getuser_Email() + " password: "+ value.Getuser_Pass());
+		    if(value.Getuser_Email().equalsIgnoreCase(tempEmail) && value.Getuser_Pass().equalsIgnoreCase(tempPassword)){
+		    	valid = true;
+		    	System.out.println("FOUND::: email: " + tempEmail + " password: "+ tempPassword);
+		    	break;
+		    }
+		}
+
+
+		if(valid){
+			String json = "{\"user\" : \"true\"}";
+			return Response.status(200).entity(json).build();
+		}
+		else{
+			String json = "{\"user\" : \"false\"}";
+			return Response.status(200).entity(json).build();
+		}
+		// return HTTP response 200 in case of success
+//		return Response.status(200).entity(crunchifyBuilder.toString()).build();
+	}
+
     public static String getPost ()
     {
         HashMap<Integer, animalbridge_posting> posts = Model.animalbridge_posting();
@@ -192,14 +284,26 @@ public class HelloWorldService {
     }
 
     public static void main(String[] args) throws IOException
-    {	
+    {
         animalbridge_users user = new animalbridge_users(10, "name", "123@gmail.com", "pass", "N", "2016-12-01", "0001");
         //saveUser(user);
     	System.out.println(getPost());
     	//getMsg("abc");
     }
-   
-} 
 
-	
-	
+    public class Wrapper{
+    	@SerializedName("email")
+    	public String email;
+    	@SerializedName("password")
+    	public String PWD;
+    }
+
+//    public class Email{
+//    	public String e;
+//    }
+//
+//    public class Password{
+//    	public String pwd;
+//    }
+
+}

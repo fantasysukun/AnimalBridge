@@ -113,6 +113,11 @@ app.config(['$httpProvider', function($httpProvider) {
     // $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
 }]);
 
+app.config(['$sceDelegateProvider', function($sceDelegateProvider) {
+         $sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/(mhnystatic\.)?s3.amazonaws.com/, /^https?:\/\/(static\.)?s3.amazonaws.com/]);
+
+     }]);
+
 app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '$http', function(pageLayoutService, loginService, $http) {
     var self = this;
     self.name = "AnimalBridgeApp";
@@ -124,12 +129,17 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
 
+    self.userVerification = {
+      "user": ''
+    };
     self.signinSubmit = function() {
         console.log(self.login);
         loginService.setLogin(self.login);
 
-        $http.post('http://localhost:8080/TeamMinions/rest/hello/testGet/', self.login)
+        $http.post('http://localhost:8080/TeamMinions/rest/hello/testPost/', self.login)
             .then(function(response) {
+              self.userVerification = response.data
+              console.log("T/F: "+ self.userVerification.user);
                 login = {};
 
             }, function(err) {

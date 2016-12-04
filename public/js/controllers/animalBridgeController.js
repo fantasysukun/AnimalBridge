@@ -459,9 +459,7 @@ app.controller("MainController", ['pageLayoutService', '$scope', function(pageLa
     $scope.showSignUpButton = pageLayoutService.getShowSignUp();
     $(".pulse-button").on("click",function(){
 
-    $(".modal-container").css('z-index', 3000)
-    document.getElementById('.form-control1').value=document.getElementById('.email12').value;
-
+    $(".modal-container").css('z-index', 3000);
 
 });
 }]);

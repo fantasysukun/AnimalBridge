@@ -1,4 +1,11 @@
-var app = angular.module('AnimalBridgeApp', ['ngRoute', ]);
+var app = angular.module('AnimalBridgeApp', ["ngRoute"]);
+
+
+
+
+
+
+
 
 app.service("pageLayoutService", function() {
     var self = this;
@@ -184,6 +191,10 @@ app.controller('aboutController', ['pageLayoutService', '$http', function(pageLa
 
 
 }]);
+
+
+
+
 
 app.controller('contactController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {
     var self = this;
@@ -399,3 +410,28 @@ app.directive('googleplace', function() {
 function MyCtrl($scope) {
     $scope.gPlace;
 }
+
+app.controller( "MainController", function( $scope ) {
+  $scope.title = "This is a message";
+  $scope.body = "Welcome Modal";
+} );
+app.directive( "modalWindow", function(){ 
+  return {
+    restrict: "E",
+    template: "<div class='btncontainer'><button ng-click='open()' class='pulse-button btn-info'>Sign Up</button><div ng-hide='hidden' class='trans-layer'></div><div class='modal-container' ng-class='{modalactive: !hidden}' ng-transclude></div>   </div>",
+   	scope: true,
+    transclude: true,
+    controller: function( $scope ) {
+      $scope.hidden = true;
+      $scope.open = function() {
+        $scope.hidden = false;
+      };
+    },
+    link: function( scope,ele,attrs ) {
+      $( ele ).find( '.trans-layer' ).on( 'click', function( event ) {
+        scope.hidden = true;
+        scope.$apply();
+      })
+    }
+  }
+} );

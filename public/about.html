@@ -1,11 +1,8 @@
 <!-- header -->
-<div ng-include="'./header.html'" ng-show="MainCtrl.showHeader">
-
-</div>
+<div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div>
 <!-- navbar -->
-<div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav">
-
-</div>
+<div ng-include="'./header.html'" ng-show="MainCtrl.showHeader"></div>
+<div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav"></div>
 <div>
  <h2>{{name}}</h2>
   <h4>{{this.name}}</h4>
@@ -14,7 +11,7 @@
 <div id="wrapper">
   <h1 align="center">Post</h1>
 <div class="toggles">
-   <button class="CatButton" id="showall">Show All</button> 
+   <button class="CatButton" id="showall">Show All</button>
   <button class="CatButton" id="emergency">Emergency</button>
   <button class="CatButton" id="recent_news">Recent News</button>
   <button class="CatButton" id="lost_pet">Lost Pet</button>
@@ -35,4 +32,4 @@
     <div class="recent_news post">please donate!</div>
     <div class="recent_news post">Help requested</div>
     <div class="recent_news post">yoyoyoyoyoyoyoyoyo</div>
-  </div> 
+  </div>

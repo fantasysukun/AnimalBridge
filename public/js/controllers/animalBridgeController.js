@@ -1,16 +1,10 @@
 var app = angular.module('AnimalBridgeApp', ["ngRoute"]);
 
-
-
-
-
-
-
-
 app.service("pageLayoutService", function() {
     var self = this;
     var shouldShowHeader = true;
     var shouldShowNavBar = true;
+    var showSignUp = true;
 
     self.getShowHeader = function() {
         return shouldShowHeader;
@@ -26,6 +20,15 @@ app.service("pageLayoutService", function() {
     self.setShowNavBar = function(newVal) {
         shouldShowNavBar = newVal;
     };
+
+    self.getShowSignUp = function() {
+        return showSignUp;
+    };
+
+    self.setShowSignUp = function(newVal) {
+        showSignUp = newVal;
+    };
+
 });
 
 app.service("loginService", function() {
@@ -116,8 +119,10 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
     self.headerTemplate = 'header.html';
     pageLayoutService.setShowHeader(true);
     pageLayoutService.setShowNavBar(true);
+    pageLayoutService.setShowSignUp(true);
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
+    self.showSignUp = pageLayoutService.getShowSignUp();
 
     self.signinSubmit = function (){
       console.log(self.login);
@@ -140,9 +145,10 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
     self.headerTemplate = 'header.html';
     pageLayoutService.setShowHeader(true);
     pageLayoutService.setShowNavBar(true);
+    pageLayoutService.setShowSignUp(true);
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
-
+    self.showSignUp = pageLayoutService.getShowSignUp();
     self.items = [];
     $http.get('http://localhost:8080/TeamMinions/rest/hello/testGet/')
     .then(
@@ -161,6 +167,8 @@ app.controller('aboutController', ['pageLayoutService', '$http', function(pageLa
     self.headerTemplate = 'header.html';
     pageLayoutService.setShowHeader(true);
     pageLayoutService.setShowNavBar(true);
+    pageLayoutService.setShowSignUp(true);
+self.showSignUp = pageLayoutService.getShowSignUp();
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
 
@@ -203,6 +211,8 @@ app.controller('contactController', ['pageLayoutService', '$http', function(page
 
     pageLayoutService.setShowHeader(true);
     pageLayoutService.setShowNavBar(true);
+    pageLayoutService.setShowSignUp(true);
+self.showSignUp = pageLayoutService.getShowSignUp();
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
 }]);
@@ -317,6 +327,7 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
 
     pageLayoutService.setShowHeader(false);
     pageLayoutService.setShowNavBar(true);
+    pageLayoutService.setShowSignUp(false);
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
 
@@ -411,14 +422,15 @@ function MyCtrl($scope) {
     $scope.gPlace;
 }
 
-app.controller( "MainController", function( $scope ) {
+app.controller( "MainController", ['pageLayoutService', '$scope', function(pageLayoutService, $scope) {
   $scope.title = "This is a message";
   $scope.body = "Welcome Modal";
-} );
-app.directive( "modalWindow", function(){ 
+  $scope.showSignUpButton = pageLayoutService.getShowSignUp();
+} ]);
+app.directive( "modalWindow", function(){
   return {
     restrict: "E",
-    template: "<div class='btncontainer'><button ng-click='open()' class='pulse-button btn-info'>Sign Up</button><div ng-hide='hidden' class='trans-layer'></div><div class='modal-container' ng-class='{modalactive: !hidden}' ng-transclude></div>   </div>",
+    template: "<div class='btncontainer'><button ng-show='showSignUpButton' ng-click='open()' class='pulse-button btn-info'>Sign Up</button><div ng-hide='hidden' class='trans-layer'></div><div class='modal-container' ng-class='{modalactive: !hidden}' ng-transclude></div>   </div>",
    	scope: true,
     transclude: true,
     controller: function( $scope ) {

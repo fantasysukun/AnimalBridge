@@ -118,7 +118,7 @@ app.config(['$sceDelegateProvider', function($sceDelegateProvider) {
 
      }]);
 
-app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '$http', function(pageLayoutService, loginService, $http) {
+app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '$scope','$http', function(pageLayoutService, loginService, $scope, $http) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -128,7 +128,7 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
-
+    self.userVerified = false;
     self.userVerification = {
       "user": ''
     };
@@ -138,14 +138,28 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
 
         $http.post('http://localhost:8080/TeamMinions/rest/hello/testPost/', self.login)
             .then(function(response) {
-              self.userVerification = response.data
-              console.log("T/F: "+ self.userVerification.user);
-                login = {};
+              self.userVerification = response.data;
+              self.userVerified = response.data.user;
+              console.log("T/F: "+ self.userVerified);
+              // scroll window to top
+              var move = function(){$(window).scrollTop(0);};
+              login = {};
 
             }, function(err) {
                 console.log("SERVER ERROR!!!");
             });
     };
+
+    // $scope.$watch(angular.bind(this, function() {
+    //     return self.userVerification;
+    // }), function(newValue) {
+    //     self.userVerified = newValue.user;
+    //     console.log('T/F changed to ' + newValue.user);
+    //     // $('#timepicker1').timepicker().on('changeTime.timepicker', function(e) {
+    //     //     console.log('Starting time is ' + e.time.value);
+    //     //     self.post.startingTime = e.time.value;
+    //     // });
+    // });
 
 }]);
 
@@ -160,7 +174,8 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
     self.items = [];
-    $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
+    // $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
+    $http.get('http://localhost:8080/TeamMinions/rest/hello/testGet/')
         .then(
             function(response) {
                 self.items = response.data;

@@ -8,7 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
-import edu.sjsu.db.AnimalBridge_users;
+import edu.sjsu.db.animalbridge_users;
 import edu.sjsu.db.Dao;
 import edu.sjsu.db.Model;
 import edu.sjsu.db.animalbridge_aboutus;
@@ -41,16 +41,18 @@ import javax.ws.rs.core.Response;
 //<artifactId>gson</artifactId>
 //<version>2.2.4</version>
 //</dependency> in pom file
+
 @Path("/hello")
 public class HelloWorldService {
     @GET
     @Path("/{param}")
-    public Response getMsg(@PathParam("param") String msg) {
+    public static Response getMsg(@PathParam("param") String msg) {
         String output = "Hello " + msg;
        
-        HashMap<Integer, AnimalBridge_users> Testing = Model.AnimalBridge_users();
+        HashMap<Integer, animalbridge_users> Testing = Model.animalbridge_users();
+        System.out.println(Testing.get(5).toString());
         output += "Running";
-        return Response.status(200).entity(output).build();
+        return Response.status(200).entity(Testing.get(5).Getuser_Name()).build();
     } //method
    
     @GET
@@ -80,7 +82,7 @@ public class HelloWorldService {
     	if (name == "user")
     	{
     		JSONObject jsonObject = new JSONObject(json);
-    		AnimalBridge_users user = new AnimalBridge_users(0, jsonObject.getString("name"), jsonObject.getString("email"), jsonObject.getString("password"), jsonObject.getString("confirm"), jsonObject.getString("date"), jsonObject.getString("token"));
+    		animalbridge_users user = new animalbridge_users(0, jsonObject.getString("name"), jsonObject.getString("email"), jsonObject.getString("password"), jsonObject.getString("confirm"), jsonObject.getString("date"), jsonObject.getString("token"));
     		//insertUser(user);
     	}
     	if (name == "animal")
@@ -110,7 +112,7 @@ public class HelloWorldService {
     @Path("/animals/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void saveAnimals(animalbridge_animals animal)
+    public static void saveAnimals(animalbridge_animals animal)
     {
     	Model.Addanimalbridge_animals(animal);
     }
@@ -119,7 +121,7 @@ public class HelloWorldService {
     @Path("/users/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void saveUser(AnimalBridge_users user)
+    public static void saveUser(animalbridge_users user)
     {
     	Model.Addanimalbridge_users(user);
     }
@@ -128,14 +130,14 @@ public class HelloWorldService {
     @Path("/emergencycontact/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public animalbridge_emergencycontact saveEmergencyContact(animalbridge_emergencycontact emergency)
+    public static animalbridge_emergencycontact saveEmergencyContact(animalbridge_emergencycontact emergency)
     {
     	return emergency;
     }
 
     public static String getUser ()
     {
-        HashMap<Integer, AnimalBridge_users> users = Model.AnimalBridge_users();
+        HashMap<Integer, animalbridge_users> users = Model.animalbridge_users();
         Gson gson = new Gson();
         String json = gson.toJson(users);
 
@@ -192,7 +194,10 @@ public class HelloWorldService {
 
     public static void main(String[] args) throws IOException
     {	
+        animalbridge_users user = new animalbridge_users(10, "name", "123@gmail.com", "pass", "N", "2016-12-01", "0001");
+        //saveUser(user);
     	System.out.println(getPost());
+    	//getMsg("abc");
     }
    
 } 

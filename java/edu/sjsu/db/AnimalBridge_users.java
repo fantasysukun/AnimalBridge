@@ -2,6 +2,9 @@ package edu.sjsu.db;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * COPYRIGHT 2016 TeamMinion. All Rights Reserved. 
  * Animal Bridge
@@ -9,16 +12,15 @@ import java.util.Date;
  * @author Kun Su, Archer Zhao, Nelson Liang, Marco Kuang, Peilu Liu
  * @version 1.00 2016/11/22
  */
-
+@XmlRootElement
 public class animalbridge_users {
-
-	private int user_ID;
-	private String user_Name;
-	private String user_Email;
-	private String user_Pass;
-	private String user_ComfirmStatus;
-	private String user_RegisteredDate;
-	private String tokenCode;
+	@XmlElement private int user_ID;
+	@XmlElement private String user_Name;
+	@XmlElement private String user_Email;
+	@XmlElement private String user_Pass;
+	@XmlElement private String user_ComfirmStatus;
+	@XmlElement private String user_RegisteredDate;
+	@XmlElement private String tokenCode;
 
 	public animalbridge_users (
 

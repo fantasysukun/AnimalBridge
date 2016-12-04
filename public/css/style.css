@@ -269,28 +269,30 @@ overflow: hidden;
 .pulse-button {
    position: relative;
   display: block;
-  top: 23em;
-  padding: 19px 39px 18px 39px;
-  color: #2B2D40;
+  top: 25em;
+  float: right;
+  padding: 12px 39px 18px 39px;
+  color: #ffffff;
   margin: 0 auto;
-  background: #1ABCE1;
-  font-size: 25px;
-  text-align: center;
+  background: #a4cfff;
+  font-size: 15px;
   font-style: normal;
-  width: 30%;
-  border: 2px solid #1ABCE1;
+   text-align: center;
+  width: 12%;
+  border: 2px solid #1584c3;
   border-radius: 5px;
   margin-bottom: 10px;
   transition: .4s;
-  cursor: pointer;}
+  cursor: pointer;
+  }
 
 .pulse-button:hover {
- color: #1ABCE1;
-  width: 15%;
+ color: #e1a1fc;
+  width: 20%;
   border-radius: 20px;
   background: transparent;
-  border: 2px dotted #1ABCE1;
-  border-color: #1ABCE1;
+  border: 2px dotted #e1a1fc;
+  border-color: #eb96f9;
 }
 
 *, *:before, *:after {
@@ -299,4 +301,15 @@ overflow: hidden;
   font-family: 'Architects Daughter', sans-serif;
   -webkit-user-select: none;
   user-select: none;
+  }
+  .signup{
+ width:100%;
+    height:100%;
+      }
+  .form-inline{
+	  float: left;
+	  margin-left:35%;
+  }
+  .btncontainer{
+	  margin-right: 20%;
   }

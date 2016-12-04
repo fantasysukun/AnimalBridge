@@ -430,7 +430,7 @@ app.controller( "MainController", ['pageLayoutService', '$scope', function(pageL
 app.directive( "modalWindow", function(){
   return {
     restrict: "E",
-    template: "<div class='btncontainer'><button ng-show='showSignUpButton' ng-click='open()' class='pulse-button btn-info'>Sign Up</button><div ng-hide='hidden' class='trans-layer'></div><div class='modal-container' ng-class='{modalactive: !hidden}' ng-transclude></div>   </div>",
+    template: "<div class = 'signup'><div class='btncontainer'><button ng-show='showSignUpButton' ng-click='open()' class='pulse-button btn-info'>Sign Up</button><div ng-hide='hidden' class='trans-layer'></div><div class='modal-container' ng-class='{modalactive: !hidden}' ng-transclude></div></div> <div>",
    	scope: true,
     transclude: true,
     controller: function( $scope ) {

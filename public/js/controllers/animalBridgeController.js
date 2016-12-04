@@ -34,17 +34,17 @@ app.service("pageLayoutService", function() {
 app.service("loginService", function() {
     var self = this;
     var login = {
-      email : "",
-      password : ""
+        email: "",
+        password: ""
     };
 
-    self.getLogin = function (){
-      return login;
+    self.getLogin = function() {
+        return login;
     }
 
-    self.setLogin = function (newLogin){
-      login = newLogin;
-      console.log("from service: email: " + login.email + " pwd: " + login.password);
+    self.setLogin = function(newLogin) {
+        login = newLogin;
+        console.log("from service: email: " + login.email + " pwd: " + login.password);
     }
 });
 
@@ -124,17 +124,17 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
 
-    self.signinSubmit = function (){
-      console.log(self.login);
-      loginService.setLogin(self.login);
+    self.signinSubmit = function() {
+        console.log(self.login);
+        loginService.setLogin(self.login);
 
-      $http.post('http://localhost:8080/TeamMinions/rest/hello/testGet/', self.login)
-          .then(function(response) {
-            login = {};
+        $http.post('http://localhost:8080/TeamMinions/rest/hello/testGet/', self.login)
+            .then(function(response) {
+                login = {};
 
-          }, function(err){
-            console.log("SERVER ERROR!!!");
-          });
+            }, function(err) {
+                console.log("SERVER ERROR!!!");
+            });
     };
 
 }]);
@@ -150,14 +150,14 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
     self.items = [];
-    $http.get('http://localhost:8080/TeamMinions/rest/hello/testGet/')
-    .then(
-      function(response) {
-        self.items = response.data;
-    },
-    function(errResponse) {
-        console.error('Error while fetching notes');
-    });
+    $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
+        .then(
+            function(response) {
+                self.items = response.data;
+            },
+            function(errResponse) {
+                console.error('Error while fetching notes');
+            });
 
 }]);
 
@@ -168,7 +168,7 @@ app.controller('aboutController', ['pageLayoutService', '$http', function(pageLa
     pageLayoutService.setShowHeader(true);
     pageLayoutService.setShowNavBar(true);
     pageLayoutService.setShowSignUp(true);
-self.showSignUp = pageLayoutService.getShowSignUp();
+    self.showSignUp = pageLayoutService.getShowSignUp();
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
 
@@ -212,7 +212,7 @@ app.controller('contactController', ['pageLayoutService', '$http', function(page
     pageLayoutService.setShowHeader(true);
     pageLayoutService.setShowNavBar(true);
     pageLayoutService.setShowSignUp(true);
-self.showSignUp = pageLayoutService.getShowSignUp();
+    self.showSignUp = pageLayoutService.getShowSignUp();
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
 }]);
@@ -359,6 +359,33 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
     //         //self.post.priority = newValue.priority;
     //     }
     // );
+    var dp1 = $('#datepicker1').datepicker().on('changeDate', function(e) {
+        console.log('datepicker is ' + e.format([0]));
+        self.post.date = e.format([0]);
+    });
+    var tp1 = $('#timepicker1').timepicker().on('changeTime.timepicker', function(e) {
+        console.log('Starting time is ' + e.time.value);
+        self.post.startingTime = e.time.value;
+    });
+    var tp2 = $('#timepicker2').timepicker().on('changeTime.timepicker', function(e) {
+        console.log('Ending time is ' + e.time.value);
+        self.post.endingTime = e.time.value;
+    });
+
+    $scope.initializeTimeicker1 = function() {
+        $('#timepicker1').timepicker().on('changeTime.timepicker', function(e) {
+            console.log('Starting time is ' + e.time.value);
+            self.post.startingTime = e.time.value;
+        });
+    };
+
+    $scope.initializeTimeicker2 = function() {
+        $('#timepicker2').timepicker().on('changeTime.timepicker', function(e) {
+            console.log('Ending time is ' + e.time.value);
+            self.post.endingTime = e.time.value;
+        });
+    };
+
     $scope.$watch(angular.bind(this, function() {
         return self.selected;
     }), function(newValue) {
@@ -366,6 +393,11 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
         console.log('selected changed to ' + newValue.priority);
         self.post.category = newValue.label;
         self.post.priority = newValue.priority;
+        tp1.timepicker();
+        // $('#timepicker1').timepicker().on('changeTime.timepicker', function(e) {
+        //     console.log('Starting time is ' + e.time.value);
+        //     self.post.startingTime = e.time.value;
+        // });
     });
 
     self.submit = function() {
@@ -383,18 +415,7 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
         readFile.readAsBinaryString(file);
     };
 
-    self.dp1 = $('#datepicker1').datepicker().on('changeDate', function(e) {
-        console.log('datepicker is ' + e.format([0]));
-        self.post.date = e.format([0]);
-    });
-    self.tp1 = $('#timepicker1').timepicker().on('changeTime.timepicker', function(e) {
-        console.log('Starting time is ' + e.time.value);
-        self.post.startingTime = e.time.value;
-    });
-    self.tp2 = $('#timepicker2').timepicker().on('changeTime.timepicker', function(e) {
-        console.log('Ending time is ' + e.time.value);
-        self.post.endingTime = e.time.value;
-    });
+
 
 }]);
 
@@ -422,28 +443,28 @@ function MyCtrl($scope) {
     $scope.gPlace;
 }
 
-app.controller( "MainController", ['pageLayoutService', '$scope', function(pageLayoutService, $scope) {
-  $scope.title = "This is a message";
-  $scope.body = "Welcome Modal";
-  $scope.showSignUpButton = pageLayoutService.getShowSignUp();
-} ]);
-app.directive( "modalWindow", function(){
-  return {
-    restrict: "E",
-    template: "<div class='btncontainer'><button ng-show='showSignUpButton' ng-click='open()' class='pulse-button btn-info'>Sign Up</button><div ng-hide='hidden' class='trans-layer'></div><div class='modal-container' ng-class='{modalactive: !hidden}' ng-transclude></div>   </div>",
-   	scope: true,
-    transclude: true,
-    controller: function( $scope ) {
-      $scope.hidden = true;
-      $scope.open = function() {
-        $scope.hidden = false;
-      };
-    },
-    link: function( scope,ele,attrs ) {
-      $( ele ).find( '.trans-layer' ).on( 'click', function( event ) {
-        scope.hidden = true;
-        scope.$apply();
-      })
+app.controller("MainController", ['pageLayoutService', '$scope', function(pageLayoutService, $scope) {
+    $scope.title = "This is a message";
+    $scope.body = "Welcome Modal";
+    $scope.showSignUpButton = pageLayoutService.getShowSignUp();
+}]);
+app.directive("modalWindow", function() {
+    return {
+        restrict: "E",
+        template: "<div class='btncontainer'><button ng-show='showSignUpButton' ng-click='open()' class='pulse-button btn-info'>Sign Up</button><div ng-hide='hidden' class='trans-layer'></div><div class='modal-container' ng-class='{modalactive: !hidden}' ng-transclude></div>   </div>",
+        scope: true,
+        transclude: true,
+        controller: function($scope) {
+            $scope.hidden = true;
+            $scope.open = function() {
+                $scope.hidden = false;
+            };
+        },
+        link: function(scope, ele, attrs) {
+            $(ele).find('.trans-layer').on('click', function(event) {
+                scope.hidden = true;
+                scope.$apply();
+            })
+        }
     }
-  }
-} );
+});

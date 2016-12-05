@@ -114,7 +114,7 @@ app.config(['$httpProvider', function($httpProvider) {
 }]);
 
 app.config(['$sceDelegateProvider', function($sceDelegateProvider) {
-         $sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/(mhnystatic\.)?s3.amazonaws.com/, /^https?:\/\/(static\.)?s3.amazonaws.com/]);
+        //  $sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/(mhnystatic\.)?s3.amazonaws.com/, /^https?:\/\/(static\.)?s3.amazonaws.com/]);
 
      }]);
 
@@ -129,6 +129,7 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
 
+    self.userVerified = false;
     self.userVerification = {
       "user": ''
     };
@@ -138,10 +139,12 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
 
         $http.post('http://localhost:8080/TeamMinions/rest/hello/testPostLogin/', self.login)
             .then(function(response) {
-              self.userVerification = response.data
-              console.log("T/F: "+ self.userVerification.user);
-                login = {};
-
+                           self.userVerification = response.data;
+                            self.userVerified = response.data.user;
+                            console.log("T/F: "+ self.userVerified);
+                            // scroll window to top
+                            var move = function(){$(window).scrollTop(0);};
+                            login = {};
             }, function(err) {
                 console.log("SERVER ERROR!!!");
             });
@@ -160,7 +163,8 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
     self.items = [];
-    $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
+    // $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
+    $http.get('http://localhost:8080/TeamMinions/rest/hello/testGetPost/')
         .then(
             function(response) {
                 self.items = response.data;
@@ -454,7 +458,8 @@ function MyCtrl($scope) {
     $scope.gPlace;
 }
 
-app.controller("MainController", ['pageLayoutService', '$scope', function(pageLayoutService, $scope) {
+app.controller("MainController", ['pageLayoutService', '$http', '$scope', function(pageLayoutService, $http, $scope) {
+    var self = this;
     $scope.title = "This is a message";
     $scope.body = "Welcome Modal";
     $scope.showSignUpButton = pageLayoutService.getShowSignUp();
@@ -462,6 +467,22 @@ app.controller("MainController", ['pageLayoutService', '$scope', function(pageLa
 
     $(".modal-container").css('z-index', 3000);
 
+        $scope.signup = {
+          "name": "",
+          "email": "",
+          "password": "",
+          "repassword": ""
+        }
+        $scope.signUpSubmit = function (){
+          console.log("clickedxxxxx");
+          if ($scope.signup.password !== $scope.signup.repassword) {
+            console.log("yyy");
+          }
+          else{
+            console.log("ooo");
+          }
+        };
+    
 });
 
 }]);

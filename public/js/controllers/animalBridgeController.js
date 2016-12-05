@@ -143,7 +143,7 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
         console.log(self.login);
         loginService.setLogin(self.login);
 
-        $http.post('http://localhost:8080/TeamMinions/rest/hello/testPostLogin/', self.login)
+        $http.post('./rest/hello/testPostLogin/', self.login)
             .then(function(response) {
                 self.userVerification = response.data;
                 if(response.data.user == "true"){
@@ -222,7 +222,7 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
     self.showSignUp = pageLayoutService.getShowSignUp();
     self.items = [];
     // $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
-    $http.get('http://localhost:8080/TeamMinions/rest/hello/testGetPost/')
+    $http.get('./rest/hello/testGetPost/')
         .then(
             function(response) {
                 self.items = response.data;
@@ -540,7 +540,7 @@ app.controller("MainController", ['pageLayoutService', '$http', '$scope', functi
             } else {
                 console.log($scope.signup);
 
-                $http.post('http://localhost:8080/TeamMinions/rest/hello/InsertUser/', $scope.signup)
+                $http.post('./rest/hello/InsertUser/', $scope.signup)
                     .then(function(response) {
                         // self.userVerification = response.data;
                         // if(response.data.user == "true"){

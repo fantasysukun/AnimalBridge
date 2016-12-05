@@ -6,8 +6,14 @@
 <div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav"></div>
 
 <h1>Hello Servers!</h1>
-<div ng-repeat="todo in MainCtrl.items" class="item">
+<div ng-repeat="posting in MainCtrl.items" class="item">
   <!-- <div><span ng-bind="todo.label"></span></div>
   <div>- by <span ng-bind="todo.author"></span></div> -->
-  {{MainCtrl.todo}}
+  <!-- <h3>{{MainCtrl.posting.Posting_Title}}</h3> -->
+  <div ng-repeat="(key, value) in posting">
+    <!-- <p>{{key}}</p> -->
+    <p ng-if="key==='Posting_Title'">{{key}}::{{value}}</p>
+  </div>
+  <br>
+  <br>
 </div>

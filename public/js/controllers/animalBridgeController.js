@@ -136,7 +136,7 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
         console.log(self.login);
         loginService.setLogin(self.login);
 
-        $http.post('http://localhost:8080/TeamMinions/rest/hello/testPost/', self.login)
+        $http.post('http://localhost:8080/TeamMinions/rest/hello/testPostLogin/', self.login)
             .then(function(response) {
               self.userVerification = response.data;
               self.userVerified = response.data.user;
@@ -179,6 +179,7 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
         .then(
             function(response) {
                 self.items = response.data;
+                console.log(self.items);
             },
             function(errResponse) {
                 console.error('Error while fetching notes');

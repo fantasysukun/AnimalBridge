@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * COPYRIGHT 2016 TeamMinion. All Rights Reserved. 
+ * COPYRIGHT 2016 TeamMinion. All Rights Reserved.
  * Animal Bridge
  * CS160 Group Project
  * @author Kun Su, Archer Zhao, Nelson Liang, Marco Kuang, Peilu Liu
@@ -17,6 +17,7 @@ import com.google.gson.annotations.SerializedName;
 //@XmlRootElement(name = "user")
 public class animalbridge_users {
 	private int user_ID;
+	@SerializedName("name")
 	private String user_Name;
 	@SerializedName("email")
 	private String user_Email;

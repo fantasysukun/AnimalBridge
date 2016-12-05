@@ -180,6 +180,7 @@ app.controller('loginController', ['pageLayoutService', 'loginService', '$http',
 
     self.userVerified = true;
     // self.userVerification = {
+
     //     "user": ''
     // };
     // self.signinSubmit = function() {
@@ -527,15 +528,38 @@ app.controller("MainController", ['pageLayoutService', '$http', '$scope', functi
         $scope.signup = {
             "name": "",
             "email": "",
-            "password": "",
-            "repassword": ""
-        }
+            "password": ""
+        };
+        $scope.re = {
+          "repassword": ""
+        };
         $scope.signUpSubmit = function() {
             console.log("clickedxxxxx");
-            if ($scope.signup.password !== $scope.signup.repassword) {
+            if ($scope.signup.password !== $scope.re.repassword) {
                 console.log("yyy");
             } else {
-                console.log("ooo");
+                console.log($scope.signup);
+
+                $http.post('http://localhost:8080/TeamMinions/rest/hello/InsertUser/', $scope.signup)
+                    .then(function(response) {
+                        // self.userVerification = response.data;
+                        // if(response.data.user == "true"){
+                        //   self.userVerified = true;
+                        //   // $(window).location = "./login.html";
+                        //   $location.path('/login');
+                        // }
+                        // else{
+                        //   self.userVerified = false;
+                        // }
+                        // console.log("T/F: " + self.userVerified);
+                        // // scroll window to top
+                        // var move = function() {
+                        //     $(window).scrollTop(0);
+                        // };
+                        // login = {};
+                    }, function(err) {
+                        console.log("SERVER ERROR!!!");
+                    });
             }
         };
 

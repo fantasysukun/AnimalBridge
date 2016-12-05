@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
 import java.sql.Blob;
 
 /**
- * COPYRIGHT 2016 TeamMinion. All Rights Reserved. 
+ * COPYRIGHT 2016 TeamMinion. All Rights Reserved.
  * Animal Bridge
  * CS160 Group Project
  * @author Kun Su, Archer Zhao, Nelson Liang, Marco Kuang, Peilu Liu
@@ -32,7 +32,7 @@ public class Model {
 	// variables used for manager
 	private static Connection connection = Dao.getConn();
 	private static Statement statement = Dao.getStatement(connection);
-	
+
 	/**
 	 * Generate a HashMap with attribute's name and data type from a txt file with DB table attribute
 	 * @param ClassName DB table's name
@@ -41,7 +41,7 @@ public class Model {
 	 * @throws IOException
 	 */
 	public static HashMap<Integer, Attribute> DBinput(String ClassName) {
-		
+
 		HashMap<Integer, Attribute> MashMapInput = new HashMap<Integer, Attribute>();
 		//Get DB input from txt file
 		try(BufferedReader br = new BufferedReader(new FileReader(ClassName))) {
@@ -55,7 +55,7 @@ public class Model {
 		    }
 		    String everything = sb.toString();
 		    String[] Result = everything.split(", ");
-		    
+
 			for(int i = 0; i < Result.length; i++) {
 				if(i == Result.length-1){
 					Result[i] = Result[i].substring(0, Result[i].length()-2);	//Delete the \n at the end of an array -Kun
@@ -71,7 +71,7 @@ public class Model {
 		}
 		return MashMapInput;
 	}
-	
+
 	/**
 	 * Convert Blob type of data from DB To bufferedImage type of data in Java
 	 * @param blob
@@ -86,7 +86,7 @@ public class Model {
 		try {
 	        int blobLength = (int) blob.length();
 	        byte[] blobAsBytes = blob.getBytes(1, blobLength);
-        
+
 			Image = ImageIO.read(new ByteArrayInputStream(blobAsBytes));
 		} catch (IOException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,13 +94,13 @@ public class Model {
 		}
 		return Image;
 	}
-		
+
 	/**
 	 * Auto Generate HashMap for each class
 	 * @param ClassName
 	 */
 	public static void HashMapGenerator(String ClassName) {
-		
+
 		HashMap<Integer, Attribute> MashMapInput = DBinput(ClassName);
 		ClassName = ClassName.substring(0, ClassName.length()-4);
 		String Output = "";
@@ -148,7 +148,7 @@ public class Model {
 		Output += "	}\n";
 		System.out.println(Output);
 	}
-	
+
 	/**
 	 * The class will auto generate a java class from a DB table
 	 * @param ClassName
@@ -156,7 +156,7 @@ public class Model {
 	 * @throws IOException
 	 */
 	public static void DB_To_Java_ClassGenerator (String ClassName) {
-	
+
 		HashMap<Integer, Attribute> MashMapInput;
 
 		MashMapInput = DBinput(ClassName);
@@ -167,7 +167,7 @@ public class Model {
 			Output += "	private " + MashMapInput.get(i).GetDataType() + " " + MashMapInput.get(i).GetAttributeName() + ";\n";
 		}
 		Output += "\n";
-		
+
 		Output += "	public " + ClassName.substring(0, ClassName.length()-4) + " (\n";
 		Output += "\n";
 		for(int i = 0; i < MashMapInput.size(); i++) {
@@ -177,13 +177,13 @@ public class Model {
 			}
 			Output += "\n";
 		}
-		
+
 		Output += "	) {\n";
 		for(int i = 0; i < MashMapInput.size(); i++) {
 			Output += "		this." + MashMapInput.get(i).GetAttributeName() + " = " + MashMapInput.get(i).GetAttributeName() + ";\n";
 		}
 		Output += "	}\n\n";
-		
+
 		for(int i = 0; i < MashMapInput.size(); i++) {
 			Output += "	public " + MashMapInput.get(i).GetDataType() + " Get" + MashMapInput.get(i).GetAttributeName() + "() {\n";
 			Output += "		return " + MashMapInput.get(i).GetAttributeName() + ";\n";
@@ -193,9 +193,9 @@ public class Model {
 		Output += "}";
 		System.out.println(Output);
 	}
-	
+
 	public static void AddQueryGenerator(String ClassName) {
-		
+
 		HashMap<Integer, Attribute> MashMapInput = DBinput(ClassName);
 		ClassName = ClassName.substring(0, ClassName.length()-4);
 		String Output = "";
@@ -205,7 +205,7 @@ public class Model {
 			String AttributeName = MashMapInput.get(i).GetAttributeName();
 			Output += "		String " + MashMapInput.get(i).GetAttributeName() + " = ";
 			Output += "InputObject.Get" + MashMapInput.get(i).GetAttributeName() + "().replace(\"\'\", \"\'\'\");\n";
-							
+
 		}
 		Output += "\n";
 
@@ -246,7 +246,7 @@ public class Model {
 			}
 		}
 		Output += ");\n";
-		
+
 		Output += "		try {\n";
 		Output += "			statement.execute(query);\n";
 		Output += "			return true;\n";
@@ -284,7 +284,7 @@ public class Model {
 			return null;
 		}
 	}
-	
+
 	public static HashMap<Integer, animalbridge_aboutus> animalbridge_aboutus() {
 
 		HashMap<Integer, animalbridge_aboutus> ResultMap = new HashMap<Integer, animalbridge_aboutus>();
@@ -449,8 +449,8 @@ public class Model {
 
 
 /*
-	public static boolean Addanimalbridge_users(animalbridge_users user) {		
-		
+	public static boolean Addanimalbridge_users(animalbridge_users user) {
+
 		String user_Name = user.Getuser_Name().replace("'", "''");
 		String user_Email = user.Getuser_Email().replace("'", "''");
 		String user_Pass = user.Getuser_Pass().replace("'", "''");
@@ -458,9 +458,9 @@ public class Model {
 		String user_RegisteredDate = user.Getuser_RegisteredDate().replace("'", "''");
 		String tokenCode = user.GettokenCode().replace("'", "''");
 
-		
+
 		String query = String.format("INSERT INTO animalbridge_users(user_Name, user_Email, user_Pass, user_ComfirmStatus, user_RegisteredDate, tokenCode)"
-				+ " VALUES('%s','%s','%s','%s',%s,'%s')", 
+				+ " VALUES('%s','%s','%s','%s',%s,'%s')",
 				user_Name, user_Email, user_Pass, user_ComfirmStatus, user_RegisteredDate, tokenCode);
 		try {
 			statement.execute(query);
@@ -473,13 +473,26 @@ public class Model {
 	}
 */
 	public static boolean Addanimalbridge_users(animalbridge_users InputObject) {
+//		System.out.println(InputObject.Getuser_Name());
+//		System.out.println(InputObject.Getuser_Email());
+//		System.out.println(InputObject.Getuser_Pass());
 
 		String user_Name = InputObject.Getuser_Name().replace("'", "''");
 		String user_Email = InputObject.Getuser_Email().replace("'", "''");
 		String user_Pass = InputObject.Getuser_Pass().replace("'", "''");
-		String user_ComfirmStatus = InputObject.Getuser_ComfirmStatus().replace("'", "''");
-		String user_RegisteredDate = InputObject.Getuser_RegisteredDate().replace("'", "''");
-		String tokenCode = InputObject.GettokenCode().replace("'", "''");
+		String user_ComfirmStatus = "";
+		String user_RegisteredDate = "";
+		String tokenCode = "";
+		try{
+			user_ComfirmStatus = InputObject.Getuser_ComfirmStatus().replace("'", "''");
+			user_RegisteredDate = InputObject.Getuser_RegisteredDate().replace("'", "''");
+			tokenCode = InputObject.GettokenCode().replace("'", "''");
+		}
+		catch(Exception e){
+			user_ComfirmStatus = "N";
+			user_RegisteredDate = "2016-12-1";
+			tokenCode = "0000";
+		}
 
 		String query = String.format("INSERT INTO animalbridge_users("
 			+ "user_Name,"
@@ -582,7 +595,7 @@ public class Model {
 			return false;
 		}
 	}
-	
+
 	public static boolean Addanimalbridge_contactus(animalbridge_contactus InputObject) {
 
 		String ContactUs_Title = InputObject.GetContactUs_Title().replace("'", "''");
@@ -734,7 +747,7 @@ public class Model {
 
 
 	public static void main(String[] args) {
-		
+
 		//DB_To_Java_ClassGenerator("animalbridge_users.txt");
 		//HashMapGenerator("animalbridge_users.txt");
 
@@ -743,9 +756,9 @@ public class Model {
 		String Date = "2016-12-02";
 		animalbridge_users user = new animalbridge_users(0, "Second Testing", "Second.Testing@sjsu.edu", "123456", "Y", Date, "0001");
 		Addanimalbridge_users(user);
-		
-		
-		
+
+
+
 		animalbridge_aboutus aboutus = new animalbridge_aboutus(0, "First Testing", "First Testing Description", "2016-12-1", null);
 		Addanimalbridge_aboutus(aboutus);
 		*/
@@ -771,7 +784,7 @@ public class Model {
 		Addanimalbridge_animals(animals);
 		*/
 		//
-		
+
 		/*
 		HashMap<Integer, animalbridge_aboutus> ResultMap1 = animalbridge_aboutus();
 		HashMap<Integer, animalbridge_animals> ResultMap2 = animalbridge_animals();
@@ -779,12 +792,12 @@ public class Model {
 		HashMap<Integer, animalbridge_emergencycontact> ResultMap4 = animalbridge_emergencycontact();
 		HashMap<Integer, animalbridge_homepage> ResultMap5 = animalbridge_homepage();
 		HashMap<Integer, animalbridge_posting> ResultMap6 = animalbridge_posting();
-		
+
 		HashMap<Integer, animalbridge_users> ResultMap7 = animalbridge_users();
-		
-		
+
+
 		// I will do a simple unit Test later -Kun
-		
+
 		int ID;
 		System.out.println("ResultMap1.size(): " + ResultMap1.size());
 		System.out.println("ResultMap2.size(): " + ResultMap2.size());
@@ -793,7 +806,7 @@ public class Model {
 		System.out.println("ResultMap5.size(): " + ResultMap5.size());
 		System.out.println("ResultMap6.size(): " + ResultMap6.size());
 		System.out.println("ResultMap7.size(): " + ResultMap7.size());
-		
+
 		for(int i = 1; i < ResultMap7.size()+1; i++) {
 			ID = i;
 			System.out.println("Running");
@@ -803,10 +816,10 @@ public class Model {
 			System.out.println("Getuser_Pass(): " + ResultMap7.get(ID).Getuser_Pass());
 			System.out.println("Getuser_ComfirmStatus(): " + ResultMap7.get(ID).Getuser_ComfirmStatus());
 			System.out.println("Getuser_RegisteredDate(): " + ResultMap7.get(ID).Getuser_RegisteredDate());
-			System.out.println("GettokenCode(): " + ResultMap7.get(ID).GettokenCode());			
+			System.out.println("GettokenCode(): " + ResultMap7.get(ID).GettokenCode());
 		}
 		*/
-		
+
 		/*
 		ID = 1;
 		HashMap<Integer, AnimalBridge_users> Testing = AnimalBridge_users();
@@ -818,7 +831,7 @@ public class Model {
 		System.out.println("Getuser_ComfirmStatus(): " + Testing.get(ID).Getuser_ComfirmStatus());
 		System.out.println("Getuser_RegisteredDate(): " + Testing.get(ID).Getuser_RegisteredDate());
 		System.out.println("GettokenCode(): " + Testing.get(ID).GettokenCode());
-		
+
 		ID = 2;
 		System.out.println("Running");
 		System.out.println("Getuser_ID(): " + Testing.get(ID).Getuser_ID());
@@ -828,7 +841,7 @@ public class Model {
 		System.out.println("Getuser_ComfirmStatus(): " + Testing.get(ID).Getuser_ComfirmStatus());
 		System.out.println("Getuser_RegisteredDate(): " + Testing.get(ID).Getuser_RegisteredDate());
 		System.out.println("GettokenCode(): " + Testing.get(ID).GettokenCode());
-		
+
 		ID = 3;
 		System.out.println("Running");
 		System.out.println("Getuser_ID(): " + Testing.get(ID).Getuser_ID());

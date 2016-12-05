@@ -175,7 +175,7 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
     self.showSignUp = pageLayoutService.getShowSignUp();
     self.items = [];
     // $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
-    $http.get('http://localhost:8080/TeamMinions/rest/hello/testGet/')
+    $http.get('http://localhost:8080/TeamMinions/rest/hello/testGetPost/')
         .then(
             function(response) {
                 self.items = response.data;
@@ -468,7 +468,7 @@ function MyCtrl($scope) {
     $scope.gPlace;
 }
 
-app.controller("MainController", ['pageLayoutService', '$scope', function(pageLayoutService, $scope) {
+app.controller("MainController", ['pageLayoutService', '$http', '$scope', function(pageLayoutService, $http, $scope) {
   var self = this;
     $scope.title = "This is a message";
     $scope.body = "Welcome Modal";

@@ -1,12 +1,11 @@
 <!-- header -->
-<div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp && MainCtrl.userVerified==false"></div>
-<div ng-include="'./header.html'" ng-show="MainCtrl.showHeader && MainCtrl.userVerified==false"></div>
+<div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div>
+<div ng-include="'./header.html'" ng-show="MainCtrl.showHeader"></div>
 <!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div> -->
 <!-- navbar -->
 <div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav"></div>
 <!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div> -->
-<div class="card" ng-class="{cardNew: MainCtrl.userVerified}">
-  <h4 ng-if="MainCtrl.userVerified">Welcome, {{MainCtrl.login}}!{{MainCtrl.userVerification.user}}</h4>
+<div class="card">
     <h3>Recent Post</h3>
     <ul>
         <li>

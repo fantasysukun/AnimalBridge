@@ -1,8 +1,9 @@
 $mainColor: #1ECD97;
 h1 {
     text-align: center;
+    font-family: 'Pacifico', cursive;
+	font-size: 25px;
     color: $mainColor;
-    font: bold 50px Arial;
     padding: 10px;
     border-bottom: 1px solid;
     width: 250px;
@@ -11,30 +12,38 @@ h1 {
 }
 
 .toggles {
-    width: 800px;
-    margin: auto;
+    width: 100%;
     display: block;
     clear: both;
     overflow: hidden;
 }
 
 .CatButton {
-    border: 2px solid $mainColor;
-    border-radius: 40px;
-    color: $mainColor;
-    display: block;
-    float: left;
-    margin: auto;
-    padding: 10px;
-    width: 150px;
-    cursor: pointer;
-    font-size: 14px;
-    margin: 0 5px;
+position: relative;
+	padding: 10px 10px;
+  margin: 0px 20px 15px 0px;
+  float: left;
+	border-radius: 10px;
+	font-family: 'Pacifico', cursive;
+	font-size: 25px;
+	color: #FFF;
+	text-decoration: none;	
+	background-color: #3498DB;
+	border-bottom: 5px solid #2980B9;
+	text-shadow: 0px -2px #2980B9;
 }
 
 .posts {
     width: 800px;
     margin: 2em auto;
+    background: rgb(105,155,200);
+background: -moz-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%, rgba(181,197,216,1) 57%);
+ background: -webkit-gradient(radial, top left, 0px, top left, 100%, color-stop(0%,rgba(105,155,200,1)), color-stop(57%,rgba(181,197,216,1)));
+ background: -webkit-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%,rgba(181,197,216,1) 57%);
+ background: -o-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%,rgba(181,197,216,1) 57%);
+ background: -ms-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%,rgba(181,197,216,1) 57%);
+ background: radial-gradient(ellipse at top left, rgba(105,155,200,1) 0%,rgba(181,197,216,1) 57%);
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#699bc8', endColorstr='#b5c5d8',GradientType=1 );
     div {
         font: 16px/250px Arial;
         width: 245px;
@@ -110,3 +119,4 @@ h1 {
     background: rgba(0, 0, 0, .5);
     z-index: 1000;
 }
+

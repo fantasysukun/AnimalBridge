@@ -186,6 +186,25 @@ public class HelloWorldService {
 		return Response.status(200).entity(json2).build();
 	}
 
+	//Kun added
+	@GET
+	@Path("/GetPost/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public static Response GetAllPosting() {
+		Gson gson = new Gson();
+		String OutputJSON = gson.toJson("");
+		try {
+			HashMap<Integer, animalbridge_posting> Testing = Model.animalbridge_posting();			
+			OutputJSON = gson.toJson(Testing);
+		}
+		catch (Exception e) {
+			String Error = "RESTful layer GetAllPosting method has error!!!";
+			OutputJSON = gson.toJson(Error);
+		}
+		return Response.status(200).entity(OutputJSON).build();
+	}
+	
 	@POST
 	@Path("/testPost")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -194,13 +213,13 @@ public class HelloWorldService {
 	public Response crunchifyREST(String JSONData) {
 		Gson gson = new Gson();
 		HashMap<Integer, animalbridge_users> Testing = Model.animalbridge_users();
-		Wrapper ee = null;
+		animalbridge_users ee = null;
 		try {
 			// String kk = "{\"email\": \"dd\", \"password\":\"rr\"}";
 			String kk = JSONData.replaceAll("\"", "\\\"");
-			ee = gson.fromJson(kk, Wrapper.class);
-			System.out.println(ee.email);
-			System.out.println(ee.PWD);
+			ee = gson.fromJson(kk, animalbridge_users.class);
+			System.out.println(ee.Getuser_Email());
+			System.out.println(ee.Getuser_Pass());
 		} catch (Exception r) {
 			r.printStackTrace();
 		}
@@ -219,8 +238,8 @@ public class HelloWorldService {
 		// System.out.println("Data Received: " + crunchifyBuilder.toString());
 		// Wrapper w = gson.fromJson(new Reader., Wrapper.class);
 		boolean valid = false;
-		String tempEmail = ee.email;
-		String tempPassword = ee.PWD;
+		String tempEmail = ee.Getuser_Email();
+		String tempPassword = ee.Getuser_Pass();
 		for (Entry<Integer, animalbridge_users> entry : Testing.entrySet()) {
 			int key = (int) entry.getKey();
 			animalbridge_users value = entry.getValue();
@@ -248,13 +267,41 @@ public class HelloWorldService {
 		// Response.status(200).entity(crunchifyBuilder.toString()).build();
 	}
 
-	public static String getPost() {
-		HashMap<Integer, animalbridge_posting> posts = Model.animalbridge_posting();
+	
+	@POST
+	@Path("/InsertPost")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	// public Response crunchifyREST(InputStream incomingData) {
+	public Response InsertPost(String JSONData) {
 		Gson gson = new Gson();
-		String json = gson.toJson(posts);
+		String OutputJSON = "";
+		HashMap<Integer, animalbridge_posting> Testing = Model.animalbridge_posting();
+		animalbridge_posting ee = null;
+		
+		boolean valid = false;
+		try {
 
-		return json;
+			String kk = JSONData.replaceAll("\"", "\\\"");
+			ee = gson.fromJson(kk, animalbridge_posting.class);
+			
+			Model.Addanimalbridge_posting(ee); //call back end method
+			
+			valid = true;
+		} catch (Exception r) {
+			r.printStackTrace();
+		}
+
+		if (valid) {
+			OutputJSON = gson.toJson("New Post add!!");
+			return Response.status(200).entity(OutputJSON).build();
+		} else {
+			OutputJSON = gson.toJson("RESTful layer GetAllPosting method has error!!!");
+			return Response.status(200).entity(OutputJSON).build();
+		}
+
 	}
+
 
 	public static String getHomepage() {
 		HashMap<Integer, animalbridge_homepage> home = Model.animalbridge_homepage();
@@ -300,7 +347,7 @@ public class HelloWorldService {
 		animalbridge_users user = new animalbridge_users(10, "name", "123@gmail.com", "pass", "N", "2016-12-01",
 				"0001");
 		// saveUser(user);
-		System.out.println(getPost());
+
 		// getMsg("abc");
 	}
 

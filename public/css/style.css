@@ -122,3 +122,7 @@ div.form-group.tp {
 #price {
     width: 15em;
 }
+
+#welcomeMessage{
+  margin: 5em;
+}

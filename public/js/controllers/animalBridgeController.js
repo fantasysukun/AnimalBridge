@@ -97,6 +97,12 @@ app.config(["$routeProvider", "$locationProvider", function($routeProvider, $loc
         controllerAs: 'MainCtrl'
     })
 
+    .when('/login', {
+        templateUrl: 'login.html',
+        controller: 'loginController',
+        controllerAs: 'MainCtrl'
+    })
+
     .when('/emergency', {
         templateUrl: 'emergency.html',
         controller: 'emergencyController',
@@ -114,11 +120,11 @@ app.config(['$httpProvider', function($httpProvider) {
 }]);
 
 app.config(['$sceDelegateProvider', function($sceDelegateProvider) {
-        //  $sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/(mhnystatic\.)?s3.amazonaws.com/, /^https?:\/\/(static\.)?s3.amazonaws.com/]);
+    //  $sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/(mhnystatic\.)?s3.amazonaws.com/, /^https?:\/\/(static\.)?s3.amazonaws.com/]);
 
-     }]);
+}]);
 
-app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '$http', function(pageLayoutService, loginService, $http) {
+app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '$http', '$location',function(pageLayoutService, loginService, $http, $location) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -131,7 +137,7 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
 
     self.userVerified = false;
     self.userVerification = {
-      "user": ''
+        "user": ''
     };
     self.signinSubmit = function() {
         console.log(self.login);
@@ -139,16 +145,67 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
 
         $http.post('http://localhost:8080/TeamMinions/rest/hello/testPostLogin/', self.login)
             .then(function(response) {
-                           self.userVerification = response.data;
-                            self.userVerified = response.data.user;
-                            console.log("T/F: "+ self.userVerified);
-                            // scroll window to top
-                            var move = function(){$(window).scrollTop(0);};
-                            login = {};
+                self.userVerification = response.data;
+                if(response.data.user == "true"){
+                  self.userVerified = true;
+                  // $(window).location = "./login.html";
+                  $location.path('/login');
+                }
+                else{
+                  self.userVerified = false;
+                }
+                console.log("T/F: " + self.userVerified);
+                // scroll window to top
+                var move = function() {
+                    $(window).scrollTop(0);
+                };
+                login = {};
             }, function(err) {
                 console.log("SERVER ERROR!!!");
             });
     };
+
+}]);
+
+app.controller('loginController', ['pageLayoutService', 'loginService', '$http', function(pageLayoutService, loginService, $http) {
+    var self = this;
+    self.name = "AnimalBridgeApp";
+    self.headerTemplate = 'header.html';
+    pageLayoutService.setShowHeader(false);
+    pageLayoutService.setShowNavBar(true);
+    pageLayoutService.setShowSignUp(false);
+    self.showHeader = pageLayoutService.getShowHeader();
+    self.showNav = pageLayoutService.getShowNavBar();
+    self.showSignUp = pageLayoutService.getShowSignUp();
+
+    self.userVerified = true;
+    // self.userVerification = {
+    //     "user": ''
+    // };
+    // self.signinSubmit = function() {
+    //     console.log(self.login);
+    //     loginService.setLogin(self.login);
+    //
+    //     $http.post('http://localhost:8080/TeamMinions/rest/hello/testPostLogin/', self.login)
+    //         .then(function(response) {
+    //             self.userVerification = response.data;
+    //             if(response.data.user == "true"){
+    //               self.userVerified = true;
+    //               $(window).location = "./login.html"
+    //             }
+    //             else{
+    //               self.userVerified = false;
+    //             }
+    //             console.log("T/F: " + self.userVerified);
+    //             // scroll window to top
+    //             var move = function() {
+    //                 $(window).scrollTop(0);
+    //             };
+    //             login = {};
+    //         }, function(err) {
+    //             console.log("SERVER ERROR!!!");
+    //         });
+    // };
 
 }]);
 
@@ -463,27 +520,26 @@ app.controller("MainController", ['pageLayoutService', '$http', '$scope', functi
     $scope.title = "This is a message";
     $scope.body = "Welcome Modal";
     $scope.showSignUpButton = pageLayoutService.getShowSignUp();
-    $(".pulse-button").on("click",function(){
+    $(".pulse-button").on("click", function() {
 
-    $(".modal-container").css('z-index', 3000);
+        $(".modal-container").css('z-index', 3000);
 
         $scope.signup = {
-          "name": "",
-          "email": "",
-          "password": "",
-          "repassword": ""
+            "name": "",
+            "email": "",
+            "password": "",
+            "repassword": ""
         }
-        $scope.signUpSubmit = function (){
-          console.log("clickedxxxxx");
-          if ($scope.signup.password !== $scope.signup.repassword) {
-            console.log("yyy");
-          }
-          else{
-            console.log("ooo");
-          }
+        $scope.signUpSubmit = function() {
+            console.log("clickedxxxxx");
+            if ($scope.signup.password !== $scope.signup.repassword) {
+                console.log("yyy");
+            } else {
+                console.log("ooo");
+            }
         };
-    
-});
+
+    });
 
 }]);
 app.directive("modalWindow", function() {

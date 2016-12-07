@@ -6,7 +6,7 @@ import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * COPYRIGHT 2016 TeamMinion. All Rights Reserved. 
+ * COPYRIGHT 2016 TeamMinion. All Rights Reserved.
  * Animal Bridge
  * CS160 Group Project
  * @author Kun Su, Archer Zhao, Nelson Liang, Marco Kuang, Peilu Liu
@@ -17,33 +17,33 @@ public class animalbridge_posting {
 
 	@SerializedName("Posting_ID")
 	private int Posting_ID;
-	@SerializedName("Posting_Categories")
+	@SerializedName("category")
 	private String Posting_Categories;
-	@SerializedName("Posting_Priority")
+	@SerializedName("priority")
 	private String Posting_Priority;
-	@SerializedName("Posting_Title")
+	@SerializedName("title")
 	private String Posting_Title;
-	@SerializedName("Posting_Address")
+	@SerializedName("address")
 	private String Posting_Address;
-	@SerializedName("Posting_Description")
+	@SerializedName("description")
 	private String Posting_Description;
-	@SerializedName("Posting_Date")
+	@SerializedName("date")
 	private String Posting_Date;
-	@SerializedName("Posting_StartingTime")
+	@SerializedName("startingTime")
 	private String Posting_StartingTime;
-	@SerializedName("Posting_EndingTIme")
+	@SerializedName("endingTime")
 	private String Posting_EndingTIme;
-	@SerializedName("Posting_Image")
+	@SerializedName("imageData")
 	private BufferedImage Posting_Image;
-	@SerializedName("Posting_Price")
+	@SerializedName("price")
 	private String Posting_Price;
-	@SerializedName("Posting_ContactEmail")
+	@SerializedName("email")
 	private String Posting_ContactEmail;
-	@SerializedName("Posting_OwnerID")
+	@SerializedName("ownerID")
 	private int Posting_OwnerID;
-	@SerializedName("Posting_OwnerName")
+	@SerializedName("ownerName")
 	private String Posting_OwnerName;
-	
+
 	public animalbridge_posting (
 
 		int Posting_ID,

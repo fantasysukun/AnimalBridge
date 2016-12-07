@@ -280,8 +280,10 @@ public class HelloWorldService {
 
 		boolean valid = false;
 		try {
-
-			String kk = JSONData.replaceAll("\"", "\\\"");
+			System.out.println(JSONData);
+			String kk = JSONData.replaceAll("\"\"", "null");
+			kk = kk.replaceAll("\"", "\\\"");
+			System.out.println(kk);
 			ee = gson.fromJson(kk, animalbridge_posting.class);
 
 			Model.Addanimalbridge_posting(ee); // call back end method

@@ -694,19 +694,50 @@ public class Model {
 
 	public static boolean Addanimalbridge_posting(animalbridge_posting InputObject) {
 
-		String Posting_Categories = InputObject.GetPosting_Categories().replace("'", "''");
-		String Posting_Priority = InputObject.GetPosting_Priority().replace("'", "''");
-		String Posting_Title = InputObject.GetPosting_Title().replace("'", "''");
-		String Posting_Address = InputObject.GetPosting_Address().replace("'", "''");
-		String Posting_Description = InputObject.GetPosting_Description().replace("'", "''");
-		String Posting_Date = InputObject.GetPosting_Date().replace("'", "''");
-		String Posting_StartingTime = InputObject.GetPosting_StartingTime().replace("'", "''");
-		String Posting_EndingTIme = InputObject.GetPosting_EndingTIme().replace("'", "''");
-		String Posting_Image = null;
-		String Posting_Price = InputObject.GetPosting_Price().replace("'", "''");
-		String Posting_ContactEmail = InputObject.GetPosting_ContactEmail().replace("'", "''");
-		int Posting_OwnerID = InputObject.GetPosting_OwnerID();
-		String Posting_OwnerName = InputObject.GetPosting_OwnerName().replace("'", "''");
+		String Posting_Categories;
+		String Posting_Priority;
+		String Posting_Title;
+		String Posting_Address;
+		String Posting_Description;
+		String Posting_Date;
+		String Posting_StartingTime;
+		String Posting_EndingTIme;
+		String Posting_Image;
+		String Posting_Price;
+		String Posting_ContactEmail;
+		int Posting_OwnerID;
+		String Posting_OwnerName;
+
+		try{
+			 Posting_Categories = InputObject.GetPosting_Categories().replace("'", "''");
+			 Posting_Priority = InputObject.GetPosting_Priority().replace("'", "''");
+			 Posting_Title = InputObject.GetPosting_Title().replace("'", "''");
+			 Posting_Address = InputObject.GetPosting_Address().replace("'", "''");
+			 Posting_Description = InputObject.GetPosting_Description().replace("'", "''");
+			 Posting_Date = InputObject.GetPosting_Date().replace("'", "''");
+			 Posting_StartingTime = InputObject.GetPosting_StartingTime().replace("'", "''");
+			 Posting_EndingTIme = InputObject.GetPosting_EndingTIme().replace("'", "''");
+			 Posting_Image= null;
+			 Posting_Price = InputObject.GetPosting_Price().replace("'", "''");
+			 Posting_ContactEmail = InputObject.GetPosting_ContactEmail().replace("'", "''");
+			 Posting_OwnerID = InputObject.GetPosting_OwnerID();
+			 Posting_OwnerName = InputObject.GetPosting_OwnerName().replace("'", "''");
+		}
+		catch(Exception e){
+			 Posting_Categories = InputObject.GetPosting_Categories();
+			 Posting_Priority = InputObject.GetPosting_Priority();
+			 Posting_Title = InputObject.GetPosting_Title();
+			 Posting_Address = InputObject.GetPosting_Address();
+			 Posting_Description = InputObject.GetPosting_Description();
+			 Posting_Date = InputObject.GetPosting_Date();
+			 Posting_StartingTime = InputObject.GetPosting_StartingTime();
+			 Posting_EndingTIme = InputObject.GetPosting_EndingTIme();
+			 Posting_Image= null;
+			 Posting_Price = InputObject.GetPosting_Price();
+			 Posting_ContactEmail = InputObject.GetPosting_ContactEmail();
+			 Posting_OwnerID = 1;
+			 Posting_OwnerName = "Kun Su";
+		}
 
 		String query = String.format("INSERT INTO animalbridge_posting("
 			+ "Posting_Categories,"
@@ -737,6 +768,7 @@ public class Model {
 			Posting_OwnerID,
 			Posting_OwnerName);
 		try {
+			System.out.println(query);
 			statement.execute(query);
 			return true;
 		} catch (SQLException e) {

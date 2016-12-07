@@ -27,7 +27,7 @@ public class Dao {
 		String driverStr = "com.mysql.jdbc.Driver";
 		String urlStr = "jdbc:mysql://localhost:3306/cs160test?autoReconnect=true&useSSL=false";
 		String uid = "root";
-		String pwd = "123456";
+		String pwd = "root";
 
 		// marco's data
 		// String urlStr = "jdbc:mysql://localhost:3307/cs160test?autoReconnect=true&useSSL=false";

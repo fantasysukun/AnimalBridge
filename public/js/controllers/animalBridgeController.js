@@ -390,7 +390,9 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
         "date": "",
         "startingTime": "",
         "endingTime": "",
-        "price": ""
+        "price": "",
+        "ownerID": "",
+        "ownerName" : ""
     };
 
     self.selected = {
@@ -475,6 +477,12 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
 
     self.submit = function() {
         console.log('User clicked submit with ', self.post);
+        $http.post('./rest/hello/InsertPost', self.post)
+            .then(function(response){
+              console.log(response);
+            }, function(err){
+              console.log(err);
+            });
     };
 
     self.addImageFile = function() {

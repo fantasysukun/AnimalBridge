@@ -516,7 +516,7 @@ function MyCtrl($scope) {
     $scope.gPlace;
 }
 
-app.controller("MainController", ['pageLayoutService', '$http', '$scope', '$location',function(pageLayoutService, $http, $scope, $location) {
+app.controller("MainController", ['pageLayoutService', '$http', '$scope', function(pageLayoutService, $http, $scope) {
     var self = this;
     $scope.title = "This is a message";
     $scope.body = "Welcome Modal";
@@ -557,10 +557,6 @@ app.controller("MainController", ['pageLayoutService', '$http', '$scope', '$loca
                         //     $(window).scrollTop(0);
                         // };
                         // login = {};
-                        console.log(response);
-                        $location.path('/login');
-
-
                     }, function(err) {
                         console.log("SERVER ERROR!!!");
                     });

@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
-import edu.sjsu.db.animalbridge_users;
+import edu.sjsu.db.AnimalBridge_users;
 import edu.sjsu.db.Dao;
 import edu.sjsu.db.Model;
 import edu.sjsu.db.animalbridge_aboutus;
@@ -52,6 +52,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/hello")
 public class HelloWorldService {
+	
 	@GET
 	@Path("/{param}")
 	public static Response getMsg(@PathParam("param") String msg) {

@@ -1,35 +1,41 @@
 <!-- header -->
-<div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div>
+<signup-header ng-hide="hidden"></signup-header>
+<!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp && MainCtrl.userVerified==false"></div> -->
+<!-- <div ng-include="'./header.html'" ng-show="MainCtrl.showHeader && MainCtrl.userVerified==false"></div> -->
+<signin-header ng-hide="hidden"></signin-header>
+<!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div> -->
 <!-- navbar -->
-<div ng-include="'./header.html'" ng-show="MainCtrl.showHeader"></div>
 <div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav"></div>
-<div>
- <h2>{{name}}</h2>
-  <h4>{{this.name}}</h4>
-</div>
 
-<div id="wrapper">
-  <h1 align="center">Post</h1>
-<div class="toggles">
-   <button class="CatButton red" id="showall">Show All</button>
-  <button class="CatButton" id="emergency">Emergency</button>
-  <button class="CatButton" id="recent_news">Recent News</button>
-  <button class="CatButton" id="lost_pet">Lost Pet</button>
-  <button class="CatButton" id="adoption_offer">Adoption Offer</button>
-  <button class="CatButton" id="shelter_promotion">Shelter Promotion</button>
-    <button class="CatButton" id="adoption_request">Adoption Request</button>
+<div ng-class="{cardNew: MainCtrl.userVerified}">
 
+    <div>
+        <h2>{{name}}</h2>
+        <h4>{{this.name}}</h4>
+    </div>
 
-</div>
+    <div id="wrapper">
+        <h1 align="center">Post</h1>
+        <div class="toggles">
+            <button class="CatButton red" id="showall">Show All</button>
+            <button class="CatButton" id="emergency">Emergency</button>
+            <button class="CatButton" id="recent_news">Recent News</button>
+            <button class="CatButton" id="lost_pet">Lost Pet</button>
+            <button class="CatButton" id="adoption_offer">Adoption Offer</button>
+            <button class="CatButton" id="shelter_promotion">Shelter Promotion</button>
+            <button class="CatButton" id="adoption_request">Adoption Request</button>
 
-<div class="posts">
-     <div class="emergency post">Someone murder a cat at MLK library Person discription qedasfegwgwrrew ewrewrew rgrwdwdweerewfwfdsfweewrewfdsdfghethegrretrtre</div>
-    <div class="recent_news post">offering help!!</div>
-    <div class="lost_pet post">Lost Pet @ san jose state</div>
-    <div class="adoption_offer post">looking for a chiwawa</div>
-    <div class="shelter_promotion post">new shelter opening!!!</div>
-    <div class="adoption_request post">Please adopt this poor cat</div>
-    <div class="recent_news post">please donate!</div>
-    <div class="recent_news post">Help requested</div>
-    <div class="recent_news post">yoyoyoyoyoyoyoyoyo</div>
-  </div>
+        </div>
+
+        <div class="posts">
+            <div class="emergency post">Someone murder a cat at MLK library Person discription qedasfegwgwrrew ewrewrew rgrwdwdweerewfwfdsfweewrewfdsdfghethegrretrtre</div>
+            <div class="recent_news post">offering help!!</div>
+            <div class="lost_pet post">Lost Pet @ san jose state</div>
+            <div class="adoption_offer post">looking for a chiwawa</div>
+            <div class="shelter_promotion post">new shelter opening!!!</div>
+            <div class="adoption_request post">Please adopt this poor cat</div>
+            <div class="recent_news post">please donate!</div>
+            <div class="recent_news post">Help requested</div>
+            <div class="recent_news post">yoyoyoyoyoyoyoyoyo</div>
+        </div>
+    </div>

@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
-import edu.sjsu.db.AnimalBridge_users;
+import edu.sjsu.db.animalbridge_users;
 import edu.sjsu.db.Dao;
 import edu.sjsu.db.Model;
 import edu.sjsu.db.animalbridge_aboutus;
@@ -52,7 +52,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/hello")
 public class HelloWorldService {
-	
 	@GET
 	@Path("/{param}")
 	public static Response getMsg(@PathParam("param") String msg) {
@@ -241,6 +240,8 @@ public class HelloWorldService {
 		boolean valid = false;
 		String tempEmail = ee.Getuser_Email();
 		String tempPassword = ee.Getuser_Pass();
+		String userName = "";
+		int id = -1;
 		for (Entry<Integer, animalbridge_users> entry : Testing.entrySet()) {
 			int key = (int) entry.getKey();
 			animalbridge_users value = entry.getValue();
@@ -251,13 +252,19 @@ public class HelloWorldService {
 			if (value.Getuser_Email().equalsIgnoreCase(tempEmail)
 					&& value.Getuser_Pass().equalsIgnoreCase(tempPassword)) {
 				valid = true;
+				userName = value.Getuser_Name();
+				id = value.Getuser_ID();
 				System.out.println("FOUND::: email: " + tempEmail + " password: " + tempPassword);
 				break;
 			}
 		}
 
 		if (valid) {
-			String json = "{\"user\" : \"true\"}";
+			String json = "{\"user\" : \"true\", \"userName\" : \"";
+			json += userName;
+			json += "\", \"id:\" : \"";
+			json += id;
+			json += "\"}";
 			return Response.status(200).entity(json).build();
 		} else {
 			String json = "{\"user\" : \"false\"}";

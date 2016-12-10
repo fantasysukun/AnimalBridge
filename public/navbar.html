@@ -13,7 +13,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                <li ng-hide="MainCtrl.userVerified">
                     <a href="#/">HOME</a>
                 </li>
                 <li>
@@ -33,7 +33,12 @@
                 </li>
                 <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
 
-                <li class="dropdown">
+                <!-- <li ng-show="($root.userInfo.signinStatus == true && $root.userInfo != null) || MainCtrl.userVerified"> -->
+                <li ng-show="MainCtrl.userVerified">
+                    <a href="#/" ng-click="MainCtrl.logout()">LOGOUT</a>
+                </li>
+                <!-- <li class="dropdown" ng-show="$root.userInfo.signinStatus == false || $root.userInfo == null"> -->
+                <li class="dropdown" ng-hide="MainCtrl.userVerified">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <b>Login</b>
                     </a>
@@ -59,6 +64,7 @@
                         </div>
                     </div>
                 </li>
+
                 <!------------------------------------------------- <LogIn nav bar-> ------------------------------------------>
 
             </ul>

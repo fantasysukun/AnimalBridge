@@ -1,20 +1,26 @@
 <!-- header -->
-<div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div>
-
-<div ng-include="'./header.html'" ng-show="MainCtrl.showHeader"></div>
+<signup-header ng-hide="hidden"></signup-header>
+<!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp && MainCtrl.userVerified==false"></div> -->
+<!-- <div ng-include="'./header.html'" ng-show="MainCtrl.showHeader && MainCtrl.userVerified==false"></div> -->
+<signin-header ng-hide="hidden"></signin-header>
+<!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div> -->
 <!-- navbar -->
 <div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav"></div>
 
-<h1>Hello Servers!</h1>
-<div ng-repeat="posting in MainCtrl.items" class="item">
-  <!-- <div><span ng-bind="todo.label"></span></div>
+<div ng-class="{cardNew: MainCtrl.userVerified}">
+
+    <h1>Hello Servers!</h1>
+    <div ng-repeat="posting in MainCtrl.items" class="item">
+        <!-- <div><span ng-bind="todo.label"></span></div>
   <div>- by <span ng-bind="todo.author"></span></div> -->
-  <!-- <h3>{{MainCtrl.posting.Posting_Title}}</h3> -->
-  <div ng-repeat="(key, value) in posting">
-    <!-- <p>{{key}}</p> -->
-    <p ng-if="key==='Posting_Title'">{{key}}::{{value}}</p>
-    <p ng-if="key==='Posting_Description'">{{key}}::{{value}}</p>
-  </div>
-  <br>
-  <br>
+        <!-- <h3>{{MainCtrl.posting.Posting_Title}}</h3> -->
+        <p>{{posting[0]}}</p>
+        <div ng-repeat="(key, value) in posting">
+            <p>{{key}}{{key}}::{{value}}</p>
+            <p ng-if="key==='Posting_Title'">{{key}}::{{value}}</p>
+            <p ng-if="key==='Posting_Description'">{{key}}::{{value}}</p>
+        </div>
+        <br>
+        <br>
+    </div>
 </div>

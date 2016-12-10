@@ -48,6 +48,81 @@ app.service("loginService", function() {
     }
 });
 
+app.factory("signinService", ["$rootScope", "$http", "$location", function($rootScope, $http, $location) {
+    var login = {
+        email: "",
+        password: ""
+    };
+
+    var userInfo = {
+        signinStatus: false,
+        userID: -1,
+        userName: ""
+    }
+
+    $rootScope.userInfo = userInfo;
+
+    return {
+        signinVerify: function() {
+            return userInfo.signinStatus;
+        },
+
+        setSignin: function(l) {
+            login = l;
+        },
+
+        getSignin: function() {
+            return login;
+        },
+
+        getUserInfo: function() {
+            return userInfo;
+        },
+
+        logout: function() {
+            login = {
+                email: "",
+                password: ""
+            };
+
+            userInfo = {
+                signinStatus: false,
+                userID: -1,
+                userName: ""
+            };
+
+            $rootScope.userInfo = userInfo;
+        },
+
+        signinNow: function() {
+            $http.post('./rest/hello/testPostLogin/', login)
+                .then(function(response) {
+                    userInfo.signinStatus = response.data.user;
+                    if (userInfo.signinStatus == "true") {
+                        userInfo.userName = response.data.userName;
+                        userInfo.userID = response.data.id;
+                        // $(window).location = "./login.html";
+                        $rootScope.userInfo = userInfo;
+                        $location.path('/login');
+                    } else {
+                        userInfo.userName = "Not Found";
+                    }
+                    console.log("from service::: signedin T/F: " + userInfo.signinStatus);
+                    console.log("user : " + userInfo.userName);
+                    // scroll window to top
+                    var move = function() {
+                        $(window).scrollTop(0);
+                    };
+
+                    return true;
+                }, function(err) {
+                    console.log(err);
+                    return false;
+                });
+        }
+    }
+}]);
+
 jQuery(document).ready(function() {
     $('.launch-modal').on('click', function(e) {
         e.preventDefault();
@@ -119,12 +194,7 @@ app.config(['$httpProvider', function($httpProvider) {
     // $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
 }]);
 
-app.config(['$sceDelegateProvider', function($sceDelegateProvider) {
-    //  $sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/(mhnystatic\.)?s3.amazonaws.com/, /^https?:\/\/(static\.)?s3.amazonaws.com/]);
-
-}]);
-
-app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '$http', '$location',function(pageLayoutService, loginService, $http, $location) {
+app.controller('animalBridgeController', ['pageLayoutService', 'signinService', '$http', '$location', '$scope',function(pageLayoutService, signinService, $http, $location, $scope) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -135,39 +205,53 @@ app.controller('animalBridgeController', ['pageLayoutService', 'loginService', '
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
 
-    self.userVerified = false;
-    self.userVerification = {
-        "user": ''
-    };
+    var userInfo = {
+        signinStatus: false,
+        userID: -1,
+        userName: ""
+    }
+
+    self.userVerified = signinService.getUserInfo().signinStatus;
+    // console.log("animalBridgeController:::" + signinService.getUserInfo().userName + " verified::" + signinService.getUserInfo().signinStatus + "::self::" + self.userVerified);
+    // self.userVerification = {
+    //     "user": ''
+    // };
     self.signinSubmit = function() {
         console.log(self.login);
-        loginService.setLogin(self.login);
+        // loginService.setLogin(self.login);
+        //
+        // $http.post('./rest/hello/testPostLogin/', self.login)
+        //     .then(function(response) {
+        //         self.userVerification = response.data;
+        //         if(response.data.user == "true"){
+        //           self.userVerified = true;
+        //           // $(window).location = "./login.html";
+        //           $location.path('/login');
+        //         }
+        //         else{
+        //           self.userVerified = false;
+        //         }
+        //         console.log("T/F: " + self.userVerified);
+        //         // scroll window to top
+        //         var move = function() {
+        //             $(window).scrollTop(0);
+        //         };
+        //         login = {};
+        //     }, function(err) {
+        //         console.log("SERVER ERROR!!!");
+        //     });
+        console.log("calling signinService");
+        signinService.setSignin(self.login);
+        signinService.signinNow();
 
-        $http.post('./rest/hello/testPostLogin/', self.login)
-            .then(function(response) {
-                self.userVerification = response.data;
-                if(response.data.user == "true"){
-                  self.userVerified = true;
-                  // $(window).location = "./login.html";
-                  $location.path('/login');
-                }
-                else{
-                  self.userVerified = false;
-                }
-                console.log("T/F: " + self.userVerified);
-                // scroll window to top
-                var move = function() {
-                    $(window).scrollTop(0);
-                };
-                login = {};
-            }, function(err) {
-                console.log("SERVER ERROR!!!");
-            });
     };
+    self.logout = function() {
+        signinService.logout();
+    }
 
 }]);
 
-app.controller('loginController', ['pageLayoutService', 'loginService', '$http', function(pageLayoutService, loginService, $http) {
+app.controller('loginController', ['pageLayoutService', 'signinService', '$http', function(pageLayoutService, signinService, $http) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -178,39 +262,16 @@ app.controller('loginController', ['pageLayoutService', 'loginService', '$http',
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
 
-    self.userVerified = true;
-    // self.userVerification = {
+    self.user = signinService.getUserInfo();
+    self.userVerified = self.user.signinStatus;
+    console.log("loginController:::"+self.userVerified);
 
-    //     "user": ''
-    // };
-    // self.signinSubmit = function() {
-    //     console.log(self.login);
-    //     loginService.setLogin(self.login);
-    //
-    //     $http.post('http://localhost:8080/TeamMinions/rest/hello/testPostLogin/', self.login)
-    //         .then(function(response) {
-    //             self.userVerification = response.data;
-    //             if(response.data.user == "true"){
-    //               self.userVerified = true;
-    //               $(window).location = "./login.html"
-    //             }
-    //             else{
-    //               self.userVerified = false;
-    //             }
-    //             console.log("T/F: " + self.userVerified);
-    //             // scroll window to top
-    //             var move = function() {
-    //                 $(window).scrollTop(0);
-    //             };
-    //             login = {};
-    //         }, function(err) {
-    //             console.log("SERVER ERROR!!!");
-    //         });
-    // };
-
+    self.logout = function() {
+        signinService.logout();
+    }
 }]);
 
-app.controller('viewPostsController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {
+app.controller('viewPostsController', ['pageLayoutService', 'signinService', '$http', function(pageLayoutService, signinService, $http) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -221,7 +282,22 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
     self.showNav = pageLayoutService.getShowNavBar();
     self.showSignUp = pageLayoutService.getShowSignUp();
     self.items = [];
-    // $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
+
+    self.userVerified = signinService.getUserInfo().signinStatus;
+    console.log("HOME:::" + signinService.getUserInfo().userName + " verified::" + signinService.getUserInfo().signinStatus + "::self::" + self.userVerified);
+    self.signinSubmit = function() {
+        console.log(self.login);
+        console.log("calling signinService");
+        signinService.setSignin(self.login);
+        signinService.signinNow();
+
+    };
+
+    self.logout = function() {
+            signinService.logout();
+        }
+        // $http.get('http://localhost:8080/TeamMinions/rest/hello/kjkjk34343')
+    console.log("VIEWPOSTCONTROLLER:::::");
     $http.get('./rest/hello/testGetPost/')
         .then(
             function(response) {
@@ -232,9 +308,11 @@ app.controller('viewPostsController', ['pageLayoutService', '$http', function(pa
                 console.error('Error while fetching notes');
             });
 
+
+
 }]);
 
-app.controller('aboutController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {
+app.controller('aboutController', ['pageLayoutService', '$http', 'signinService', function(pageLayoutService, $http, signinService) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -269,7 +347,19 @@ app.controller('aboutController', ['pageLayoutService', '$http', function(pageLa
         $('.grid-item').find('img').removeClass().addClass(optionVal);
     });
 
+    self.userVerified = signinService.getUserInfo().signinStatus;
+    console.log("HOME:::" + signinService.getUserInfo().userName + " verified::" + signinService.getUserInfo().signinStatus + "::self::" + self.userVerified);
+    self.signinSubmit = function() {
+        console.log(self.login);
+        console.log("calling signinService");
+        signinService.setSignin(self.login);
+        signinService.signinNow();
 
+    };
+
+    self.logout = function() {
+        signinService.logout();
+    }
 
 }]);
 
@@ -277,7 +367,7 @@ app.controller('aboutController', ['pageLayoutService', '$http', function(pageLa
 
 
 
-app.controller('contactController', ['pageLayoutService', '$http', function(pageLayoutService, $http) {
+app.controller('contactController', ['pageLayoutService', 'signinService', '$http', function(pageLayoutService, signinService, $http) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -288,6 +378,19 @@ app.controller('contactController', ['pageLayoutService', '$http', function(page
     self.showSignUp = pageLayoutService.getShowSignUp();
     self.showHeader = pageLayoutService.getShowHeader();
     self.showNav = pageLayoutService.getShowNavBar();
+
+    self.userVerified = signinService.getUserInfo().signinStatus;
+    console.log("HOME:::" + signinService.getUserInfo().userName + " verified::" + signinService.getUserInfo().signinStatus + "::self::" + self.userVerified);
+    self.signinSubmit = function() {
+        console.log(self.login);
+        console.log("calling signinService");
+        signinService.setSignin(self.login);
+        signinService.signinNow();
+
+    };
+    self.logout = function() {
+        signinService.logout();
+    }
 }]);
 
 app.controller('emergencyController', ['pageLayoutService', '$scope', '$http', function(pageLayoutService, $scope, $http) {
@@ -373,7 +476,7 @@ app.controller('emergencyController', ['pageLayoutService', '$scope', '$http', f
     google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise());
 }]);
 
-app.controller('newPostController', ['pageLayoutService', '$scope', '$http', function(pageLayoutService, $scope, $http) {
+app.controller('newPostController', ['pageLayoutService', 'signinService','$scope', '$http', function(pageLayoutService, signinService, $scope, $http) {
     var self = this;
     self.name = "AnimalBridgeApp";
     self.headerTemplate = 'header.html';
@@ -392,7 +495,7 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
         "endingTime": "",
         "price": "",
         "ownerID": "",
-        "ownerName" : ""
+        "ownerName": ""
     };
 
     self.selected = {
@@ -478,10 +581,10 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
     self.submit = function() {
         console.log('User clicked submit with ', self.post);
         $http.post('./rest/hello/InsertPost', self.post)
-            .then(function(response){
-              console.log(response);
-            }, function(err){
-              console.log(err);
+            .then(function(response) {
+                console.log(response);
+            }, function(err) {
+                console.log(err);
             });
     };
 
@@ -496,6 +599,19 @@ app.controller('newPostController', ['pageLayoutService', '$scope', '$http', fun
         readFile.readAsBinaryString(file);
     };
 
+    self.userVerified = signinService.getUserInfo().signinStatus;
+    console.log("HOME:::" + signinService.getUserInfo().userName + " verified::" + signinService.getUserInfo().signinStatus + "::self::" + self.userVerified);
+    self.signinSubmit = function() {
+        console.log(self.login);
+        console.log("calling signinService");
+        signinService.setSignin(self.login);
+        signinService.signinNow();
+
+    };
+
+    self.logout = function() {
+        signinService.logout();
+    }
 
 
 }]);
@@ -524,7 +640,7 @@ function MyCtrl($scope) {
     $scope.gPlace;
 }
 
-app.controller("MainController", ['pageLayoutService', '$http', '$scope', '$location',function(pageLayoutService, $http, $scope, $location) {
+app.controller("MainController", ['pageLayoutService', '$http', '$scope', '$location', function(pageLayoutService, $http, $scope, $location) {
     var self = this;
     $scope.title = "This is a message";
     $scope.body = "Welcome Modal";
@@ -539,7 +655,7 @@ app.controller("MainController", ['pageLayoutService', '$http', '$scope', '$loca
             "password": ""
         };
         $scope.re = {
-          "repassword": ""
+            "repassword": ""
         };
         $scope.signUpSubmit = function() {
             console.log("clickedxxxxx");
@@ -567,6 +683,8 @@ app.controller("MainController", ['pageLayoutService', '$http', '$scope', '$loca
                         // login = {};
                         console.log(response);
                         $location.path('/login');
+
+
                     }, function(err) {
                         console.log("SERVER ERROR!!!");
                     });
@@ -591,8 +709,31 @@ app.directive("modalWindow", function() {
         link: function(scope, ele, attrs) {
             $(ele).find('.trans-layer').on('click', function(event) {
                 scope.hidden = true;
-                scope.$apply();
+                // scope.$apply();
             })
         }
     }
 });
+app.directive("signinHeader", ['signinService', function(signinService) {
+    return {
+        restrict: "E",
+        templateUrl: "header.html",
+        scope: true,
+        link: function($scope, $element, $attrs) {
+            $scope.hidden = signinService.getUserInfo().signinStatus;
+            // $scope.$apply();
+        }
+    }
+}]);
+
+app.directive("signupHeader", ['signinService', function(signinService) {
+    return {
+        restrict: "E",
+        templateUrl: "signUp.html",
+        scope: true,
+        link: function($scope, $element, $attrs) {
+            $scope.hidden = signinService.getUserInfo().signinStatus;
+            // $scope.$apply();
+        }
+    }
+}]);

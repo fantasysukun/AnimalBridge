@@ -1,22 +1,24 @@
 <!-- header -->
-<div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp && MainCtrl.userVerified==false"></div>
-<div ng-include="'./header.html'" ng-show="MainCtrl.showHeader && MainCtrl.userVerified==false"></div>
+<signup-header ng-hide="hidden"></signup-header>
+<!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp && MainCtrl.userVerified==false"></div> -->
+<!-- <div ng-include="'./header.html'" ng-show="MainCtrl.showHeader && MainCtrl.userVerified==false"></div> -->
+<signin-header ng-hide="hidden"></signin-header>
 <!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div> -->
 <!-- navbar -->
 <div ng-include="'./navbar.html'" ng-show="MainCtrl.showNav"></div>
 <!-- <div ng-include="'./signUp.html'" ng-show="MainCtrl.showSignUp"></div> -->
 <div class="card" ng-class="{cardNew: MainCtrl.userVerified}">
-  <h4 ng-if="MainCtrl.userVerified">Welcome, {{MainCtrl.login}}!{{MainCtrl.userVerification.user}}</h4>
+  <h4 ng-if="MainCtrl.userVerified">Welcome to AnimalBridge!!!</h4>
     <h3>Recent Post</h3>
     <ul>
         <li>
             <a href="#" class="cat1">
-                Kun 大佬
+                Kun
             </a>
         </li>
         <li>
             <a href="#" class="cat2">
-                强哥
+                Peilu
             </a>
 
         </li>
@@ -85,7 +87,7 @@
 
         <li class="grid-item">
             <img src="https://cdn2.iconfinder.com/data/icons/despicable-me-2-minions/128/girl-minion-icon.png" alt="" class="square"/>
-            <h3 class="member-name">强哥</h3>
+            <h3 class="member-name">Peilu Liu</h3>
             <span class="member-title">Developer</span>
         </li>
         <li class="grid-item">

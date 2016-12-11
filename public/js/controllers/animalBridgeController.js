@@ -31,22 +31,22 @@ app.service("pageLayoutService", function() {
 
 });
 
-app.service("loginService", function() {
-    var self = this;
-    var login = {
-        email: "",
-        password: ""
-    };
-
-    self.getLogin = function() {
-        return login;
-    }
-
-    self.setLogin = function(newLogin) {
-        login = newLogin;
-        console.log("from service: email: " + login.email + " pwd: " + login.password);
-    }
-});
+// app.service("loginService", function() {
+//     var self = this;
+//     var login = {
+//         email: "",
+//         password: ""
+//     };
+//
+//     self.getLogin = function() {
+//         return login;
+//     }
+//
+//     self.setLogin = function(newLogin) {
+//         login = newLogin;
+//         console.log("from service: email: " + login.email + " pwd: " + login.password);
+//     }
+// });
 
 app.factory("signinService", ["$rootScope", "$http", "$location", function($rootScope, $http, $location) {
     var login = {
@@ -178,6 +178,12 @@ app.config(["$routeProvider", "$locationProvider", function($routeProvider, $loc
         controllerAs: 'MainCtrl'
     })
 
+    .when('/forget', {
+        templateUrl: 'forget.html',
+        controller: 'forgetController',
+        controllerAs: 'MainCtrl'
+    })
+
     .when('/emergency', {
         templateUrl: 'emergency.html',
         controller: 'emergencyController',
@@ -279,6 +285,42 @@ app.controller('loginController', ['pageLayoutService', 'signinService', '$http'
     self.logout = function() {
         signinService.logout();
     }
+}]);
+
+app.controller('forgetController', ['pageLayoutService', 'signinService', '$http', function(pageLayoutService, signinService, $http) {
+    var self = this;
+    self.name = "AnimalBridgeApp";
+    self.headerTemplate = 'header.html';
+    pageLayoutService.setShowHeader(false);
+    pageLayoutService.setShowNavBar(true);
+    pageLayoutService.setShowSignUp(false);
+    self.showHeader = pageLayoutService.getShowHeader();
+    self.showNav = pageLayoutService.getShowNavBar();
+    self.showSignUp = pageLayoutService.getShowSignUp();
+
+    self.user = signinService.getUserInfo();
+    self.userVerified = self.user.signinStatus;
+    console.log("forgetController:::"+self.userVerified);
+
+    self.forget = {
+        email: "",
+        password: "ForgetPassword"
+    };
+
+    self.submit = function() {
+        $http.post('./rest/hello/forget/', self.forget)
+        .then(function(response){
+          console.log("hehehe:::"+response);
+          console.log("forget::::data.user:"+response.data.user+"---"+response.user);
+          if (response.data.user == "true") {
+            self.recovered = response.data.password;
+          }
+          else{
+            self.recovered = "NO USER FOUND";
+          }
+        }, function(err){
+          console.log("forgetController:::SERVER ERROR");
+        })};
 }]);
 
 app.controller('viewPostsController', ['pageLayoutService', 'signinService', '$http', function(pageLayoutService, signinService, $http) {

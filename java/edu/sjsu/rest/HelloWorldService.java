@@ -262,8 +262,64 @@ public class HelloWorldService {
 		if (valid) {
 			String json = "{\"user\" : \"true\", \"userName\" : \"";
 			json += userName;
-			json += "\", \"id:\" : \"";
+			json += "\", \"id\" : \"";
 			json += id;
+			json += "\"}";
+			return Response.status(200).entity(json).build();
+		} else {
+			String json = "{\"user\" : \"false\"}";
+			return Response.status(200).entity(json).build();
+		}
+		// return HTTP response 200 in case of success
+		// return
+		// Response.status(200).entity(crunchifyBuilder.toString()).build();
+	}
+
+	@POST
+	@Path("/forget")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	// public Response crunchifyREST(InputStream incomingData) {
+	public Response forgetPassword(String JSONData) {
+		Gson gson = new Gson();
+		HashMap<Integer, animalbridge_users> Testing = Model.animalbridge_users();
+		animalbridge_users ee = null;
+		try {
+			// String kk = "{\"email\": \"dd\", \"password\":\"rr\"}";
+			String kk = JSONData.replaceAll("\"", "\\\"");
+			ee = gson.fromJson(kk, animalbridge_users.class);
+			System.out.println(ee.Getuser_Email());
+			System.out.println(ee.Getuser_Pass());
+		} catch (Exception r) {
+			r.printStackTrace();
+		}
+
+		boolean valid = false;
+		String tempEmail = ee.Getuser_Email();
+		String tempPassword = ee.Getuser_Pass();
+		String userName = "";
+		String pwd = "";
+		for (Entry<Integer, animalbridge_users> entry : Testing.entrySet()) {
+			int key = (int) entry.getKey();
+			animalbridge_users value = entry.getValue();
+			// String tempEmail = gson.fromJson("\"email\"", String.class);
+			// String tempPassword = gson.fromJson("\"email\"", String.class);
+
+			System.out.println("SEARCHING: email: " + value.Getuser_Email() + " password: " + value.Getuser_Pass());
+			if (value.Getuser_Email().equalsIgnoreCase(tempEmail)) {
+				valid = true;
+				userName = value.Getuser_Name();
+				pwd = value.Getuser_Pass();
+				System.out.println("FOUND::: email: " + tempEmail);
+				break;
+			}
+		}
+
+		if (valid) {
+			String json = "{\"user\" : \"true\", \"userName\" : \"";
+			json += userName;
+			json += "\", \"password\" : \"";
+			json += pwd;
 			json += "\"}";
 			return Response.status(200).entity(json).build();
 		} else {

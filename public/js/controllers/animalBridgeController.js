@@ -212,6 +212,16 @@ app.controller('animalBridgeController', ['pageLayoutService', 'signinService', 
     }
 
     self.userVerified = signinService.getUserInfo().signinStatus;
+
+    $scope.$watch(
+      'self.userVerified',
+      function(newValue, oldValue){
+        if (newValue != oldValue) {
+            console.log("watch:::" + newValue);
+            $scope.$apply();
+        }
+      }
+    )
     // console.log("animalBridgeController:::" + signinService.getUserInfo().userName + " verified::" + signinService.getUserInfo().signinStatus + "::self::" + self.userVerified);
     // self.userVerification = {
     //     "user": ''

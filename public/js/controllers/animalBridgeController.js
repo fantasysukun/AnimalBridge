@@ -302,6 +302,20 @@ app.controller('forgetController', ['pageLayoutService', 'signinService', '$http
     self.userVerified = self.user.signinStatus;
     console.log("forgetController:::"+self.userVerified);
 
+    self.userVerified = signinService.getUserInfo().signinStatus;
+    console.log("forgetController:::" + signinService.getUserInfo().userName + " verified::" + signinService.getUserInfo().signinStatus + "::self::" + self.userVerified);
+    self.signinSubmit = function() {
+        console.log(self.login);
+        console.log("calling signinService");
+        signinService.setSignin(self.login);
+        signinService.signinNow();
+
+    };
+
+    self.logout = function() {
+        signinService.logout();
+    }
+
     self.forget = {
         email: "",
         password: "ForgetPassword"

@@ -707,7 +707,7 @@ public class Model {
 		String Posting_ContactEmail;
 		int Posting_OwnerID;
 		String Posting_OwnerName;
-
+		
 		try{
 			 Posting_Categories = InputObject.GetPosting_Categories().replace("'", "''");
 			 Posting_Priority = InputObject.GetPosting_Priority().replace("'", "''");

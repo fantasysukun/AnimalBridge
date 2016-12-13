@@ -196,7 +196,7 @@ CREATE TABLE `animalbridge_posting` (
   PRIMARY KEY (`Posting_ID`),
   KEY `Posting_OwnerID` (`Posting_OwnerID`,`Posting_OwnerName`),
   CONSTRAINT `animalbridge_posting_ibfk_1` FOREIGN KEY (`Posting_OwnerID`, `Posting_OwnerName`) REFERENCES `animalbridge_users` (`user_ID`, `user_Name`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +205,7 @@ CREATE TABLE `animalbridge_posting` (
 
 LOCK TABLES `animalbridge_posting` WRITE;
 /*!40000 ALTER TABLE `animalbridge_posting` DISABLE KEYS */;
-INSERT INTO `animalbridge_posting` VALUES (1,'Lost',5,'TestingTitle1','TestingAddres1','TestingDescription1','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail1',1,'Kun Su'),(2,'Emergency',6,'TestingTitle2','TestingAddres2','TestingDescription2','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail2',2,'Yitao Zhao'),(3,'AdpotionOffer',4,'TestingTitle3','TestingAddres3','TestingDescription3','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail3',3,'Peilu Liu'),(4,'AdpotionRequest',3,'TestingTitle4','TestingAddres4','TestingDescription4','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail1',4,'Marco Kuang'),(5,'RecentNews',1,'TestingTitle5','TestingAddres5','TestingDescription5','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail5',5,'Neslon Liang'),(6,'ShelterPromotion',2,'TestingTitle6','TestingAddres6','TestingDescription6','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail6',1,'Kun Su');
+INSERT INTO `animalbridge_posting` VALUES (1,'Lost',5,'TestingTitle1','TestingAddres1','TestingDescription1','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail1',1,'Kun Su'),(2,'Emergency',6,'TestingTitle2','TestingAddres2','TestingDescription2','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail2',2,'Yitao Zhao'),(3,'AdpotionOffer',4,'TestingTitle3','TestingAddres3','TestingDescription3','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail3',3,'Peilu Liu'),(4,'AdpotionRequest',3,'TestingTitle4','TestingAddres4','TestingDescription4','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail1',4,'Marco Kuang'),(5,'RecentNews',1,'TestingTitle5','TestingAddres5','TestingDescription5','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail5',5,'Neslon Liang'),(6,'ShelterPromotion',2,'TestingTitle6','TestingAddres6','TestingDescription6','2016-12-1','00:00:00','12:00:00',NULL,'$100','TestingEmail6',1,'Kun Su'),(7,'Emergency',6,'Testing from Kun','1232r','21344tythgfds','12/08/2016','null','null','null','null','kun.su@sjsu.edu',1,'Kun Su'),(8,'Emergency',6,'Testing from Kun','1232r','21344tythgfds','12/08/2016','null','null','null','null','kun.su@sjsu.edu',1,'Kun Su');
 /*!40000 ALTER TABLE `animalbridge_posting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +226,7 @@ CREATE TABLE `animalbridge_users` (
   `tokenCode` varchar(100) NOT NULL,
   PRIMARY KEY (`user_ID`,`user_Name`),
   UNIQUE KEY `user_Email` (`user_Email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +235,7 @@ CREATE TABLE `animalbridge_users` (
 
 LOCK TABLES `animalbridge_users` WRITE;
 /*!40000 ALTER TABLE `animalbridge_users` DISABLE KEYS */;
-INSERT INTO `animalbridge_users` VALUES (1,'Kun Su','kun.su@sjsu.edu','123456','Y','2016-12-1','0001'),(2,'Yitao Zhao','Yitao.Zhao@sjsu.edu','123456','Y','2016-12-1','0001'),(3,'Peilu Liu','Peilu.Liu@sjsu.edu','123456','Y','2016-12-1','0001'),(4,'Marco Kuang','Marco.Kuang@sjsu.edu','123456','Y','2016-12-1','0001'),(5,'Neslon Liang','Neslon.Liang@sjsu.edu','123456','Y','2016-12-1','0001');
+INSERT INTO `animalbridge_users` VALUES (1,'Kun Su','kun.su@sjsu.edu','123456','Y','2016-12-1','0001'),(2,'Yitao Zhao','Yitao.Zhao@sjsu.edu','123456','Y','2016-12-1','0001'),(3,'Peilu Liu','Peilu.Liu@sjsu.edu','123456','Y','2016-12-1','0001'),(4,'Marco Kuang','Marco.Kuang@sjsu.edu','123456','Y','2016-12-1','0001'),(5,'Neslon Liang','Neslon.Liang@sjsu.edu','123456','Y','2016-12-1','0001'),(6,'fantasysukun','kunsu.903@gmail.com','123456','N','2016-12-1','0000');
 /*!40000 ALTER TABLE `animalbridge_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -248,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-03 17:40:06
+-- Dump completed on 2016-12-12 15:49:37
